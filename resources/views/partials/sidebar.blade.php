@@ -1,19 +1,39 @@
 <aside :class="sidebarToggle ? 'translate-x-0 lg:w-[90px]' : '-translate-x-full'"
-    class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 duration-300 ease-linear dark:border-white dark:bg-white lg:static lg:translate-x-0"
+    class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[250px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 transition-all duration-300 ease-linear dark:border-gray-800 dark:bg-gray-900 lg:static lg:translate-x-0"
     @click.outside="sidebarToggle = false">
-    <!-- SIDEBAR HEADER -->
-    <div :class="sidebarToggle ? 'justify-center' : 'justify-between'"
-        class="sidebar-header flex items-center gap-2 pb-7 pt-8">
-        <a href="index.html">
-            <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
-                <img class="dark:hidden" src="./images/logo/logo.svg" alt="Logo" />
-                <img class="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo" />
-            </span>
 
-            <img class="logo-icon" :class="sidebarToggle ? 'lg:block' : 'hidden'" src="./images/logo/logo-icon.svg"
-                alt="Logo" />
+    <!-- SIDEBAR HEADER -->
+    {{-- <div :class="sidebarToggle ? 'justify-center' : 'justify-between'"
+        class="sidebar-header flex items-center gap-2 pb-7 pt-8">
+        <a href="{{ route('dashboard') }}">
+            {{-- <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
+                <x-application-logo class="dark:hidden w-24 h-24 fill-current text-gray-500" />
+                <x-application-logo class="hidden dark:block w-24 h-24 fill-current text-gray-500" />
+                {{-- <img class="dark:hidden" src="./images/logo/logo.svg" alt="Logo" />
+                <img class="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo" /> --}}
+    {{-- </span> --}}
+
+    {{-- <x-application-logo class="w-14 h-14 fill-current text-gray-500" />
+    </a>
+    </div> --}}
+
+    <!-- SIDEBAR HEADER -->
+    <div :class="sidebarToggle ? 'justify-center' : 'justify-start'"
+        class="sidebar-header flex items-center gap-3 pb-7 pt-8 transition-all duration-300">
+
+        <a href="{{ route('dashboard') }}" class="flex items-center">
+            <x-application-logo class="w-5 h-5 lg:w-12 lg:h-12 fill-current text-gray-500" />
+
+            <!-- Text hanya muncul saat sidebar penuh -->
+            <div x-show="!sidebarToggle" x-transition
+                class="hidden lg:flex flex-col ml-3 leading-snug text-left font-semibold text-gray-700 dark:text-gray-100 text-lg font-sans">
+                <span>Kas</span>
+                <span class="pl-2">Management</span>
+            </div>
         </a>
     </div>
+
+
     <!-- SIDEBAR HEADER -->
 
     <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
@@ -74,8 +94,10 @@
                             <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                 class="menu-dropdown mt-2 flex flex-col gap-1 pl-9">
                                 <li>
-                                    <a href="index.html" class="menu-dropdown-item group"
-                                        :class="page === 'ecommerce' ? 'menu-dropdown-item-active' :
+                                    <a href="index.html"
+                                        class="menu-dropdown-item group text-gray-700 dark:text-gray-100
+"
+                                        :class="page === 'dashboard' ? 'menu-dropdown-item-active' :
                                             'menu-dropdown-item-inactive'">
                                         eCommerce
                                     </a>
@@ -86,11 +108,7 @@
                                             'menu-dropdown-item-inactive'">
                                         Analytics
                                         <span class="absolute right-3 flex items-center gap-1">
-                                            <span class="menu-dropdown-badge"
-                                                :class="page === 'analytics' ? 'menu-dropdown-badge-active' :
-                                                    'menu-dropdown-badge-inactive'">
-                                                Pro
-                                            </span>
+
                                         </span>
                                     </a>
                                 </li>
@@ -99,13 +117,7 @@
                                         :class="page === 'marketing' ? 'menu-dropdown-item-active' :
                                             'menu-dropdown-item-inactive'">
                                         Marketing
-                                        <span class="absolute right-3 flex items-center gap-1">
-                                            <span class="menu-dropdown-badge"
-                                                :class="page === 'marketing' ? 'menu-dropdown-badge-active' :
-                                                    'menu-dropdown-badge-inactive'">
-                                                Pro
-                                            </span>
-                                        </span>
+
                                     </a>
                                 </li>
                                 <li>
@@ -114,12 +126,6 @@
                                             'menu-dropdown-item-inactive'">
                                         CRM
                                         <span class="absolute right-3 flex items-center gap-1">
-                                            <span class="menu-dropdown-badge"
-                                                :class="page === 'crm' ? 'menu-dropdown-badge-active' :
-                                                    'menu-dropdown-badge-inactive'">
-                                                Pro
-                                            </span>
-                                        </span>
                                     </a>
                                 </li>
                                 <li>
@@ -133,11 +139,7 @@
                                                     'menu-dropdown-badge-inactive'">
                                                 New
                                             </span>
-                                            <span class="menu-dropdown-badge"
-                                                :class="page === 'stocks' ? 'menu-dropdown-badge-active' :
-                                                    'menu-dropdown-badge-inactive'">
-                                                Pro
-                                            </span>
+
                                         </span>
                                     </a>
                                 </li>
@@ -145,6 +147,10 @@
                         </div>
                         <!-- Dropdown Menu End -->
                     </li>
-                    <!-- Promo Box -->
+                    <!-- Menu Item Dashboard -->
+                </ul>
             </div>
+        </nav>
+        <!-- Sidebar Menu -->
+    </div>
 </aside>
