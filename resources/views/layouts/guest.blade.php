@@ -9,7 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="icon" type="image/png" href="{{ asset('build/assets/images/mcr-logoo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/mcr-logoo.png') }}">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
@@ -19,6 +19,7 @@
 <body class="font-sans text-gray-900 antialiased">
     <div
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        @include('partials.preloader')
         <div>
             <a href="/">
                 <x-application-logo class="w-24 h-24 fill-current text-gray-500" />
@@ -29,7 +30,6 @@
             {{ $slot }}
         </div>
     </div>
-
 </body>
 
 </html>
