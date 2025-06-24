@@ -1,6 +1,26 @@
+@php
+    $menus = [
+        [
+            'name' => 'Dashboard',
+            'icon' => 'fa-solid fa-chart-simple',
+            'route' => 'dashboard',
+            'submenus' => [],
+        ],
+        [
+            'name' => 'Master',
+            'icon' => 'fa-solid fa-circle-user',
+            'route' => 'master',
+            'submenus' => [
+                ['name' => 'Data Siswa', 'route' => 'master.siswa'],
+                ['name' => 'Data Guru', 'route' => 'master.guru'],
+            ],
+        ],
+    ];
+@endphp
+
+
 <aside :class="sidebarToggle ? 'translate-x-0 lg:w-[100px]' : '-translate-x-full'"
-    class="sidebar fixed left-0 top-0 z-50 flex h-screen w-[323px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 transition-all duration-300 ease-linear dark:border-gray-800 dark:bg-slate-900 lg:static lg:translate-x-0"
-    @click.outside="sidebarToggle = false">
+    class="sidebar fixed left-0 top-0 z-50 flex h-screen w-[323px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 transition-all duration-300 ease-linear dark:border-gray-800 dark:bg-slate-900 lg:static lg:translate-x-0">
 
     <!-- Sidebar Header -->
     <div :class="sidebarToggle ? 'justify-center' : 'justify-start'"
@@ -22,7 +42,7 @@
         <nav x-data="{ selected: $persist('Dashboard') }">
             <div>
                 <!-- Menu Title -->
-                <h3 class="mt-6 mb-4 px-1 lg:mt-0 text-xs uppercase tracking-wider font-medium text-slate-400">
+                <h3 class="mt-6 mb-4 px-1 lg:mt-1 text-xs uppercase tracking-wider font-medium text-slate-400">
                     <span :class="sidebarToggle ? 'lg:hidden' : ''">MENU</span>
                     <svg :class="sidebarToggle ? 'lg:block hidden' : 'hidden'" class="mx-auto text-slate-400"
                         width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -32,11 +52,71 @@
                     </svg>
                 </h3>
 
-                <!-- Menu Items -->
-                <ul class="mb-6 flex flex-col gap-1">
-                    <!-- Di sini akan ditaruh item menu secara manual -->
-                    <!-- Silakan paste menu manualmu kembali di sini, Adit -->
+                <ul class="flex flex-col px-2 text-[16px]">
+                    @foreach ($menus as $menu)
+                        @php
+                            // Menentukan apakah menu utama aktif
+                            $isActive = false;
+
+                            if (isset($menu['route']) && request()->routeIs($menu['route'])) {
+                                $isActive = true;
+                            } elseif (!empty($menu['submenus'])) {
+                                foreach ($menu['submenus'] as $submenu) {
+                                    if (request()->routeIs($submenu['route'])) {
+                                        $isActive = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        @endphp
+
+                        @if (empty($menu['submenus']))
+                            <!-- Menu tanpa submenu -->
+                            <li class="my-1">
+                                <a href="{{ route($menu['route']) }}"
+                                    :class="sidebarToggle ? 'justify-center px-2 py-3' : 'justify-start px-5 py-3'"
+                                    class="flex items-center gap-4 rounded-lg font-semibold transition-all duration-200
+                                        {{ $isActive ? 'bg-indigo-700 text-white' : 'text-slate-200 hover:bg-slate-800' }}">
+                                    <i class="{{ $menu['icon'] }} text-[18px] w-6 h-6"></i>
+                                    <span x-show="!sidebarToggle"
+                                        class="transition-all duration-300">{{ $menu['name'] }}</span>
+                                </a>
+                            </li>
+                        @else
+                            <!-- Menu dengan submenu -->
+                            <li class="my-1" x-data="{ open: {{ $isActive ? 'true' : 'false' }} }" x-effect="if (sidebarToggle) open = false">
+                                <button @click="open = !open"
+                                    :class="sidebarToggle ? 'justify-center px-2 py-3' : 'justify-between px-4 py-3'"
+                                    class="flex w-full items-center rounded-lg font-semibold transition-all duration-200
+                                        {{ $isActive ? 'bg-indigo-700 text-white' : 'text-slate-200 hover:bg-slate-800' }}">
+                                    <div class="flex items-center gap-4">
+                                        <i class="{{ $menu['icon'] }} text-[18px] w-6 h-6"></i>
+                                        <span x-show="!sidebarToggle"
+                                            class="transition-all duration-300">{{ $menu['name'] }}</span>
+                                    </div>
+                                    <i x-show="!sidebarToggle"
+                                        class="fas fa-chevron-right w-4 h-4 transition-transform duration-200"
+                                        :class="{ 'rotate-90': open }"></i>
+                                </button>
+
+                                <!-- Submenu -->
+                                <ul x-show="open && !sidebarToggle" x-collapse
+                                    class="mt-2 space-y-1 pl-10 text-slate-400 text-[15px] font-normal">
+                                    @foreach ($menu['submenus'] as $submenu)
+                                        <li>
+                                            <a href="{{ route($submenu['route']) }}"
+                                                class="block rounded-md px-3 py-2 hover:bg-slate-700 hover:text-white transition-all
+                                                    {{ request()->routeIs($submenu['route']) ? 'text-white bg-slate-700' : '' }}">
+                                                {{ $submenu['name'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endif
+                    @endforeach
                 </ul>
+
             </div>
         </nav>
     </div>

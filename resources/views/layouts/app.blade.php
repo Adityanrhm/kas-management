@@ -45,6 +45,7 @@
         </div>
         <!-- ===== Content Area End ===== -->
     </div>
+    <!-- ===== Page Wrapper End ===== -->
 </body>
 
 </html>
