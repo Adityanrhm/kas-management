@@ -18,7 +18,6 @@
     ];
 @endphp
 
-
 <aside :class="sidebarToggle ? 'translate-x-0 lg:w-[100px]' : '-translate-x-full'"
     class="sidebar fixed left-0 top-0 z-50 flex h-screen w-[323px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 transition-all duration-300 ease-linear dark:border-gray-800 dark:bg-slate-900 lg:static lg:translate-x-0">
 
@@ -84,39 +83,59 @@
                             </li>
                         @else
                             <!-- Menu dengan submenu -->
-                            <li class="my-1" x-data="{ open: {{ $isActive ? 'true' : 'false' }} }" x-effect="if (sidebarToggle) open = false">
-                                <button @click="open = !open"
+                            <li class="my-1" x-data="{
+                                open: {{ $isActive ? 'true' : 'false' }},
+                                isRotating: false,
+                                toggleOpen() {
+                                    if (!sidebarToggle) {
+                                        this.isRotating = true;
+                                        this.open = !this.open;
+                                        // Reset rotating state after animation
+                                        setTimeout(() => { this.isRotating = false; }, 300);
+                                    }
+                                }
+                            }"
+                                x-effect="if (sidebarToggle) { open = false; isRotating = false; }">
+                                <button @click="toggleOpen()"
                                     :class="sidebarToggle ? 'justify-center px-2 py-3' : 'justify-between px-4 py-3'"
                                     class="flex w-full items-center rounded-lg font-semibold transition-all duration-200
                                         {{ $isActive ? 'bg-indigo-700 text-white' : 'text-slate-200 hover:bg-slate-800' }}">
                                     <div class="flex items-center gap-4">
-                                        <i class="{{ $menu['icon'] }} text-[18px] w-6 h-6"></i>
+                                        <i class="{{ $menu['icon'] }} text-[18px] w-6 h-6 flex-shrink-0"></i>
                                         <span x-show="!sidebarToggle"
-                                            class="transition-all duration-300">{{ $menu['name'] }}</span>
+                                            class="whitespace-nowrap">{{ $menu['name'] }}</span>
                                     </div>
+                                    <!-- Rotasi hanya saat button diklik, bukan saat navigasi -->
                                     <i x-show="!sidebarToggle"
-                                        class="fas fa-chevron-right w-4 h-4 transition-transform duration-200"
-                                        :class="{ 'rotate-90': open }"></i>
+                                        class="fas fa-chevron-left w-4 h-4 transition-transform duration-300 ease-in-out"
+                                        :class="open ? 'transform rotate-[-90deg]' : 'transform rotate-0'"
+                                        style="transform-origin: center;"></i>
                                 </button>
 
-                                <!-- Submenu -->
-                                <ul x-show="open && !sidebarToggle" x-collapse
-                                    class="mt-2 space-y-1 pl-10 text-slate-400 text-[15px] font-normal">
-                                    @foreach ($menu['submenus'] as $submenu)
-                                        <li>
-                                            <a href="{{ route($submenu['route']) }}"
-                                                class="block rounded-md px-3 py-2 hover:bg-slate-700 hover:text-white transition-all
-                                                    {{ request()->routeIs($submenu['route']) ? 'text-white bg-slate-700' : '' }}">
-                                                {{ $submenu['name'] }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                <!-- Submenu dengan animasi smooth untuk buka dan tutup -->
+                                <div x-show="open && !sidebarToggle"
+                                    x-transition:enter="transition ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 max-h-0"
+                                    x-transition:enter-end="opacity-100 max-h-screen"
+                                    x-transition:leave="transition ease-in duration-300"
+                                    x-transition:leave-start="opacity-100 max-h-screen"
+                                    x-transition:leave-end="opacity-0 max-h-0" class="overflow-hidden">
+                                    <ul class="mt-2 space-y-1 pl-10 text-slate-400 text-[15px] font-normal">
+                                        @foreach ($menu['submenus'] as $submenu)
+                                            <li>
+                                                <a href="{{ route($submenu['route']) }}"
+                                                    class="block rounded-md px-3 py-2 hover:bg-slate-700 hover:text-white transition-all duration-200
+                                                        {{ request()->routeIs($submenu['route']) ? 'text-white bg-slate-700' : '' }}">
+                                                    {{ $submenu['name'] }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </li>
                         @endif
                     @endforeach
                 </ul>
-
             </div>
         </nav>
     </div>

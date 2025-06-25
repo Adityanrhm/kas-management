@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="bg-blue-500">ini halaman siswa</h1>
+    <livewire:dynamic-table :model="\App\Models\User::class" :columns="[
+        ['field' => 'username', 'label' => 'Username'],
+        ['field' => 'email', 'label' => 'Email'],
+        ['field' => 'roles.name', 'label' => 'Role'],
+    ]" :filter="['roles_id' => 3]" :with="['roles']" />
 @endsection

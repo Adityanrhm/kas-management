@@ -14,9 +14,10 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
-<body x-data="{ page: 'dashboard', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" class="dark bg-gray-900">
+<body x-data="{ sidebarToggle: false, menuToggle: false }" class="dark bg-gray-900">
     <!-- ===== Preloader Start ===== -->
     @include('partials.preloader')
     <!-- ===== Preloader End ===== -->
@@ -28,7 +29,7 @@
         <!-- ===== Sidebar End ===== -->
 
         <!-- ===== Content Area Start ===== -->
-        <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+        <div class="relative flex flex-col flex-1 ">
             <!-- Small Device Overlay Start -->
             @include('partials.overlay')
             <!-- Small Device Overlay End -->
@@ -38,7 +39,7 @@
             <!-- ===== Header End ===== -->
 
             <!-- ===== Main Content Start ===== -->
-            <main>
+            <main class="overflow-x-hidden overflow-y-auto">
                 @yield('content')
             </main>
             <!-- ===== Main Content End ===== -->
@@ -46,6 +47,7 @@
         <!-- ===== Content Area End ===== -->
     </div>
     <!-- ===== Page Wrapper End ===== -->
+    @livewireScripts
 </body>
 
 </html>
