@@ -14,7 +14,7 @@
                     <div class="flex items-center space-x-2 text-sm text-gray-400 font-normal">
                         <span>{{ $user->email }}</span>
                         <span class="text-gray-600 dark:text-gray-500">|</span>
-                        <span class="capitalize">{{ $user->roles->name }}</span>
+                        <span class="capitalize">{{ $user->role->name }}</span>
                     </div>
                 </div>
             </div>
