@@ -4,7 +4,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}"
-        class="rounded-lg max-w-md mx-auto bg-white dark:bg-gray-900 p-8 shadow-md">
+        class="rounded-lg max-w-md mx-auto p-8 bg-[rgba(0,0,0,0.5)] bg-gradient-to-[145deg] from-black/15 to-white/50 shadow-[0_0_16px_rgba(255,255,255,0.20)] rounded-[1em] border border-[rgba(255,255,255,0.25)] backdrop-blur-xl">
         @csrf
 
         <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
@@ -41,7 +41,7 @@
         <!-- Remember Me -->
         <div class="flex items-center mb-4">
             <input id="remember_me" type="checkbox"
-                class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                class="rounded backdrop-blur-xl dark:bg-black border-[rgba(255,255,255,0.25)] dark:border-[rgba(255,255,255,0.30)] text-[rgba(255,255,255,0.25)] shadow-sm focus:ring-[rgba(255,255,255,0.50)] dark:focus:ring-[rgba(255,255,255,0.50)] dark:focus:ring-offset-gray-800"
                 name="remember">
             <label for="remember_me" class="ms-2 text-sm text-gray-600 dark:text-gray-400">
                 {{ __('Remember me') }}
@@ -51,7 +51,7 @@
         {{-- Link forgot password --}}
         <div class="flex items-center justify-between">
             @if (Route::has('password.request'))
-                <a class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+                <a class="text-sm text-white dark:text-white glow-on-hover"
                     href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
