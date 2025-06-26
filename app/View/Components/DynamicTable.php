@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Livewire;
+namespace App\View\Components;
 
-use Livewire\Component;
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class DynamicTable extends Component
 {
+
     public $model;
     public $columns = [];
     public $filter = [];
     public $with = [];
     public $records = [];
 
-    public function mount($model, $columns = [], $filter = [], $with = [])
+    /**
+     * Create a new component instance.
+     */
+    public function __construct($model, $columns = [], $filter = [], $with = [])
     {
         $this->model = $model;
         $this->columns = $columns;
@@ -20,6 +26,10 @@ class DynamicTable extends Component
         $this->with = $with;
         $this->loadRecords();
     }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
 
     public function loadRecords()
     {
@@ -35,9 +45,8 @@ class DynamicTable extends Component
 
         $this->records = $query->latest()->get();
     }
-
-    public function render()
+    public function render(): View|Closure|string
     {
-        return view('livewire.dynamic-table');
+        return view('components.dynamic-table');
     }
 }

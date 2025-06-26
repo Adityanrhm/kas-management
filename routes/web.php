@@ -20,6 +20,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('master.siswa');
-Route::get('/guru', [MasterGuruController::class, 'index'])->name('master.guru');
 
 require __DIR__ . '/auth.php';

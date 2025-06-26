@@ -10,10 +10,7 @@
             'name' => 'Master',
             'icon' => 'fa-solid fa-circle-user',
             'route' => 'master',
-            'submenus' => [
-                ['name' => 'Data Siswa', 'route' => 'master.siswa'],
-                ['name' => 'Data Guru', 'route' => 'master.guru'],
-            ],
+            'submenus' => [['name' => 'Data Siswa', 'route' => 'master.siswa']],
         ],
     ];
 @endphp

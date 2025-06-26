@@ -14,7 +14,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
+    {{-- @livewireStyles --}}
 </head>
 
 <body x-data="{ sidebarToggle: false, menuToggle: false }" class="dark bg-gray-900">
@@ -47,7 +47,7 @@
         <!-- ===== Content Area End ===== -->
     </div>
     <!-- ===== Page Wrapper End ===== -->
-    @livewireScripts
+    {{-- @livewireScripts --}}
 </body>
 
 </html>
