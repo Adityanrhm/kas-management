@@ -15,4 +15,7 @@
 .btn-active-glow:active {
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
 }
+ .wds {
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.5));
+}
 
