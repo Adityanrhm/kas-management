@@ -51,8 +51,7 @@
         {{-- Link forgot password --}}
         <div class="flex items-center justify-between">
             @if (Route::has('password.request'))
-                <a class="text-sm text-white dark:text-white glow-on-hover"
-                    href="{{ route('password.request') }}">
+                <a class="text-sm text-white dark:text-white glow-on-hover" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif

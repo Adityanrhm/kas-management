@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Roles extends Model
+class Role extends Model
 {
-    public $timestammps = false;
+    public $timestamps = false;
 
-    protected $filltable = [
+    protected $fillable = [
         'name'
     ];
 }

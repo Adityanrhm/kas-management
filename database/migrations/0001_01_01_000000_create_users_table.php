@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar', length: 250);
 
-            $table->foreignId('roles_id')->nullable()->constrained('roles')->nullOnDelete();
+            $table->foreignId('role_id')->nullable()->constrained('roles')->nullOnDelete();
 
             $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();

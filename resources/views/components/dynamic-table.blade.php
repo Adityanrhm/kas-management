@@ -11,14 +11,13 @@
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
             </div>
-            <button
-                class="bg-slate-700 text-white px-4 py-2 rounded-lg border border-slate-600 hover:bg-slate-600 flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                </svg>
-                Filter
+            <button type="button"
+                class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
+                   bg-indigo-600 hover:bg-indigo-700 text-white">
+                <i class="fa-solid fa-plus text-xs"></i>
+                Data Baru
             </button>
+
         </div>
     </div>
 

@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Roles;
+use App\Models\Role;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,8 +46,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsTo(Roles::class, 'roles_id', 'id');
+        return $this->belongsTo(Role::class);
+    }
+    public function students()
+    {
+        return $this->hasOne(Student::class);
     }
 }
