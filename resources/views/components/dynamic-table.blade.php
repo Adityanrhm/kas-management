@@ -1,6 +1,6 @@
 <div class="bg-slate-800 rounded-lg p-6">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-semibold text-white">Data Table</h2>
+        {{ $slot }}
         <div class="flex gap-3">
             <div class="relative">
                 <input type="text" placeholder="Search..."

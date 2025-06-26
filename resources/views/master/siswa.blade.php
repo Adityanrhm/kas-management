@@ -6,6 +6,8 @@
             ['field' => 'username', 'label' => 'Username'],
             ['field' => 'email', 'label' => 'Email'],
             ['field' => 'roles.name', 'label' => 'Role'],
-        ]" :filter="['roles_id' => 3]" :with="['roles']" />
+        ]" :filter="['roles_id' => 3]" :with="['roles']">
+            <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
+        </x-dynamic-table>
     </div>
 @endsection

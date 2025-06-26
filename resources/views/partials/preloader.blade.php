@@ -1,3 +1,55 @@
+<style>
+    /* Style custome preloader */
+    #preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background-color: #0f172a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: sans-serif;
+        transition: opacity 0.6s ease;
+        opacity: 1;
+    }
+
+    #preloader.hide {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .money-icon {
+        width: 200px;
+        height: 200px;
+        animation: float 0.5s ease-in-out infinite;
+    }
+
+    .cls-1 {
+        fill: #425b72;
+    }
+
+    .cls-3 {
+        fill: #6fabe6;
+    }
+
+    .cls-4 {
+        fill: #82bcf4;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(12px);
+        }
+    }
+</style>
+
 <div id="preloader">
     <svg class="money-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
         <defs>
@@ -24,3 +76,16 @@
         </g>
     </svg>
 </div>
+
+<script>
+    // Animastion preloader
+    window.addEventListener("load", function() {
+        const preloader = document.getElementById("preloader");
+        if (preloader) {
+            preloader.classList.add("hide");
+            setTimeout(() => {
+                preloader.remove();
+            }, 800);
+        }
+    });
+</script>

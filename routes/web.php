@@ -19,6 +19,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('master.siswa');
+Route::get('/siswa', [MasterSiswaController::class, 'index'])->middleware(['auth', 'verified'])->name('master.siswa');
 
 require __DIR__ . '/auth.php';

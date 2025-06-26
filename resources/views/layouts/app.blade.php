@@ -17,7 +17,7 @@
     {{-- @livewireStyles --}}
 </head>
 
-<body x-data="{ sidebarToggle: false, menuToggle: false }" class="dark bg-gray-900">
+<body x-data="{ sidebarToggle: false, menuToggle: false }" class="bg-gray-900">
     <!-- ===== Preloader Start ===== -->
     @include('partials.preloader')
     <!-- ===== Preloader End ===== -->
