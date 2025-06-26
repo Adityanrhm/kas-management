@@ -17,9 +17,9 @@
 
 @props(['disabled' => false])
 
-<input @disabled($disabled) spellcheck="false" autocomplete="username"
+<input @disabled($disabled) spellcheck="false" onfocus="this.removeAttribute('readonly')" autocomplete="username"
     {{ $attributes->merge([
         'class' => 'block w-full rounded-lg pl-10 border-[rgba(255,255,255,0.25)] dark:border-[rgba(255,255,255,0.25)] dark:bg-white/5 \
-                dark:text-gray-300 focus:border-[rgba(255,255,255,0.25)] dark:focus:border-[rgba(255,255,255,0.25)] focus:ring-[rgba(255,255,255,0.25)] \
-                    shadow-sm text-sm',
+                    dark:text-gray-300 focus:border-[rgba(255,255,255,0.25)] dark:focus:border-[rgba(255,255,255,0.25)] focus:ring-[rgba(255,255,255,0.25)] \
+                        shadow-sm text-sm',
     ]) }}>
