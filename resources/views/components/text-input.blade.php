@@ -18,7 +18,6 @@
 
 <input
     @disabled($disabled)
-    readonly
     spellcheck="false"
     onfocus="this.removeAttribute('readonly')"
     autocomplete="username"
