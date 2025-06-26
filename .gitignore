@@ -26,3 +26,4 @@ Thumbs.db
 yarn-error.log
 database/seeders/UserSeeder.php
 assets/images
+public/assets/images/huzamewing.png
