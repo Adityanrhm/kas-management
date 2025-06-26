@@ -51,3 +51,12 @@
         transform: translateY(12px);
     }
 }
+
+/*  onhover  styling*/
+.glow-on-hover:hover {
+  text-shadow: 0 0 16px rgba(255, 255, 255, 1);
+  scale: 1.02;
+}
+.glow-on-hover {
+  transition: all 0.3s ease;
+}
