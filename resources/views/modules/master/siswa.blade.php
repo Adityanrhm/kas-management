@@ -1,0 +1,108 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="px-6 py-6">
+        <div
+            class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl shadow-xl shadow-indigo-500/10 p-6 backdrop-blur-md">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
+                <div class="flex gap-3">
+                    <div class="relative">
+                        <input type="text" placeholder="Search..."
+                            class="bg-slate-700/60 text-white placeholder-slate-400 px-4 py-2 pl-10 rounded-xl border border-slate-600 focus:outline-none focus:border-indigo-500 shadow-inner shadow-black/20">
+                        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <button type="button" x-on:click.prevent="$dispatch('open-modal', 'create-new-data')"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-500/30">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        Data Baru
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr
+                            class="bg-slate-800/80 backdrop-blur-md text-slate-300 uppercase text-xs tracking-widest border-b border-slate-700 shadow-inner shadow-black/20">
+                            <th class="text-left py-3 px-3">Photo</th>
+                            <th class="text-left py-3 px-12">NIS</th>
+                            <th class="text-left py-3 px-3">Nama</th>
+                            <th class="text-left py-3 px-3">Email</th>
+                            <th class="text-left py-3 px-3">Status Kas</th>
+                            <th class="text-left py-3 px-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-white">
+                        @forelse ($users_data as $user)
+                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition duration-200">
+                                <td class="text-left py-3 px-3">
+                                    @if ($user->avatar)
+                                        <x-user-avatar :src="$user->avatar" class="h-10 w-10" image-class="rounded-lg" />
+                                    @else
+                                        <span class="text-slate-300">-</span>
+                                    @endif
+                                </td>
+                                <td class="text-left py-3 px-12 text-slate-300">{{ $user->student->nis ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->student->name ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->email ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-slate-300">
+                                    <span
+                                        class="inline-flex items-left bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                        belum bayar
+                                    </span>
+                                </td>
+                                <td class="py-3 px-3">
+                                    <div class="flex items-center gap-3">
+                                        <!-- Delete Button -->
+                                        <button class="text-slate-400 hover:text-red-500 transition" title="Hapus">
+                                            <i class="fa-solid fa-trash text-base"></i>
+                                        </button>
+
+                                        <!-- Edit Button -->
+                                        <button class="text-slate-400 hover:text-blue-400 transition" title="Edit">
+                                            <i class="fa-solid fa-pen-to-square text-base"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="p-4 text-center text-slate-500 italic">
+                                    No data found.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <x-modal name="create-new-data">
+
+        <div class="bg-blue-600 px-4 py-2 rounded-t-md">
+            <h2 class="text-white font-semibold text-sm tracking-wide uppercase">
+                Penerimaan
+            </h2>
+        </div>
+
+        <!-- Username-->
+        <div class="mb-4">
+            <x-input-label for="login" :value="__('Username')" />
+            <div class="relative mt-1">
+                <span
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                    <i class="fas fa-user"></i>
+                </span>
+                <x-text-input id="login" type="text" name="login" :value="old('login')" required autofocus
+                    autocomplete="username" />
+            </div>
+            <x-input-error :messages="$errors->get('login')" />
+    </x-modal>
+@endsection

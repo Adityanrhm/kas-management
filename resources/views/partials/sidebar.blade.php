@@ -9,7 +9,6 @@
         [
             'name' => 'Master',
             'icon' => 'fa-solid fa-circle-user',
-            'route' => 'master',
             'submenus' => [['name' => 'Data Siswa', 'route' => 'master.siswa']],
         ],
     ];

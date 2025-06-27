@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\MasterGuruController;
 use App\Http\Controllers\MasterSiswaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/siswa', [MasterSiswaController::class, 'index'])->middleware(['auth', 'verified'])->name('master.siswa');
+Route::middleware('auth', 'verified')->prefix('master')->name('master.')->group(function () {
+    Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('siswa');
+});
 
 require __DIR__ . '/auth.php';
