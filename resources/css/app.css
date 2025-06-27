@@ -24,4 +24,7 @@
 .wdsh:hover {
       filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
 }
+.wdsR {
+        filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8));
+}
 

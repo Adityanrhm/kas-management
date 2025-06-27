@@ -1,8 +1,8 @@
 <header
-    class="sticky top-0 z-50 flex w-full border-gray-200 bg-white rounded-2xl lg:rounded-none border-b dark:border-[rgba(255,255,255,0.25)] dark:bg-black">
+    class="sticky top-0 z-50 flex w-full bg-white rounded-2xl lg:rounded-none border-b dark:border-[rgba(255,255,255,0.25)] dark:bg-black">
     <div class="flex grow flex-col items-center justify-between lg:flex-row lg:px-6">
         <div
-            class="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4 dark:border-gray-800">
+            class="flex w-full items-center justify-between gap-2  px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4 dark:border-gray-800">
             <!-- Hamburger Toggle BTN -->
             <button
                 :class="sidebarToggle ? 'lg:bg-transparent dark:lg:bg-transparent bg-white/5 dark:bg-white/5' : ''"
@@ -39,8 +39,8 @@
 
             <!-- Application nav menu button -->
             <button
-                class="z-50 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 lg:hidden dark:text-gray-400 dark:hover:bg-gray-800"
-                :class="menuToggle ? 'bg-gray-100 dark:bg-gray-800' : ''" @click.stop="menuToggle = !menuToggle">
+                class="z-50 flex h-10 w-10 items-center justify-center rounded-lg text-white/60 bg-white/5 hover:bg-black lg:hidden dark:text-white/60 border border-[rgba(255,255,255,0.25)] hover:dark:border-[rgba(255,255,255,0.25)]"
+                :class="menuToggle ? 'bg-gray-100 dark:bg-white/5' : ''" @click.stop="menuToggle = !menuToggle">
                 <svg class="fill-current" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -56,10 +56,10 @@
             class="shadow-theme-md w-full items-center justify-between gap-4 px-5 py-4 lg:flex lg:justify-end lg:px-0 lg:shadow-none">
             <!-- User Area -->
             <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
-                <a class="flex items-center text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 group"
+                <a class="flex items-center text-white dark:text-white/70 hover:text-white dark:hover:text-white transition-colors duration-300 group wdsh"
                     href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
                     <!-- Avatar with enhanced styling -->
-                    <x-user-avatar :src="Auth::user()->avatar" class="ring-blue-500 mr-2 h-10 w-10 " image-class="rounded-lg" />
+                    <x-user-avatar :src="Auth::user()->avatar" class="mr-2 h-10 w-10 " image-class="rounded-lg" />
                     <!-- Username with better typography -->
                     <span class="text-sm mr-1 block font-semibold tracking-wide">
                         {{ Auth::user()->username }}
@@ -82,11 +82,11 @@
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
-                    class="absolute right-0 mt-4 w-80 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden backdrop-blur-xl">
+                    class="absolute right-0 mt-4 w-80 bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-100 dark:border-white/20 overflow-hidden backdrop-blur-xl">
 
                     <!-- Header Section with gradient background -->
                     <div
-                        class="bg-black p-6 border-b border-gray-100 dark:border-gray-700">
+                        class="bg-black p-6 border-b border-gray-100 dark:border-white/20">
                         <div class="flex items-center space-x-4">
                             <x-user-avatar :src="Auth::user()->avatar" class="ring-white h-12 w-12" image-class="rounded-lg" />
                             <div class="flex-1 min-w-0">
@@ -105,10 +105,10 @@
                         <ul class="space-y-1">
                             <li>
                                 <a href="{{ route('profile.edit') }}"
-                                    class="group flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-700 dark:hover:text-blue-400 transition-all duration-200 transform hover:scale-[1.02]">
+                                    class="group flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium text-white dark:text-white/80 hover:bg-white dark:hover:bg-white/5 transition-all duration-300 transform wdsh hover:scale-[1.01] ">
                                     <div
-                                        class="flex-shrink-0 w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-colors duration-200">
-                                        <svg class="w-5 h-5 fill-gray-600 dark:fill-gray-400 group-hover:fill-blue-600 dark:group-hover:fill-blue-400 transition-colors duration-200"
+                                        class="flex-shrink-0 w-10 h-10 bg-black dark:bg-black rounded-lg flex items-center justify-center group-hover:bg-white dark:group-hover:bg-white/5  transition-colors duration-300">
+                                        <svg class="w-5 h-5 fill-white/50 dark:fill-white/50 group-hover:fill-white dark:group-hover:fill-white transition-colors duration-300"
                                             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd"
                                                 d="M12 3.5C7.30558 3.5 3.5 7.30558 3.5 12C3.5 14.1526 4.3002 16.1184 5.61936 17.616C6.17279 15.3096 8.24852 13.5955 10.7246 13.5955H13.2746C15.7509 13.5955 17.8268 15.31 18.38 17.6167C19.6996 16.119 20.5 14.153 20.5 12C20.5 7.30558 16.6944 3.5 12 3.5ZM17.0246 18.8566V18.8455C17.0246 16.7744 15.3457 15.0955 13.2746 15.0955H10.7246C8.65354 15.0955 6.97461 16.7744 6.97461 18.8455V18.856C8.38223 19.8895 10.1198 20.5 12 20.5C13.8798 20.5 15.6171 19.8898 17.0246 18.8566ZM2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM11.9991 7.25C10.8847 7.25 9.98126 8.15342 9.98126 9.26784C9.98126 10.3823 10.8847 11.2857 11.9991 11.2857C13.1135 11.2857 14.0169 10.3823 14.0169 9.26784C14.0169 8.15342 13.1135 7.25 11.9991 7.25ZM8.48126 9.26784C8.48126 7.32499 10.0563 5.75 11.9991 5.75C13.9419 5.75 15.5169 7.32499 15.5169 9.26784C15.5169 11.2107 13.9419 12.7857 11.9991 12.7857C10.0563 12.7857 8.48126 11.2107 8.48126 9.26784Z" />
@@ -119,7 +119,7 @@
                                         <div class="text-xs text-gray-500 dark:text-gray-400">Update your personal
                                             information</div>
                                     </div>
-                                    <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors duration-200"
+                                    <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors duration-200"
                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
@@ -129,13 +129,13 @@
                         </ul>
 
                         <!-- Divider -->
-                        <div class="my-3 border-t border-gray-100 dark:border-gray-700"></div>
+                        <div class="my-3 border-t border-gray-100 dark:border-white/20"></div>
 
                         <!-- Logout Section -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit"
-                                class="group w-full flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 transform hover:scale-[1.02]">
+                                class="group w-full flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 transform hover:scale-[1.01] wdsR">
                                 <div
                                     class="flex-shrink-0 w-10 h-10 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center group-hover:bg-red-100 dark:group-hover:bg-red-900/50 transition-colors duration-200">
                                     <svg class="w-5 h-5 fill-red-500 dark:fill-red-400 transition-colors duration-200"

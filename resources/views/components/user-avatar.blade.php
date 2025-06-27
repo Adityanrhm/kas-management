@@ -9,7 +9,7 @@
 @endphp
 
 <div
-    class="relative overflow-hidden rounded-full ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-blue-300 dark:group-hover:ring-blue-600 transition-all duration-200 {{ $class }}">
+    class="relative overflow-hidden rounded-full ring-2 ring-gray-200 dark:ring-white/30 group-hover:ring-white dark:group-hover:ring-white/50  transition-all duration-300 {{ $class }}">
     <img src="{{ str_starts_with($src, 'http') ? $src : asset('storage/' . $src) }}" alt="Avatar"
         class="w-full h-full object-cover {{ $imageClass }}">
 </div>
