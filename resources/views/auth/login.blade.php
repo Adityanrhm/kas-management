@@ -11,7 +11,7 @@
             {{ __('Welcome to Login') }}
         </h2>
 
-        <!-- Email and Username-->
+        <!-- Username-->
         <div class="mb-4">
             <x-input-label for="login" :value="__('Username')" />
             <div class="relative mt-1">
