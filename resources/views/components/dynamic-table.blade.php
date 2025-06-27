@@ -13,7 +13,7 @@
             </div>
             <button type="button"
                 class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
-                   bg-indigo-600 hover:bg-indigo-700 text-white">
+                   bg-black hover:bg-black text-white">
                 <i class="fa-solid fa-plus text-xs"></i>
                 Data Baru
             </button>
