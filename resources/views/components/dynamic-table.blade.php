@@ -17,7 +17,6 @@
                 <i class="fa-solid fa-plus text-xs"></i>
                 Data Baru
             </button>
-
         </div>
     </div>
 
