@@ -15,19 +15,21 @@
 @endphp
 
 <aside :class="sidebarToggle ? 'translate-x-0 lg:w-[100px]' : '-translate-x-full'"
-    class="sidebar fixed left-0 top-0 z-50 flex h-screen w-[323px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 transition-all duration-300 ease-linear dark:border-gray-800 dark:bg-slate-900 lg:static lg:translate-x-0">
+    class="sidebar fixed left-0 top-0 z-50 flex h-screen w-[323px] flex-col overflow-y-hidden border-r \ 
+        border-[rgba(255,255,255,0.25)] hover:dark:border-[rgba(255,255,255,0.25)]
+            bg-white px-5 transition-all duration-300 ease-linear  dark:bg-black lg:static lg:translate-x-0">
 
     <!-- Sidebar Header -->
     <div :class="sidebarToggle ? 'justify-center' : 'justify-start'"
         class="sidebar-header flex items-center gap-3 pb-7 pt-7 transition-all duration-300">
 
         <a href="{{ route('dashboard') }}" class="flex items-center">
-            <x-application-logo class="w-5 h-5 lg:w-12 lg:h-12 fill-current text-gray-500 ml-1" />
+            <x-application-logo class="w-5 h-5 lg:w-12 lg:h-12 fill-current text-gray-500 ml-1 wdsh transition-all duration-300" />
             <div x-show="!sidebarToggle && window.innerWidth >= 1024" x-transition:leave="transition ease-in duration-100"
                 x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 -translate-x-2"
                 class="hidden lg:flex flex-col ml-3 leading-snug text-left font-semibold text-gray-700 dark:text-gray-100 text-lg font-sans">
                 <span class="font-sans">Kas</span>
-                <span class="pl-2 font-sans">Management</span>
+                <span class="font-sans">Management</span>
             </div>
         </a>
     </div>
@@ -37,9 +39,9 @@
         <nav x-data="{ selected: $persist('Dashboard') }">
             <div>
                 <!-- Menu Title -->
-                <h3 class="mt-6 mb-4 px-1 lg:mt-1 text-xs uppercase tracking-wider font-medium text-slate-400">
+                <h3 class="mt-6 mb-4 px-2 lg:mt-1 text-xs uppercase tracking-wider font-medium text-white/50">
                     <span :class="sidebarToggle ? 'lg:hidden' : ''">MENU</span>
-                    <svg :class="sidebarToggle ? 'lg:block hidden' : 'hidden'" class="mx-auto text-slate-400"
+                    <svg :class="sidebarToggle ? 'lg:block hidden' : 'hidden'" class="mx-auto text-white/50"
                         width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M5.999 10.245c.966 0 1.75.783 1.75 1.75s-.784 1.75-1.75 1.75-1.75-.784-1.75-1.75.784-1.75 1.75-1.75Zm12 0c.967 0 1.75.783 1.75 1.75s-.783 1.75-1.75 1.75-1.75-.784-1.75-1.75.783-1.75 1.75-1.75ZM13.749 12c0-.967-.784-1.75-1.75-1.75s-1.75.783-1.75 1.75.784 1.75 1.75 1.75 1.75-.783 1.75-1.75Z"
@@ -70,8 +72,11 @@
                             <li class="my-1">
                                 <a href="{{ route($menu['route']) }}"
                                     :class="sidebarToggle ? 'justify-center px-2 py-3' : 'justify-start px-5 py-3'"
-                                    class="flex items-center gap-4 rounded-lg font-semibold transition-all duration-200
-                                        {{ $isActive ? 'bg-indigo-700 text-white' : 'text-slate-200 hover:bg-slate-800' }}">
+                                    class="flex items-center gap-4 rounded-lg font-semibold transition-all duration-200 bg-white/5 \
+                                    border border-[rgba(255,255,255,0.15)] dark:border-[rgba(255,255,255,0.15)] wdsh
+
+                                       \ {{ $isActive ? 'bg-white/5 border 
+                                         \ wds2 text-white' : 'text-slate-200 hover:bg-white/5 hover:border-[rgba(255,255,255,0.25)] hover:dark:border-[rgba(255,255,255,0.25)]' }}">
                                     <i class="{{ $menu['icon'] }} text-[18px] w-6 h-6"></i>
                                     <span x-show="!sidebarToggle"
                                         class="transition-all duration-300">{{ $menu['name'] }}</span>
@@ -94,8 +99,11 @@
                                 x-effect="if (sidebarToggle) { open = false; isRotating = false; }">
                                 <button @click="toggleOpen()"
                                     :class="sidebarToggle ? 'justify-center px-2 py-3' : 'justify-between px-4 py-3'"
-                                    class="flex w-full items-center rounded-lg font-semibold transition-all duration-200
-                                        {{ $isActive ? 'bg-indigo-700 text-white' : 'text-slate-200 hover:bg-slate-800' }}">
+                                    class="flex w-full items-center rounded-lg font-semibold transition-all duration-200 wdsh \ 
+                                            border border-[rgba(255,255,255,0.15)] dark:border-[rgba(255,255,255,0.15)] bg-white/5 \ 
+                                            hover:border-[rgba(255,255,255,0.25)] hover:dark:border-[rgba(255,255,255,0.25)]
+
+                                        {{ $isActive ? 'bg-black-700 text-white' : 'text-slate-200 hover:bg-white/5' }}">
                                     <div class="flex items-center gap-4">
                                         <i class="{{ $menu['icon'] }} text-[18px] w-6 h-6 flex-shrink-0"></i>
                                         <span x-show="!sidebarToggle"
@@ -116,12 +124,14 @@
                                     x-transition:leave="transition ease-in duration-300"
                                     x-transition:leave-start="opacity-100 max-h-screen"
                                     x-transition:leave-end="opacity-0 max-h-0" class="overflow-hidden">
-                                    <ul class="mt-2 space-y-1 pl-10 text-slate-400 text-[15px] font-normal">
+                                    <ul class="mt-2 space-y-1 pl-10 text-slate-400 text-[15px] font-normal ">
                                         @foreach ($menu['submenus'] as $submenu)
                                             <li>
                                                 <a href="{{ route($submenu['route']) }}"
-                                                    class="block rounded-md px-3 py-2 hover:bg-slate-700 hover:text-white transition-all duration-200
-                                                        {{ request()->routeIs($submenu['route']) ? 'text-white bg-slate-700' : '' }}">
+                                                    class="block rounded-md px-3 py-2 wdsh text-white/50 hover:bg-white/5 hover:text-white transition-all duration-300 \
+                                                        border border-[rgba(255,255,255,0.15)] dark:border-[rgba(255,255,255,0.15)] \
+                                                        hover:border-[rgba(255,255,255,0.25)] hover:dark:border-[rgba(255,255,255,0.25)]
+                                                        {{ request()->routeIs($submenu['route']) ? 'text-white bg-white/5 ' : '' }}">
                                                     {{ $submenu['name'] }}
                                                 </a>
                                             </li>

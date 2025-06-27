@@ -17,7 +17,7 @@
     {{-- @livewireStyles --}}
 </head>
 
-<body x-data="{ sidebarToggle: false, menuToggle: false }" class="bg-gray-900">
+<body x-data="{ sidebarToggle: false, menuToggle: false }" class="bg-black">
     <!-- ===== Preloader Start ===== -->
     @include('partials.preloader')
     <!-- ===== Preloader End ===== -->
@@ -29,7 +29,7 @@
         <!-- ===== Sidebar End ===== -->
 
         <!-- ===== Content Area Start ===== -->
-        <div class="relative flex flex-col flex-1 ">
+        <div class="relative flex flex-col flex-1">
             <!-- Small Device Overlay Start -->
             @include('partials.overlay')
             <!-- Small Device Overlay End -->

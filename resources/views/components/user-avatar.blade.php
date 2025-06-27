@@ -4,7 +4,6 @@
 @php
     if (!$src) {
         $username = Auth::user()->username ?: 'User';
-        dump($username);
         $src = 'https://ui-avatars.com/api/?name=' . urlencode($username) . '&background=0D8ABC&color=fff';
     }
 @endphp

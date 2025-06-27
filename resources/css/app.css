@@ -18,4 +18,10 @@
  .wds {
   filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.5));
 }
+.wds2 {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+.wdsh:hover {
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+}
 

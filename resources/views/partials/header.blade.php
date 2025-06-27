@@ -1,12 +1,13 @@
 <header
-    class="sticky top-0 z-50 flex w-full border-gray-200 bg-white rounded-2xl lg:rounded-none border-b dark:border-gray-800 dark:bg-slate-900">
+    class="sticky top-0 z-50 flex w-full border-gray-200 bg-white rounded-2xl lg:rounded-none border-b dark:border-[rgba(255,255,255,0.25)] dark:bg-black">
     <div class="flex grow flex-col items-center justify-between lg:flex-row lg:px-6">
         <div
             class="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4 dark:border-gray-800">
             <!-- Hamburger Toggle BTN -->
             <button
-                :class="sidebarToggle ? 'lg:bg-transparent dark:lg:bg-transparent bg-gray-100 dark:bg-gray-800' : ''"
-                class="z-50 flex h-10 w-10 items-center justify-center rounded-lg border-gray-200 text-gray-500 lg:h-12 lg:w-12 lg:border dark:border-gray-800 dark:text-gray-400"
+                :class="sidebarToggle ? 'lg:bg-transparent dark:lg:bg-transparent bg-white/5 dark:bg-white/5' : ''"
+                class="z-50 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5  text-gray-500 lg:h-12 lg:w-12 \ 
+                    wdsh transition-all duration-300 border dark:border-[rgba(255,255,255,0.25)]  dark:text-gray-400"
                 @click.stop="sidebarToggle = !sidebarToggle">
                 <svg class="hidden fill-current lg:block" width="16" height="12" viewBox="0 0 16 12" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +34,7 @@
             <!-- Hamburger Toggle BTN -->
 
             <a href="{{ route('dashboard') }}" class="lg:hidden">
-                <x-application-logo class="w-12 h-12 fill-current text-gray-500" />
+                <x-application-logo class="w-12 h-12 fill-current text-white/50 " />
             </a>
 
             <!-- Application nav menu button -->
@@ -81,13 +82,13 @@
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
-                    class="absolute right-0 mt-4 w-80 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden backdrop-blur-sm">
+                    class="absolute right-0 mt-4 w-80 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden backdrop-blur-xl">
 
                     <!-- Header Section with gradient background -->
                     <div
-                        class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 p-6 border-b border-gray-100 dark:border-gray-700">
+                        class="bg-black p-6 border-b border-gray-100 dark:border-gray-700">
                         <div class="flex items-center space-x-4">
-                            <x-user-avatar :src="Auth::user()->avatar" class="ring-blue-500 h-12 w-12" image-class="rounded-lg" />
+                            <x-user-avatar :src="Auth::user()->avatar" class="ring-white h-12 w-12" image-class="rounded-lg" />
                             <div class="flex-1 min-w-0">
                                 <h3 class="text-lg font-bold text-gray-900 dark:text-white truncate">
                                     {{ Auth::user()->username }}

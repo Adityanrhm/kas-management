@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('avatar', length: 250);
+            $table->string('avatar', length: 250)->nullable();
 
             $table->foreignId('role_id')->nullable()->constrained('roles')->nullOnDelete();
 

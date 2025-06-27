@@ -13,8 +13,8 @@
                 </svg>
             </div>
             <button type="button"
-                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold
-                   bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-500/30">
+                class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
+                   bg-black hover:bg-black text-white">
                 <i class="fa-solid fa-plus text-xs"></i>
                 Data Baru
             </button>

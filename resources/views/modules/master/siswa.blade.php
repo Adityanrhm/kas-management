@@ -32,8 +32,9 @@
                             class="bg-slate-800/80 backdrop-blur-md text-slate-300 uppercase text-xs tracking-widest border-b border-slate-700 shadow-inner shadow-black/20">
                             <th class="text-left py-3 px-3">Photo</th>
                             <th class="text-left py-3 px-12">NIS</th>
-                            <th class="text-left py-3 px-3">Nama</th>
                             <th class="text-left py-3 px-3">Email</th>
+                            <th class="text-left py-3 px-3">Nama</th>
+                            <th class="text-left py-3 px-3">Kelas</th>
                             <th class="text-left py-3 px-3">Status Kas</th>
                             <th class="text-left py-3 px-3">Action</th>
                         </tr>
@@ -49,8 +50,9 @@
                                     @endif
                                 </td>
                                 <td class="text-left py-3 px-12 text-slate-300">{{ $user->student->nis ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->student->name ?? '-' }}</td>
                                 <td class="text-left py-3 px-3 text-slate-300">{{ $user->email ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->student->name ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->student->class ?? '-' }}</td>
                                 <td class="text-left py-3 px-3 text-slate-300">
                                     <span
                                         class="inline-flex items-left bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
@@ -85,24 +87,90 @@
     </div>
 
     <x-modal name="create-new-data">
+        <form method="POST" action="{{ route('master.store.siswa') }}">
+            @csrf
 
-        <div class="bg-blue-600 px-4 py-2 rounded-t-md">
-            <h2 class="text-white font-semibold text-sm tracking-wide uppercase">
-                Penerimaan
-            </h2>
-        </div>
-
-        <!-- Username-->
-        <div class="mb-4">
-            <x-input-label for="login" :value="__('Username')" />
-            <div class="relative mt-1">
-                <span
-                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
-                    <i class="fas fa-user"></i>
-                </span>
-                <x-text-input id="login" type="text" name="login" :value="old('login')" required autofocus
-                    autocomplete="username" />
+            <!-- Header -->
+            <div class="bg-blue-800 px-4 py-2 rounded-t-md">
+                <h2 class="text-white font-semibold text-sm tracking-wide uppercase">
+                    Data Siswa
+                </h2>
             </div>
-            <x-input-error :messages="$errors->get('login')" />
+
+            <div class="px-6 py-6">
+                <!-- Username -->
+                <div class="mb-4">
+                    <x-input-label for="nis" :value="__('NIS')" />
+                    <div class="relative mt-1">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            <i class="fas fa-hashtag"></i>
+                        </span>
+                        <x-text-input id="nis" type="text" name="nis" :value="old('nis', $nis_siswa)" required autofocus
+                            readonly autocomplete="nis" />
+                    </div>
+                    <x-input-error :messages="$errors->get('nis')" />
+                </div>
+                <div class="mb-4">
+                    <x-input-label for="email" :value="__('Email')" />
+                    <div class="relative mt-1">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <x-text-input id="email" name="email" type="email" :value="old('email')" required
+                            autocomplete="email" />
+                    </div>
+                    <x-input-error :messages="$errors->get('email')" />
+                </div>
+                <div class="mb-4">
+                    <x-input-label for="name" :value="__('Nama')" />
+                    <div class="relative mt-1">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <x-text-input id="name" type="text" name="name" :value="old('name')" required autofocus
+                            autocomplete="name" />
+                    </div>
+                    <x-input-error :messages="$errors->get('Username')" />
+                </div>
+
+                <x-select-dropdown name="class" :options="['' => 'Piih kelas', 'XI RPL 1' => 'XI RPL 1']" label="Pilih Kelas" :selected="old('class')" />
+
+                <div class="mb-4">
+                    <x-input-label for="password" :value="__('Password')" />
+                    <div class="relative mt-1">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <x-text-input id="password" type="password" name="password" required
+                            autocomplete="current-password" />
+                    </div>
+                    <x-input-error :messages="$errors->get('password')" />
+                </div>
+
+                <div class="mb-4">
+                    <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
+                    <div class="relative mt-1">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <x-text-input id="password_confirmation" type="password" name="password_confirmation" required
+                            autocomplete="new-password" />
+                    </div>
+                    <x-input-error :messages="$errors->get('password_confirmation')" />
+                </div>
+
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Batal') }}
+                </x-secondary-button>
+
+                <x-primary-button class="">
+                    {{ __('Register') }}
+                </x-primary-button>
+        </form>
     </x-modal>
 @endsection
