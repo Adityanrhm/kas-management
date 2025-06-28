@@ -17,7 +17,7 @@
                         </svg>
                     </div>
                     <button type="button" x-on:click.prevent="$dispatch('open-modal', 'create-new-data')"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-500/30">
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white">
                         <i class="fa-solid fa-plus text-xs"></i>
                         Data Baru
                     </button>
@@ -29,7 +29,7 @@
                 <table class="w-full text-sm">
                     <thead>
                         <tr
-                            class="bg-slate-800/80 backdrop-blur-md text-slate-300 uppercase text-xs tracking-widest border-b border-slate-700 shadow-inner shadow-black/20">
+                            class="backdrop-blur-lg bg-white/5 text-white/80 uppercase text-xs tracking-widest border-b border-white/20 ">
                             <th class="text-left py-3 px-3">Photo</th>
                             <th class="text-left py-3 px-12">NIS</th>
                             <th class="text-left py-3 px-3">Email</th>
@@ -41,33 +41,33 @@
                     </thead>
                     <tbody class="text-white">
                         @forelse ($users_data as $user)
-                            <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition duration-200">
+                            <tr class="border-b border-white/20 hover:bg-white/5 transition duration-300">
                                 <td class="text-left py-3 px-3">
                                     @if ($user->avatar)
                                         <x-user-avatar :src="$user->avatar" class="h-10 w-10" image-class="rounded-lg" />
                                     @else
-                                        <span class="text-slate-300">-</span>
+                                        <span class="text-white/50">-</span>
                                     @endif
                                 </td>
-                                <td class="text-left py-3 px-12 text-slate-300">{{ $user->student->nis ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->email ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->student->name ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-slate-300">{{ $user->student->class ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-slate-300">
+                                <td class="text-left py-3 px-12 text-white/60">{{ $user->student->nis ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-white/60">{{ $user->email ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-white/60">{{ $user->student->name ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-white/60">{{ $user->student->class ?? '-' }}</td>
+                                <td class="text-left py-3 px-3 text-white/60">
                                     <span
-                                        class="inline-flex items-left bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                        class="inline-flex items-left wdsR bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
                                         belum bayar
                                     </span>
                                 </td>
                                 <td class="py-3 px-3">
                                     <div class="flex items-center gap-3">
                                         <!-- Delete Button -->
-                                        <button class="text-slate-400 hover:text-red-500 transition" title="Hapus">
+                                        <button class="text-slate-400 hover:text-red-500 transition wdshR duration-300" title="Hapus">
                                             <i class="fa-solid fa-trash text-base"></i>
                                         </button>
 
                                         <!-- Edit Button -->
-                                        <button class="text-slate-400 hover:text-blue-400 transition" title="Edit">
+                                        <button class="text-slate-400 hover:text-blue-400 transition wdshB duration-300" title="Edit">
                                             <i class="fa-solid fa-pen-to-square text-base"></i>
                                         </button>
                                     </div>
@@ -91,7 +91,7 @@
             @csrf
 
             <!-- Header -->
-            <div class="bg-blue-800 px-4 py-2 rounded-t-md">
+            <div class="bg-white/5 backdrop-blur-lg px-4 py-2 rounded-t-md">
                 <h2 class="text-white font-semibold text-sm tracking-wide uppercase">
                     Data Siswa
                 </h2>
@@ -103,7 +103,7 @@
                     <x-input-label for="nis" :value="__('NIS')" />
                     <div class="relative mt-1">
                         <span
-                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50 text-white/50">
                             <i class="fas fa-hashtag"></i>
                         </span>
                         <x-text-input id="nis" type="text" name="nis" :value="old('nis', $nis_siswa)" required autofocus
@@ -115,7 +115,7 @@
                     <x-input-label for="email" :value="__('Email')" />
                     <div class="relative mt-1">
                         <span
-                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50 text-white/50">
                             <i class="fas fa-envelope"></i>
                         </span>
                         <x-text-input id="email" name="email" type="email" :value="old('email')" required
@@ -127,7 +127,7 @@
                     <x-input-label for="name" :value="__('Nama')" />
                     <div class="relative mt-1">
                         <span
-                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50 text-white/50">
                             <i class="fas fa-user"></i>
                         </span>
                         <x-text-input id="name" type="text" name="name" :value="old('name')" required autofocus
@@ -142,7 +142,7 @@
                     <x-input-label for="password" :value="__('Password')" />
                     <div class="relative mt-1">
                         <span
-                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50 text-white/50">
                             <i class="fas fa-lock"></i>
                         </span>
                         <x-text-input id="password" type="password" name="password" required
@@ -155,7 +155,7 @@
                     <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
                     <div class="relative mt-1">
                         <span
-                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50 text-white/50">
                             <i class="fas fa-lock"></i>
                         </span>
                         <x-text-input id="password_confirmation" type="password" name="password_confirmation" required

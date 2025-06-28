@@ -10,7 +10,7 @@
             'class' => implode(' ', [
                 'block w-full rounded-lg',
                 'dark:border-[rgba(255,255,255,0.25)]',
-                'dark:bg-gray-700 dark:text-gray-100',
+                'bg-black text-white',
                 'focus:border-[rgba(255,255,255,0.25)]',
                 'focus:ring-[rgba(255,255,255,0.25)]',
                 'shadow-sm text-sm',
