@@ -43,11 +43,7 @@
                         @forelse ($users_data as $user)
                             <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition duration-200">
                                 <td class="text-left py-3 px-3">
-                                    @if ($user->avatar)
-                                        <x-user-avatar :src="$user->avatar" class="h-10 w-10" image-class="rounded-lg" />
-                                    @else
-                                        <span class="text-slate-300">-</span>
-                                    @endif
+                                    <x-user-avatar :src="$user->avatar" class="h-10 w-10" image-class="rounded-lg" />
                                 </td>
                                 <td class="text-left py-3 px-12 text-slate-300">{{ $user->student->nis ?? '-' }}</td>
                                 <td class="text-left py-3 px-3 text-slate-300">{{ $user->email ?? '-' }}</td>
@@ -62,14 +58,27 @@
                                 <td class="py-3 px-3">
                                     <div class="flex items-center gap-3">
                                         <!-- Delete Button -->
-                                        <button class="text-slate-400 hover:text-red-500 transition" title="Hapus">
-                                            <i class="fa-solid fa-trash text-base"></i>
-                                        </button>
+                                        <form action="{{ route('master.destroy.siswa', $user->id) }}" method="POST"
+                                            class="form-delete">
+                                            @csrf
+                                            @method('DELETE')
 
+                                            <button type="submit" class="text-slate-400 hover:text-red-500 transition"
+                                                title="Hapus">
+                                                <i class="fa-solid fa-trash text-base"></i>
+                                            </button>
+
+                                        </form>
+                                        <x-swal-delete selector=".form-delete" />
                                         <!-- Edit Button -->
-                                        <button class="text-slate-400 hover:text-blue-400 transition" title="Edit">
+                                        <button class="text-slate-400 hover:text-blue-400 transition" title="Edit" x-data
+                                            x-on:click.prevent="
+                                            $dispatch('pass-user-id', { id_siswa: {{ $user->id }} });
+                                            $dispatch('open-modal', 'create-new-data');
+                                        ">
                                             <i class="fa-solid fa-pen-to-square text-base"></i>
                                         </button>
+
                                     </div>
                                 </td>
                             </tr>
@@ -86,8 +95,9 @@
         </div>
     </div>
 
-    <x-modal name="create-new-data">
-        <form method="POST" action="{{ route('master.store.siswa') }}">
+    <x-modal name="create-new-data" x-data="{ id_siswa: null }" x-on:pass-user-id.window="id_siswa = $event.detail.id_siswa">
+        <form method="POST" :action="id_siswa ? `/master/siswa/${id_siswa}` : '{{ route('master.store.siswa') }}'"
+            enctype="multipart/form-data">
             @csrf
 
             <!-- Header -->
@@ -98,7 +108,68 @@
             </div>
 
             <div class="px-6 py-6">
-                <!-- Username -->
+                {{-- Photo Upload --}}
+                <div class="mb-6">
+                    <x-input-label for="photo" :value="__('Foto Siswa')" />
+                    <div class="mt-2">
+                        <!-- Photo Preview Container -->
+                        <div class="flex items-start space-x-4">
+                            <!-- Preview Image -->
+                            <div class="flex-shrink-0">
+                                <div id="photo-preview"
+                                    class="w-24 h-24 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-gray-700 overflow-hidden">
+                                    <div id="preview-placeholder" class="text-center">
+                                        <i class="fas fa-camera text-gray-400 dark:text-gray-500 text-xl mb-1"></i>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Preview</p>
+                                    </div>
+                                    <img id="preview-image" src="" alt="Preview"
+                                        class="w-full h-full object-cover hidden">
+                                </div>
+                            </div>
+
+                            <!-- Upload Area -->
+                            <div class="flex-1">
+                                <div class="relative">
+                                    <input type="file" id="photo" name="photo" accept="image/*" class="sr-only"
+                                        onchange="previewPhoto(event)">
+                                    <label for="photo" class="cursor-pointer">
+                                        <div
+                                            class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                            <div class="space-y-2">
+                                                <div class="mx-auto w-12 h-12 text-gray-400 dark:text-gray-500">
+                                                    <i class="fas fa-cloud-upload-alt text-2xl"></i>
+                                                </div>
+                                                <div class="text-sm text-gray-600 dark:text-gray-300">
+                                                    <span class="font-medium text-blue-600 dark:text-blue-400">Klik untuk
+                                                        upload</span>
+                                                    atau drag and drop
+                                                </div>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400">
+                                                    PNG, JPG, JPEG hingga 2MB
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <!-- Selected File Info -->
+                                <div id="file-info" class="mt-2 hidden">
+                                    <div class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
+                                        <i class="fas fa-file-image text-blue-500"></i>
+                                        <span id="file-name"></span>
+                                        <button type="button" onclick="removePhoto()"
+                                            class="text-red-500 hover:text-red-700">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <x-input-error :messages="$errors->get('photo')" />
+                </div>
+
+                {{-- Username --}}
                 <div class="mb-4">
                     <x-input-label for="nis" :value="__('NIS')" />
                     <div class="relative mt-1">
@@ -111,6 +182,8 @@
                     </div>
                     <x-input-error :messages="$errors->get('nis')" />
                 </div>
+
+                {{-- Email --}}
                 <div class="mb-4">
                     <x-input-label for="email" :value="__('Email')" />
                     <div class="relative mt-1">
@@ -123,6 +196,8 @@
                     </div>
                     <x-input-error :messages="$errors->get('email')" />
                 </div>
+
+                {{-- Nama --}}
                 <div class="mb-4">
                     <x-input-label for="name" :value="__('Nama')" />
                     <div class="relative mt-1">
@@ -136,8 +211,10 @@
                     <x-input-error :messages="$errors->get('Username')" />
                 </div>
 
+                {{-- Dropdown kelas --}}
                 <x-select-dropdown name="class" :options="['' => 'Piih kelas', 'XI RPL 1' => 'XI RPL 1']" label="Pilih Kelas" :selected="old('class')" />
 
+                {{-- Password --}}
                 <div class="mb-4">
                     <x-input-label for="password" :value="__('Password')" />
                     <div class="relative mt-1">
@@ -151,6 +228,7 @@
                     <x-input-error :messages="$errors->get('password')" />
                 </div>
 
+                {{-- Konfirmasi passsword --}}
                 <div class="mb-4">
                     <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
                     <div class="relative mt-1">
@@ -171,6 +249,37 @@
                 <x-primary-button class="">
                     {{ __('Register') }}
                 </x-primary-button>
+            </div>
         </form>
     </x-modal>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.form-delete').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); // 🔒 cegah submit langsung
+
+                    Swal.fire({
+                        title: 'Yakin ingin menghapus?',
+                        text: 'Data akan hilang secara permanen!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal',
+                        background: '#1f2937',
+                        color: '#f9fafb',
+                        confirmButtonColor: cancelButtonColor:
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script> --}}
+
+
+    @vite(['resources/modules/js/master_siswa.js'])
 @endsection

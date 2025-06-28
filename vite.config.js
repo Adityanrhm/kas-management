@@ -9,9 +9,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    resolve: {
-        alias: {
-            "@modules": path.resolve(__dirname, "resources/modules"),
-        },
-    },
 });

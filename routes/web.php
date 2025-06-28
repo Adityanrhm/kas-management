@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth', 'verified')->prefix('master')->name('master.')->group(function () {
     Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('siswa');
     Route::post('/siswa', [MasterSiswaController::class, 'store_siswa'])->name('store.siswa');
+    Route::put('/siswa/{id_siswa}', [MasterSiswaController::class, 'update_siswa'])->name('update.siswa');
+    Route::delete('/siswa/{id_siswa}', [MasterSiswaController::class, 'destroy_siswa'])->name('destroy.siswa');
 });
 
 require __DIR__ . '/auth.php';
