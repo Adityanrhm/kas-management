@@ -27,3 +27,6 @@ yarn-error.log
 database/seeders/UserSeeder.php
 assets/images
 public/assets/images/huzamewing.png
+overview/image.png
+.gitignore
+resources/views/welcome.blade.php

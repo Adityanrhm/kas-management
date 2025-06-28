@@ -1,10 +1,10 @@
 <section class="space-y-6">
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-white/80">
             {{ __('Hapus Akun') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-1 text-sm text-white/50">
             {{ __('Setelah akun kamu dihapus, semua sumber daya dan data yang terkait akan dihapus secara permanen. Sebelum menghapus akun kamu, harap unduh data atau informasi yang ingin kamu simpan.') }}
         </p>
     </header>
@@ -17,11 +17,11 @@
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <h2 class="text-lg font-medium text-white/80">
                 {{ __('Apakah kamu yakin ingin menghapus akun mu?') }}
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            <p class="mt-1 text-sm text-white/50">
                 {{ __('Setelah akun kamu dihapus, semua sumber daya dan data yang terkait akan dihapus secara permanen. Harap masukkan kata sandi kamu untuk mengonfirmasi bahwa kamu ingin menghapus akun kamu secara permanen.') }}
             </p>
 
@@ -29,7 +29,7 @@
                 <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
                 <div class="relative mt-1">
                     <span
-                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
                         <i class="fas fa-lock"></i>
                     </span>
 

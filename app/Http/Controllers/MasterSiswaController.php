@@ -14,7 +14,7 @@ class MasterSiswaController extends Controller
 {
     public function index()
     {
-        $users_data = User::with('student', 'role')->get();
+        $users_data = User::with('student', 'role')->orderby('id', 'ASC')->get();
         $nis_siswa = Student::max('nis') + 1;
 
         return view('modules.master.siswa', ['users_data' => $users_data, 'nis_siswa' => $nis_siswa]);

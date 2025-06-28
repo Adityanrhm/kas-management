@@ -5,7 +5,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <div
-                class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 dark:bg-gray-800 shadow rounded-lg flex items-center space-x-6">
+                class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg flex items-center space-x-6">
                 <x-user-avatar :src="Auth::user()->avatar" class="h-16 w-16" image-class="rounded-lg" />
 
                 <div>
@@ -19,19 +19,19 @@
                 </div>
             </div>
 
-            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
+            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
+            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white dark:bg-gray-800 shadow rounded-lg">
+            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')
                 </div>
