@@ -62,12 +62,12 @@
                                 <td class="py-3 px-3">
                                     <div class="flex items-center gap-3">
                                         <!-- Delete Button -->
-                                        <button class="text-slate-400 hover:text-red-500 transition wdshR duration-300" title="Hapus">
+                                        <button class="text-white/50 hover:text-red-500 transition wdshR duration-300" title="Hapus">
                                             <i class="fa-solid fa-trash text-base"></i>
                                         </button>
 
                                         <!-- Edit Button -->
-                                        <button class="text-slate-400 hover:text-blue-400 transition wdshB duration-300" title="Edit">
+                                        <button class="text-white/50 hover:text-blue-400 transition wdshB duration-300" title="Edit">
                                             <i class="fa-solid fa-pen-to-square text-base"></i>
                                         </button>
                                     </div>
