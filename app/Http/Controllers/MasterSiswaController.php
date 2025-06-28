@@ -23,7 +23,7 @@ class MasterSiswaController extends Controller
     public function store_siswa(Request $request): RedirectResponse
     {
 
-        // dd($request->all());
+        dd($request->all());
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email'],
@@ -57,6 +57,44 @@ class MasterSiswaController extends Controller
 
         return redirect(route('master.siswa'));
     }
+
+    public function update_siswa(Request $request, $id_siswa): RedirectResponse
+    {
+        // dd($request->all());
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email'],
+            'nis' => ['required'],
+            'class' => ['required'],
+        ]);
+
+        $user_student = User::findOrfail($id_siswa);
+
+        $path_photo = null;
+        if ($request->hasFile('photo')) {
+            $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
+
+            $path_photo = $request->file('photo')->storeAs('assets/images', $filename, 'public');
+        };
+
+        $user_student->update([
+            'username' => $request->name,
+            'email' => $request->email,
+            'avatar' => $path_photo ? $path_photo : $user_student->avatar,
+        ]);
+
+        $student = Student::where('user_id', $id_siswa)->first();
+
+        $student->update([
+            'users_id' => $id_siswa,
+            'nis' => $request->nis,
+            'name' => $request->name,
+            'class' => $request->class,
+        ]);
+
+        return redirect(route('master.siswa'));
+    }
+
 
     public function destroy_siswa($id_siswa)
     {
