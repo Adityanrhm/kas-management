@@ -90,7 +90,7 @@ php artisan storage:link && npm run build && php artisan serve
 
 <p align="center">
   <span style="font-size: 24px; font-weight: bold;">
-    made with ❤️ Aditnyanrhm x khzx
+    made with ❤️ Adityanrhm x khzx
   </span>
 </p>
 
