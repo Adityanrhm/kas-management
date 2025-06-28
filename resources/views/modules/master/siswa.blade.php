@@ -3,14 +3,14 @@
 @section('content')
     <div class="px-6 py-6">
         <div
-            class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl shadow-xl shadow-indigo-500/10 p-6 backdrop-blur-md">
+            class="rounded-2xl shadow-xl shadow-white/10 p-6 bg-white/5 backdrop-blur-lg border border-white/20 ">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
                 <div class="flex gap-3">
                     <div class="relative">
                         <input type="text" placeholder="Search..."
-                            class="bg-slate-700/60 text-white placeholder-slate-400 px-4 py-2 pl-10 rounded-xl border border-slate-600 focus:outline-none focus:border-indigo-500 shadow-inner shadow-black/20">
-                        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor"
+                            class="bg-white/5 text-white placeholder-white/15 px-4 py-2 pl-10 rounded-xl border border-white/20 shadow-inner shadow-black/20">
+                        <svg class="w-4 h-4 text-white/50 absolute left-3 top-3" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
