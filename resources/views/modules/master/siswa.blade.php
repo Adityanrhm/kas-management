@@ -67,7 +67,7 @@
                                     <tr class="border-b border-white/20 hover:bg-white/5 transition duration-300">
                                         <td class="text-left py-3 px-3">
                                             <img :src="`{{ asset('storage') }}/` + user.avatar"
-                                                class="h-10 w-10 rounded-lg" />
+                                                class="h-10 w-10 rounded-full" />
                                         </td>
                                         <td class="text-left py-3 px-12 text-white/60" x-text="user.student?.nis ?? '-'">
                                         </td>
