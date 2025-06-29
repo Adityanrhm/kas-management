@@ -130,7 +130,7 @@
 
                 <div class="px-6 py-6">
                     {{-- Photo Upload --}}
-                    <div class="mb-6">
+                    <div class="mb-8">
                         <x-input-label for="photo" :value="__('Foto Siswa')" />
                         <div class="mt-2">
                             <!-- Photo Preview Container -->
@@ -191,58 +191,59 @@
                         <x-input-error :messages="$errors->get('photo')" />
                     </div>
 
-                    {{-- NIS --}}
-                    <div class="mb-4">
-                        <x-input-label for="nis" :value="__('NIS')" />
-                        <div class="relative mt-1">
-                            <span
-                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
-                                <i class="fas fa-hashtag"></i>
-                            </span>
-                            <x-text-input id="nis" type="text" name="nis" x-model="formData.nis" required
-                                autofocus :readonly="true" autocomplete="nis" />
+                    <div class="grid grid-cols-2 gap-4">
+                        {{-- NIS --}}
+                        <div class="mb-2">
+                            <x-input-label for="nis" :value="__('NIS')" />
+                            <div class="relative mt-1">
+                                <span
+                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
+                                    <i class="fas fa-hashtag"></i>
+                                </span>
+                                <x-text-input id="nis" type="text" name="nis" x-model="formData.nis"
+                                    required autofocus :readonly="true" autocomplete="nis" />
+                            </div>
+                            <x-input-error :messages="$errors->get('nis')" />
                         </div>
-                        <x-input-error :messages="$errors->get('nis')" />
-                    </div>
 
-                    {{-- Email --}}
-                    <div class="mb-4">
-                        <x-input-label for="email" :value="__('Email')" />
-                        <div class="relative mt-1">
-                            <span
-                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
-                                <i class="fas fa-envelope"></i>
-                            </span>
-                            <x-text-input id="email" name="email" type="email" x-model="formData.email" required
-                                autocomplete="email" />
+                        {{-- Email --}}
+                        <div class="mb-2">
+                            <x-input-label for="email" :value="__('Email')" />
+                            <div class="relative mt-1">
+                                <span
+                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <x-text-input id="email" name="email" type="email" x-model="formData.email"
+                                    required autocomplete="email" />
+                            </div>
+                            <x-input-error :messages="$errors->get('email')" />
                         </div>
-                        <x-input-error :messages="$errors->get('email')" />
-                    </div>
 
-                    {{-- Nama --}}
-                    <div class="mb-4">
-                        <x-input-label for="name" :value="__('Nama')" />
-                        <div class="relative mt-1">
-                            <span
-                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
-                                <i class="fas fa-user"></i>
-                            </span>
-                            <x-text-input id="name" type="text" name="name" x-model="formData.name" required
-                                autofocus autocomplete="name" />
+                        {{-- Nama --}}
+                        <div class="mb-4">
+                            <x-input-label for="name" :value="__('Nama')" />
+                            <div class="relative mt-1">
+                                <span
+                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <x-text-input id="name" type="text" name="name" x-model="formData.name"
+                                    required autofocus autocomplete="name" />
+                            </div>
+                            <x-input-error :messages="$errors->get('name')" />
                         </div>
-                        <x-input-error :messages="$errors->get('name')" />
-                    </div>
 
-                    {{-- Dropdown kelas --}}
-                    <div class="mb-4">
-                        <x-input-label for="class" :value="__('Pilih Kelas')" />
-                        <div class="mt-1">
-                            <x-select-dropdown name="class" :options="['' => 'Pilih Kelas', 'XI RPL 1' => 'XI RPL 1']" :selected="old('class')"
-                                x-model="formData.class" />
+                        {{-- Dropdown kelas --}}
+                        <div class="mb-4">
+                            <x-input-label for="class" :value="__('Pilih Kelas')" />
+                            <div class="mt-1">
+                                <x-select-dropdown name="class" :options="['' => 'Pilih Kelas', 'XI RPL 1' => 'XI RPL 1']" :selected="old('class')"
+                                    x-model="formData.class" />
+                            </div>
+                            <x-input-error :messages="$errors->get('class')" />
                         </div>
-                        <x-input-error :messages="$errors->get('class')" />
                     </div>
-
                     {{-- Password (hanya tampil saat create) --}}
                     <div class="mb-4" x-show="!isEdit">
                         <x-input-label for="password" :value="__('Password')" />
