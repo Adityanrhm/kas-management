@@ -13,13 +13,28 @@ use Illuminate\Support\Facades\Storage;
 
 class MasterSiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users_data = User::with('student', 'role')->orderby('id', 'ASC')->get();
-        $nis_siswa = Student::max('nis') + 1;
+        if ($request->ajax()) {
+            $keyword = $request->query('q');
+            $users = User::with('student')
+                ->where(function ($query) use ($keyword) {
+                    $query->where('email', 'like', "%$keyword%")
+                        ->orWhereHas('student', function ($q) use ($keyword) {
+                            $q->where('nis', 'like', "%$keyword%")
+                                ->orWhere('name', 'like', "%$keyword%");
+                        });
+                })
+                ->get();
 
-        return view('modules.master.siswa', ['users_data' => $users_data, 'nis_siswa' => $nis_siswa]);
+            return response()->json($users);
+        }
+
+        $users_data = User::with('student')->get();
+        $nis_siswa = Student::max('nis') + 1;
+        return view('modules.master.siswa', compact('users_data', 'nis_siswa'));
     }
+
 
     public function store_siswa(Request $request): RedirectResponse
     {

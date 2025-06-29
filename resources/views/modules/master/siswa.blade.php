@@ -3,19 +3,10 @@
 
 @section('content')
     <div class="px-6 py-6">
-        <div class="rounded-2xl shadow-xl shadow-white/10 p-6 bg-white/5 backdrop-blur-lg border border-white/20 ">
+        <div class="rounded-2xl shadow-xl shadow-white/10 p-6 bg-white/5 backdrop-blur-lg border border-white/20">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
                 <div class="flex gap-3">
-                    <div class="relative">
-                        <input type="text" placeholder="Search..."
-                            class="bg-white/5 text-white placeholder-white/15 px-4 py-2 pl-10 rounded-xl border border-white/20 shadow-inner shadow-black/20">
-                        <svg class="w-4 h-4 text-white/50 absolute left-3 top-3" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
                     <button type="button"
                         x-on:click.prevent="
                             $dispatch('reset-form');
@@ -28,90 +19,126 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto rounded-xl">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr
-                            class="backdrop-blur-lg bg-white/5 text-white/80 uppercase text-xs tracking-widest border-b border-white/20 ">
-                            <th class="text-left py-3 px-3">Photo</th>
-                            <th class="text-left py-3 px-12">NIS</th>
-                            <th class="text-left py-3 px-3">Email</th>
-                            <th class="text-left py-3 px-3">Nama</th>
-                            <th class="text-left py-3 px-3">Kelas</th>
-                            <th class="text-left py-3 px-3">Status Kas</th>
-                            <th class="text-left py-3 px-3">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-white">
-                        @forelse ($users_data as $user)
-                            <tr class="border-b border-white/20 hover:bg-white/5 transition duration-300">
-                                <td class="text-left py-3 px-3">
-                                    <x-user-avatar :src="$user->avatar" class="h-10 w-10" image-class="rounded-lg" />
-                                </td>
-                                <td class="text-left py-3 px-12 text-white/60">{{ $user->student->nis ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-white/60">{{ $user->email ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-white/60">{{ $user->student->name ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-white/60">{{ $user->student->class ?? '-' }}</td>
-                                <td class="text-left py-3 px-3 text-white/60">
-                                    <span
-                                        class="inline-flex items-left wdsR bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                                        belum bayar
-                                    </span>
-                                </td>
-                                <td class="py-3 px-3">
-                                    <div class="gap-3 flex">
-                                        <!-- Delete Button -->
-                                        <!-- Edit Button -->
-                                        <button
-                                            class="text-white/50 hover:text-blue-400 transition wdshB duration-300 edit-btn"
-                                            title="Edit" data-id="{{ $user->id }}"
-                                            data-nis="{{ $user->student->nis ?? '' }}" data-email="{{ $user->email ?? '' }}"
-                                            data-name="{{ $user->student->name ?? '' }}"
-                                            data-class="{{ $user->student->class ?? '' }}"
-                                            data-avatar="{{ $user->avatar ?? '' }}"
-                                            x-on:click.prevent="
-                                        $dispatch('edit-form', {
-                                            id: $event.target.closest('.edit-btn').dataset.id,
-                                            nis: $event.target.closest('.edit-btn').dataset.nis,
-                                            email: $event.target.closest('.edit-btn').dataset.email,
-                                            name: $event.target.closest('.edit-btn').dataset.name,
-                                            class: $event.target.closest('.edit-btn').dataset.class,
-                                            avatar: $event.target.closest('.edit-btn').dataset.avatar
-                                        });
-                                        $dispatch('open-modal', 'siswa-modal');
-                                        ">
-                                            <i class="fa-solid fa-pen-to-square text-base"></i>
-                                        </button>
-                                        <form action="{{ route('master.destroy.siswa', $user->id) }}" method="POST"
-                                            class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
+            <!-- Search and Table Section -->
+            <div x-data="searchData()" x-init="init()">
+                <div class="relative mb-4">
+                    <input type="text" placeholder="Search..." x-model="query"
+                        x-on:input.debounce.300ms="performSearch()"
+                        class="bg-white/5 text-white placeholder-white/15 px-4 py-2 pl-10 rounded-xl border border-white/20 shadow-inner shadow-black/20 w-full">
+                    <svg class="w-4 h-4 text-white/50 absolute left-3 top-3" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
 
-                                            <button type="submit"
-                                                class="text-white/50 hover:text-red-500 transition wdshR duration-300"
-                                                title="Hapus">
-                                                <i class="fa-solid fa-trash text-base"></i>
-                                            </button>
-                                        </form>
-                                        <x-swal-delete selector=".form-delete" />
-                                    </div>
-                                </td>
+                <div class="overflow-x-auto rounded-xl">
+                    <!-- Loading indicator -->
+                    <div x-show="loading" class="text-center py-4">
+                        <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-white/60">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            Searching...
+                        </div>
+                    </div>
+
+                    <table class="w-full text-sm" x-show="!loading">
+                        <thead>
+                            <tr
+                                class="backdrop-blur-lg bg-white/5 text-white/80 uppercase text-xs tracking-widest border-b border-white/20">
+                                <th class="text-left py-3 px-3">Photo</th>
+                                <th class="text-left py-3 px-12">NIS</th>
+                                <th class="text-left py-3 px-3">Email</th>
+                                <th class="text-left py-3 px-3">Nama</th>
+                                <th class="text-left py-3 px-3">Kelas</th>
+                                <th class="text-left py-3 px-3">Status Kas</th>
+                                <th class="text-left py-3 px-3">Action</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="p-4 text-center text-white/50 italic">
-                                    No data found.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-white">
+                            <template x-if="results.length > 0">
+                                <template x-for="user in results" :key="user.id">
+                                    <tr class="border-b border-white/20 hover:bg-white/5 transition duration-300">
+                                        <td class="text-left py-3 px-3">
+                                            <img :src="`{{ asset('storage') }}/` + user.avatar"
+                                                class="h-10 w-10 rounded-lg" />
+                                        </td>
+                                        <td class="text-left py-3 px-12 text-white/60" x-text="user.student?.nis ?? '-'">
+                                        </td>
+                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.email"></td>
+                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.name ?? '-'">
+                                        </td>
+                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.class ?? '-'">
+                                        </td>
+                                        <td class="text-left py-3 px-3 text-white/60">
+                                            <span
+                                                class="inline-flex items-left bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                                belum bayar
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-3">
+                                            <div class="gap-3 flex">
+                                                <!-- Edit Button -->
+                                                <button
+                                                    class="text-white/50 hover:text-blue-400 transition duration-300 edit-btn"
+                                                    title="Edit" :data-id="user.id"
+                                                    :data-nis="user.student?.nis ?? ''" :data-email="user.email ?? ''"
+                                                    :data-name="user.student?.name ?? ''"
+                                                    :data-class="user.student?.class ?? ''" :data-avatar="user.avatar ?? ''"
+                                                    x-on:click.prevent="
+                                                        $dispatch('edit-form', {
+                                                            id: user.id,
+                                                            nis: user.student?.nis ?? '',
+                                                            email: user.email ?? '',
+                                                            name: user.student?.name ?? '',
+                                                            class: user.student?.class ?? '',
+                                                            avatar: user.avatar ?? ''
+                                                        });
+                                                        $dispatch('open-modal', 'siswa-modal');
+                                                    ">
+                                                    <i class="fa-solid fa-pen-to-square text-base"></i>
+                                                </button>
+
+                                                <!-- Delete Form -->
+                                                <form :action="`/master/siswa/${user.id}`" method="POST"
+                                                    class="form-delete">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="text-white/50 hover:text-red-500 transition duration-300"
+                                                        title="Hapus">
+                                                        <i class="fa-solid fa-trash text-base"></i>
+                                                    </button>
+                                                </form>
+                                                <x-swal-delete selector=".form-delete" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+
+                            <template x-if="results.length === 0 && !loading">
+                                <tr>
+                                    <td colspan="7" class="p-4 text-center text-white/50 italic">
+                                        <span
+                                            x-text="query.length > 0 ? 'No results found for \"' + query + '\"' : 'No data found.'"></span>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
-
-
+    <!-- Modal siswa -->
     <div x-data="siswaModal()" x-init="init()" x-on:reset-form.window="resetForm()"
         x-on:edit-form.window="editForm($event.detail)">
         <x-modal name="siswa-modal">
@@ -130,7 +157,7 @@
 
                 <div class="px-6 py-6">
                     {{-- Photo Upload --}}
-                    <div class="mb-8">
+                    <div class="mb-6">
                         <x-input-label for="photo" :value="__('Foto Siswa')" />
                         <div class="mt-2">
                             <!-- Photo Preview Container -->
@@ -193,7 +220,7 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         {{-- NIS --}}
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <x-input-label for="nis" :value="__('NIS')" />
                             <div class="relative mt-1">
                                 <span
@@ -207,7 +234,7 @@
                         </div>
 
                         {{-- Email --}}
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <x-input-label for="email" :value="__('Email')" />
                             <div class="relative mt-1">
                                 <span
@@ -285,12 +312,15 @@
             </form>
         </x-modal>
     </div>
-    {{-- Set Laravel data for JavaScript --}}
+
+    {{-- Set window variables for JavaScript components --}}
     <script>
+        // Set global variables untuk komponen JavaScript
         window.routes = {
             'master.store.siswa': '{{ route('master.store.siswa') }}'
         };
         window.defaultNis = '{{ $nis_siswa ?? '' }}';
         window.storageUrl = '{{ asset('storage') }}';
+        window.initialData = @json($users_data); // Data awal untuk search component
     </script>
 @endsection
