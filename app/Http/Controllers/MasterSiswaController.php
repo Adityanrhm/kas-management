@@ -60,7 +60,7 @@ class MasterSiswaController extends Controller
 
     public function update_siswa(Request $request, $user_id): RedirectResponse
     {
-        // dd($request->all());
+        // dd(User::findOrfail($user_id));
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email'],
