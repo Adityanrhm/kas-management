@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class MasterSiswaController extends Controller
 {
@@ -23,7 +24,6 @@ class MasterSiswaController extends Controller
     public function store_siswa(Request $request): RedirectResponse
     {
 
-        dd($request->all());
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email'],
@@ -99,6 +99,9 @@ class MasterSiswaController extends Controller
     public function destroy_siswa($id_siswa)
     {
         $student_user = User::findOrfail($id_siswa);
+        if ($student_user->avatar && Storage::disk('public')->exists($student_user->avatar)) {
+            Storage::disk('public')->delete($student_user->avatar);
+        }
 
         $student_user->delete();
 

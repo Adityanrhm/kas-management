@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@vite(['resources/modules/js/master_siswa.js'])
 
 @section('content')
     <div class="px-6 py-6">
@@ -17,8 +18,8 @@
                     </div>
                     <button type="button"
                         x-on:click.prevent="
-                            $dispatch('open-modal', 'siswa-modal');
                             $dispatch('reset-form');
+                            $dispatch('open-modal', 'siswa-modal');
                         "
                         class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white">
                         <i class="fa-solid fa-plus text-xs"></i>
@@ -82,7 +83,6 @@
                                             data-class="{{ $user->student->class ?? '' }}"
                                             data-avatar="{{ $user->avatar ?? '' }}"
                                             x-on:click.prevent="
-                                                $dispatch('open-modal', 'siswa-modal');
                                                 $dispatch('edit-form', {
                                                     id: $event.target.closest('.edit-btn').dataset.id,
                                                     nis: $event.target.closest('.edit-btn').dataset.nis,
@@ -91,6 +91,7 @@
                                                     class: $event.target.closest('.edit-btn').dataset.class,
                                                     avatar: $event.target.closest('.edit-btn').dataset.avatar
                                                 });
+                                                $dispatch('open-modal', 'siswa-modal');
                                             ">
                                             <i class="fa-solid fa-pen-to-square text-base"></i>
                                         </button>
@@ -110,15 +111,16 @@
         </div>
     </div>
 
-    <!-- Modal untuk Create/Edit Siswa -->
-    <div x-data="siswaModal()" x-on:reset-form.window="resetForm()" x-on:edit-form.window="editForm($event.detail)">
+
+
+    <div x-data="siswaModal()" x-init="init()" x-on:reset-form.window="resetForm()"
+        x-on:edit-form.window="editForm($event.detail)">
         <x-modal name="siswa-modal">
             <form method="POST" :action="formAction" enctype="multipart/form-data">
                 @csrf
                 <template x-if="isEdit">
                     <input type="hidden" name="_method" value="PUT">
                 </template>
-
 
                 <!-- Header -->
                 <div class="bg-white/5 backdrop-blur-lg px-4 py-2 rounded-t-md">
@@ -150,8 +152,8 @@
                                 <!-- Upload Area -->
                                 <div class="flex-1">
                                     <div class="relative">
-                                        <input type="file" id="photo" name="photo" accept="image/*" class="sr-only"
-                                            x-on:change="previewPhoto($event)">
+                                        <input type="file" id="photo" name="photo" accept="image/*"
+                                            class="sr-only" x-on:change="previewPhoto($event)">
                                         <label for="photo" class="cursor-pointer">
                                             <div
                                                 class="border-2 border-dashed border-white/20 dark:border-white/20 rounded-lg p-4 text-center hover:border-white/25 dark:hover:border-white/25 transition-colors duration-300 bg-white/5 dark:bg-white/5 hover:bg-white/5 dark:hover:bg-white/10">
@@ -283,78 +285,12 @@
             </form>
         </x-modal>
     </div>
-
+    {{-- Set Laravel data for JavaScript --}}
     <script>
-        function siswaModal() {
-            return {
-                isEdit: false,
-                formAction: '{{ route('master.store.siswa') }}',
-                previewImage: '',
-                fileName: '',
-                formData: {
-                    id: '',
-                    nis: '{{ $nis_siswa ?? '' }}',
-                    email: '',
-                    name: '',
-                    class: ''
-                },
-
-                resetForm() {
-                    this.isEdit = false;
-                    this.formAction = '{{ route('master.store.siswa') }}';
-                    this.previewImage = '';
-                    this.fileName = '';
-                    this.formData = {
-                        id: '',
-                        nis: '{{ $nis_siswa ?? '' }}',
-                        email: '',
-                        name: '',
-                        class: ''
-                    };
-
-                    // Reset form fields
-                    document.getElementById('photo').value = '';
-                    document.getElementById('password').value = '';
-                    document.getElementById('password_confirmation').value = '';
-                },
-
-                editForm(data) {
-                    this.isEdit = true;
-                    this.formAction = `/master/siswa/${data.id}`;
-                    this.formData = {
-                        id: data.id,
-                        nis: data.nis,
-                        email: data.email,
-                        name: data.name,
-                        class: data.class
-                    };
-
-                    // Set preview image if exists
-                    if (data.avatar) {
-                        this.previewImage = '{{ asset('storage') }}/' + data.avatar;
-                    }
-                },
-
-                previewPhoto(event) {
-                    const file = event.target.files[0];
-                    if (file) {
-                        this.fileName = file.name;
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            this.previewImage = e.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                },
-
-                removePhoto() {
-                    this.previewImage = '';
-                    this.fileName = '';
-                    document.getElementById('photo').value = '';
-                }
-            }
-        }
+        window.routes = {
+            'master.store.siswa': '{{ route('master.store.siswa') }}'
+        };
+        window.defaultNis = '{{ $nis_siswa ?? '' }}';
+        window.storageUrl = '{{ asset('storage') }}';
     </script>
-
-    @vite(['resources/modules/js/master_siswa.js'])
 @endsection
