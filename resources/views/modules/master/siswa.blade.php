@@ -137,7 +137,7 @@
                                 <!-- Preview Image -->
                                 <div class="flex-shrink-0">
                                     <div id="photo-preview"
-                                        class="w-24 h-24 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-gray-700 overflow-hidden">
+                                        class="w-24 h-24 border-2 border-dashed border-white/20 dark:border-white/20 rounded-lg flex items-center justify-center bg-white/5 dark:bg-white/5 overflow-hidden">
                                         <div id="preview-placeholder" class="text-center" x-show="!previewImage">
                                             <i class="fas fa-camera text-gray-400 dark:text-gray-500 text-xl mb-1"></i>
                                             <p class="text-xs text-gray-500 dark:text-gray-400">Preview</p>
@@ -154,18 +154,18 @@
                                             x-on:change="previewPhoto($event)">
                                         <label for="photo" class="cursor-pointer">
                                             <div
-                                                class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                class="border-2 border-dashed border-white/20 dark:border-white/20 rounded-lg p-4 text-center hover:border-white/25 dark:hover:border-white/25 transition-colors duration-300 bg-white/5 dark:bg-white/5 hover:bg-white/5 dark:hover:bg-white/10">
                                                 <div class="space-y-2">
                                                     <div class="mx-auto w-12 h-12 text-gray-400 dark:text-gray-500">
                                                         <i class="fas fa-cloud-upload-alt text-2xl"></i>
                                                     </div>
-                                                    <div class="text-sm text-gray-600 dark:text-gray-300">
-                                                        <span class="font-medium text-blue-600 dark:text-blue-400">Klik
+                                                    <div class="text-sm text-white/50 dark:text-white/50">
+                                                        <span class="font-medium text-white/80 dark:text-white/80">Klik
                                                             untuk
                                                             upload</span>
                                                         atau drag and drop
                                                     </div>
-                                                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                                                    <p class="text-xs text-white/50 wds dark:text-white/50">
                                                         PNG, JPG, JPEG hingga 2MB
                                                     </p>
                                                 </div>
