@@ -36,7 +36,7 @@ class MasterSiswaController extends Controller
         if ($request->hasFile('photo')) {
             $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
 
-            $path_photo = $request->file('photo')->storeAs('assets/images', $filename, 'public');
+            $path_photo = Storage::disk('public')->putFileAs('assets/images', $request->file('photo'), $filename);
         };
 
         $user_student = User::create([
@@ -58,7 +58,7 @@ class MasterSiswaController extends Controller
         return redirect(route('master.siswa'));
     }
 
-    public function update_siswa(Request $request, $id_siswa): RedirectResponse
+    public function update_siswa(Request $request, $user_id): RedirectResponse
     {
         // dd($request->all());
         $request->validate([
@@ -68,13 +68,15 @@ class MasterSiswaController extends Controller
             'class' => ['required'],
         ]);
 
-        $user_student = User::findOrfail($id_siswa);
+        $user_student = User::findOrfail($user_id);
 
         $path_photo = null;
         if ($request->hasFile('photo')) {
+            Storage::disk('public')->delete($user_student->avatar);
+
             $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
 
-            $path_photo = $request->file('photo')->storeAs('assets/images', $filename, 'public');
+            $path_photo = Storage::disk('public')->putFileAs('assets/images', $request->file('photo'), $filename);
         };
 
         $user_student->update([
@@ -83,10 +85,10 @@ class MasterSiswaController extends Controller
             'avatar' => $path_photo ? $path_photo : $user_student->avatar,
         ]);
 
-        $student = Student::where('user_id', $id_siswa)->first();
+        $student = Student::where('user_id', $user_id)->first();
 
         $student->update([
-            'users_id' => $id_siswa,
+            'users_id' => $user_id,
             'nis' => $request->nis,
             'name' => $request->name,
             'class' => $request->class,
@@ -96,14 +98,14 @@ class MasterSiswaController extends Controller
     }
 
 
-    public function destroy_siswa($id_siswa)
+    public function destroy_siswa($user_id)
     {
-        $student_user = User::findOrfail($id_siswa);
-        if ($student_user->avatar && Storage::disk('public')->exists($student_user->avatar)) {
-            Storage::disk('public')->delete($student_user->avatar);
+        $user_student = User::findOrfail($user_id);
+        if ($user_student->avatar && Storage::disk('public')->exists($user_student->avatar)) {
+            Storage::disk('public')->delete($user_student->avatar);
         }
 
-        $student_user->delete();
+        $user_student->delete();
 
         return redirect(route('master.siswa'));
     }

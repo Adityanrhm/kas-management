@@ -59,8 +59,29 @@
                                     </span>
                                 </td>
                                 <td class="py-3 px-3">
-                                    <div class="flex items-center gap-3">
+                                    <div class="gap-3 flex">
                                         <!-- Delete Button -->
+                                        <!-- Edit Button -->
+                                        <button
+                                            class="text-white/50 hover:text-blue-400 transition wdshB duration-300 edit-btn"
+                                            title="Edit" data-id="{{ $user->id }}"
+                                            data-nis="{{ $user->student->nis ?? '' }}" data-email="{{ $user->email ?? '' }}"
+                                            data-name="{{ $user->student->name ?? '' }}"
+                                            data-class="{{ $user->student->class ?? '' }}"
+                                            data-avatar="{{ $user->avatar ?? '' }}"
+                                            x-on:click.prevent="
+                                        $dispatch('edit-form', {
+                                            id: $event.target.closest('.edit-btn').dataset.id,
+                                            nis: $event.target.closest('.edit-btn').dataset.nis,
+                                            email: $event.target.closest('.edit-btn').dataset.email,
+                                            name: $event.target.closest('.edit-btn').dataset.name,
+                                            class: $event.target.closest('.edit-btn').dataset.class,
+                                            avatar: $event.target.closest('.edit-btn').dataset.avatar
+                                        });
+                                        $dispatch('open-modal', 'siswa-modal');
+                                        ">
+                                            <i class="fa-solid fa-pen-to-square text-base"></i>
+                                        </button>
                                         <form action="{{ route('master.destroy.siswa', $user->id) }}" method="POST"
                                             class="form-delete">
                                             @csrf
@@ -73,28 +94,6 @@
                                             </button>
                                         </form>
                                         <x-swal-delete selector=".form-delete" />
-
-                                        <!-- Edit Button -->
-                                        <button
-                                            class="text-white/50 hover:text-blue-400 transition wdshB duration-300 edit-btn"
-                                            title="Edit" data-id="{{ $user->id }}"
-                                            data-nis="{{ $user->student->nis ?? '' }}" data-email="{{ $user->email ?? '' }}"
-                                            data-name="{{ $user->student->name ?? '' }}"
-                                            data-class="{{ $user->student->class ?? '' }}"
-                                            data-avatar="{{ $user->avatar ?? '' }}"
-                                            x-on:click.prevent="
-                                                $dispatch('edit-form', {
-                                                    id: $event.target.closest('.edit-btn').dataset.id,
-                                                    nis: $event.target.closest('.edit-btn').dataset.nis,
-                                                    email: $event.target.closest('.edit-btn').dataset.email,
-                                                    name: $event.target.closest('.edit-btn').dataset.name,
-                                                    class: $event.target.closest('.edit-btn').dataset.class,
-                                                    avatar: $event.target.closest('.edit-btn').dataset.avatar
-                                                });
-                                                $dispatch('open-modal', 'siswa-modal');
-                                            ">
-                                            <i class="fa-solid fa-pen-to-square text-base"></i>
-                                        </button>
                                     </div>
                                 </td>
                             </tr>
