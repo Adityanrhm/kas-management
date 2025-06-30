@@ -44,14 +44,18 @@ Berikut beberapa screenshot aplikasi manajemen kas:
 This project is licensed under the [MIT License](LICENSE)
 
 
----
+---sudo pacman -S php-pgsql
+
 
 ## Kontribusi
 
 Open issue or pull request.
 
 ## Notes
-Make sure you already have nodejs, npm, composer, postgresql.
+Make sure you already have apache, php-pgsql, nodejs, npm, composer, postgresql installed, else
+```
+sudo pacman -Syu && sudo pacman -S nodejs npm composer postgresql apache php-pgsql
+```
 
 ## Instalasi & Penggunaan
 
