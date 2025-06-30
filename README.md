@@ -50,6 +50,8 @@ This project is licensed under the [MIT License](LICENSE)
 
 Open issue or pull request.
 
+## Notes
+Make sure you already have nodejs, npm, composer, postgresql.
 
 ## Instalasi & Penggunaan
 
