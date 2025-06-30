@@ -62,8 +62,7 @@ cd kas-management
 ```
 2. Install dependency
 ```
-npm install && npm update && npm audit fix
-composer update && composer install
+npm install && npm update && composer update && composer install
 ```
 3. Setup Environment
 ```
@@ -83,7 +82,7 @@ php artisan serve
 6. Everything at once
 ```
 git clone https://github.com/Adityanrhm/kas-management.git && cd kas-management && npm install \
-&& npm update && npm audit fix && composer update && composer install && cp .env.example .env \
+&& npm update && composer update && composer install && cp .env.example .env \
 && php artisan key:generate && php artisan migrate && php artisan storage:link && php artisan migrate \
 php artisan storage:link && npm run build && php artisan serve
 ```
