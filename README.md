@@ -43,9 +43,7 @@ Berikut beberapa screenshot aplikasi manajemen kas:
 
 This project is licensed under the [MIT License](LICENSE)
 
-
----sudo pacman -S php-pgsql
-
+---
 
 ## Kontribusi
 
