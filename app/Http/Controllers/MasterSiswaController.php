@@ -15,11 +15,12 @@ class MasterSiswaController extends Controller
 {
     public function index(Request $request)
     {
+        // Search algorithm
         if ($request->ajax()) {
             $keyword = $request->query('q');
             $users = User::with('student')
                 ->where(function ($query) use ($keyword) {
-                    $query->where('email', 'like', "%$keyword%")
+                    $query->where('email', 'Ilike', "%$keyword%")
                         ->orWhereHas('student', function ($q) use ($keyword) {
                             $q->where('nis', 'like', "%$keyword%")
                                 ->orWhere('name', 'like', "%$keyword%");
@@ -30,9 +31,25 @@ class MasterSiswaController extends Controller
             return response()->json($users);
         }
 
-        $users_data = User::with('student')->get();
-        $nis_siswa = Student::max('nis') + 1;
-        return view('modules.master.siswa', compact('users_data', 'nis_siswa'));
+        // Nis siswa algorithm
+        $all_nis = Student::orderBy('nis', 'ASC')->pluck('nis')->toArray();
+
+        $next_nis = null;
+        $start_nis = 11901;
+
+        foreach ($all_nis as $nis) {
+            if ($start_nis != $nis) {
+                $next_nis = $start_nis;
+                break;
+            }
+            $start_nis++;
+        }
+        $nis_siswa = $next_nis ?? ($all_nis ? max($all_nis) + 1 : 11901);
+
+        // users_siswa data
+        $users_data = User::with('student')->orderby('id', 'ASC')->get();
+
+        return view('modules.master.siswa', ['users_data' => $users_data, 'nis_siswa' => $nis_siswa]);
     }
 
 

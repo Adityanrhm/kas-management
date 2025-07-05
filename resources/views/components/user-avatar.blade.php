@@ -2,7 +2,9 @@
 
 
 @php
-    if (!$src) {
+    use Illuminate\Support\Facades;
+
+    if (!$src || !Storage::disk('public')->exists($src)) {
         $username = Auth::user()->username ?: 'User';
         $src = 'https://ui-avatars.com/api/?name=' . urlencode($username) . '&background=0D8ABC&color=fff';
     }

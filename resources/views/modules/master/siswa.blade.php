@@ -4,32 +4,31 @@
 @section('content')
     <div class="px-6 py-6">
         <div class="rounded-2xl shadow-xl shadow-white/10 p-6 bg-white/5 backdrop-blur-lg border border-white/20">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
-                <div class="flex gap-3">
-                    <button type="button"
-                        x-on:click.prevent="
-                            $dispatch('reset-form');
-                            $dispatch('open-modal', 'siswa-modal');
-                        "
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white">
-                        <i class="fa-solid fa-plus text-xs"></i>
-                        Data Baru
-                    </button>
-                </div>
-            </div>
-
-            <!-- Search and Table Section -->
             <div x-data="searchData()" x-init="init()">
-                <div class="relative mb-4">
-                    <input type="text" placeholder="Search..." x-model="query"
-                        x-on:input.debounce.300ms="performSearch()"
-                        class="bg-white/5 text-white placeholder-white/15 px-4 py-2 pl-10 rounded-xl border border-white/20 shadow-inner shadow-black/20 w-full">
-                    <svg class="w-4 h-4 text-white/50 absolute left-3 top-3" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
+                    <div class="flex gap-3">
+                        <div class="relative">
+                            <input type="text" placeholder="Search..." x-model="query"
+                                x-on:input.debounce.300ms="performSearch()"
+                                class="bg-white/5 text-white placeholder-white/15 px-4 py-2 pl-10 rounded-xl border border-white/20 shadow-inner shadow-black/20 w-full">
+                            <svg class="w-4 h-4 text-white/50 absolute left-3 top-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+
+                        <button type="button"
+                            x-on:click.prevent="
+                                    $dispatch('reset-form');
+                                    $dispatch('open-modal', 'siswa-modal');
+                                    "
+                            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            Data Baru
+                        </button>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto rounded-xl">
@@ -78,7 +77,7 @@
                                         </td>
                                         <td class="text-left py-3 px-3 text-white/60">
                                             <span
-                                                class="inline-flex items-left bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                                class="inline-flex items-left wdsR bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
                                                 belum bayar
                                             </span>
                                         </td>
