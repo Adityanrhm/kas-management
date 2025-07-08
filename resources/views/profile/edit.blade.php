@@ -14,7 +14,7 @@
                     <div class="flex items-center space-x-2 text-sm text-gray-400 font-normal">
                         <span>{{ $user->email }}</span>
                         <span class="text-gray-600 dark:text-gray-500">|</span>
-                        <span class="capitalize">{{ $user->role->name }}</span>
+                        <span class="capitalize">{{ $user->getRoleNames()->first() }}</span>
                     </div>
                 </div>
             </div>
@@ -25,13 +25,15 @@
                 </div>
             </div>
 
-            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg">
+            <div
+                class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg">
+            <div
+                class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')
                 </div>

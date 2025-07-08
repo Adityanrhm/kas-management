@@ -43,7 +43,7 @@
                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                 </path>
                             </svg>
-                            Searching...
+                            Loading...
                         </div>
                     </div>
 
@@ -121,17 +121,45 @@
                                     </tr>
                                 </template>
                             </template>
-
                             <template x-if="results.length === 0 && !loading">
                                 <tr>
                                     <td colspan="7" class="p-4 text-center text-white/50 italic">
                                         <span
-                                            x-text="query.length > 0 ? 'No results found for \"' + query + '\"' : 'No data found.'"></span>
+                                            class="inline-flex items-center justify-center px-4 py-2 rounded-md 
+                                               text-sm font-semibold text-red-200 bg-red-500/10 border border-red-400/20 
+                                               shadow-md shadow-red-500/30 ring-1 ring-red-400/40 
+                                               animate-pulse backdrop-blur-sm">
+                                            Tidak ada data yang tersedia
+                                        </span>
                                     </td>
                                 </tr>
                             </template>
                         </tbody>
                     </table>
+
+                    <div class="flex justify-between items-center gap-2 text-white mt-4" x-show="!loading">
+                        <div class="text-white text-sm mt-2" x-show="!loading && results.length > 0">
+                            Menampilkan
+                            <span x-text="results.length"></span> data dari
+                            <span x-text="pagination.total ?? originalData.total ?? 0"></span> siswa.
+                        </div>
+                        <div>
+                            <button x-on:click="changePage(pagination.prev_page_url)"
+                                class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 disabled:opacity-30"
+                                :disabled="!pagination.prev_page_url">Previous</button>
+
+                            <template x-for="page in pagination.last_page">
+                                <button x-on:click="changePage(`/master/siswa?page=${page}&q=${query}`)"
+                                    class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10"
+                                    :class="{ 'bg-white/10 text-white font-bold': page === pagination.current_page }"
+                                    x-text="page"></button>
+                            </template>
+
+                            <button x-on:click="changePage(pagination.next_page_url)"
+                                class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 disabled:opacity-30"
+                                :disabled="!pagination.next_page_url">Next</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -178,7 +206,8 @@
                                 <div class="flex-1">
                                     <div class="relative">
                                         <input type="file" id="photo" name="photo" accept="image/*"
-                                            class="sr-only" x-on:change="previewPhoto($event)">
+                                            class="sr-only" x-on:change="previewPhoto($event)"
+                                            x-bind:required="!isEdit">
                                         <label for="photo" class="cursor-pointer">
                                             <div
                                                 class="border-2 border-dashed border-white/20 dark:border-white/20 rounded-lg p-4 text-center hover:border-white/25 dark:hover:border-white/25 transition-colors duration-300 bg-white/5 dark:bg-white/5 hover:bg-white/5 dark:hover:bg-white/10">
@@ -265,7 +294,7 @@
                             <x-input-label for="class" :value="__('Pilih Kelas')" />
                             <div class="mt-1">
                                 <x-select-dropdown name="class" :options="['' => 'Pilih Kelas', 'XI RPL 1' => 'XI RPL 1']" :selected="old('class')"
-                                    x-model="formData.class" />
+                                    x-model="formData.class" required />
                             </div>
                             <x-input-error :messages="$errors->get('class')" />
                         </div>
@@ -279,7 +308,7 @@
                                 <i class="fas fa-lock"></i>
                             </span>
                             <x-text-input id="password" type="password" name="password" :required="false"
-                                autocomplete="current-password" />
+                                autocomplete="current-password" x-bind:required="!isEdit" />
                         </div>
                         <x-input-error :messages="$errors->get('password')" />
                     </div>
@@ -293,7 +322,7 @@
                                 <i class="fas fa-lock"></i>
                             </span>
                             <x-text-input id="password_confirmation" type="password" name="password_confirmation"
-                                autocomplete="new-password" />
+                                autocomplete="new-password" x-bind:required="!isEdit" />
                         </div>
                         <x-input-error :messages="$errors->get('password_confirmation')" />
                     </div>

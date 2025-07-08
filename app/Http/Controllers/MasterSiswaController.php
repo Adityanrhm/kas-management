@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,15 +18,11 @@ class MasterSiswaController extends Controller
         // Search algorithm
         if ($request->ajax()) {
             $keyword = $request->query('q');
-            $users = User::with('student')
-                ->where(function ($query) use ($keyword) {
-                    $query->where('email', 'Ilike', "%$keyword%")
-                        ->orWhereHas('student', function ($q) use ($keyword) {
-                            $q->where('nis', 'like', "%$keyword%")
-                                ->orWhere('name', 'like', "%$keyword%");
-                        });
-                })
-                ->get();
+            $users = User::select('users.*')->join('students', 'students.user_id', '=', 'users.id')->where(function ($query) use ($keyword) {
+                $query->where('users.email', 'ILIKE', "%$keyword%")
+                    ->orWhere('students.nis', 'LIKE', "%$keyword%")
+                    ->orWhere('students.name', 'LIKE', "%$keyword%");
+            })->with('student')->orderBy('students.nis')->paginate(5);
 
             return response()->json($users);
         }
@@ -47,7 +43,7 @@ class MasterSiswaController extends Controller
         $nis_siswa = $next_nis ?? ($all_nis ? max($all_nis) + 1 : 11901);
 
         // users_siswa data
-        $users_data = User::with('student')->orderby('id', 'ASC')->get();
+        $users_data = User::select('users.*')->join('students', 'students.user_id', '=', 'users.id')->orderBy('students.nis', 'ASC')->with('student')->paginate(5);
 
         return view('modules.master.siswa', ['users_data' => $users_data, 'nis_siswa' => $nis_siswa]);
     }
@@ -76,9 +72,10 @@ class MasterSiswaController extends Controller
             'email' => $request->email,
             'avatar' => $path_photo,
             'password' => Hash::make($request->password),
-            'role_id' => Role::where('name', 'siswa')->value('id'),
             'created_at' => now()
         ]);
+
+        $user_student->assignRole('siswa');
 
         Student::create([
             'user_id' => $user_student->id,
