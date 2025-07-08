@@ -13,8 +13,6 @@ function siswaModal() {
         fileName: "",
 
         init() {
-            // console.log("Modal component initialized");
-            // Set default NIS jika ada
             if (window.defaultNis) {
                 this.formData.nis = window.defaultNis;
             }
@@ -92,16 +90,17 @@ function searchData() {
             last_page: window.initialData.last_page || 1,
             next_page_url: window.initialData.next_page_url || null,
             prev_page_url: window.initialData.prev_page_url || null,
+            from: window.initialData.from || 0,
+            to: window.initialData.to || 0,
+            total: window.initialData.total || 0,
         },
+
         // Initial data dari window variable
-        originalData: window.initialData || [], // Backup original data
+        originalData: window.initialData || [],
         loading: false,
         searchTimeout: null,
 
-        init() {
-            // console.log("Data siswa awal:", window.initialData.data);
-            // console.log("Total data siswa:", window.initialData.total);
-        },
+        init() {},
 
         performSearch() {
             // Clear previous timeout
@@ -149,6 +148,9 @@ function searchData() {
                     last_page: data.last_page,
                     next_page_url: data.next_page_url,
                     prev_page_url: data.prev_page_url,
+                    from: data.from,
+                    to: data.to,
+                    total: data.total,
                 };
             } catch (error) {
                 console.error("Search error:", error);
@@ -181,6 +183,9 @@ function searchData() {
                         last_page: data.last_page,
                         next_page_url: data.next_page_url,
                         prev_page_url: data.prev_page_url,
+                        from: data.from,
+                        to: data.to,
+                        total: data.total,
                     };
                 })
                 .catch((error) => {

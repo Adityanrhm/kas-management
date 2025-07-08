@@ -11,7 +11,9 @@
                         <div class="relative">
                             <input type="text" placeholder="Search..." x-model="query"
                                 x-on:input.debounce.300ms="performSearch()"
-                                class="bg-white/5 text-white placeholder-white/15 px-4 py-2 pl-10 rounded-xl border border-white/20 shadow-inner shadow-black/20 w-full">
+                                class="bg-white/5 text-white placeholder-white/15 px-4 py-2 pl-10 rounded-xl border border-white/20 
+                                   shadow-inner shadow-black/20 w-full
+                                   focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/20" />
                             <svg class="w-4 h-4 text-white/50 absolute left-3 top-3" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -137,23 +139,28 @@
                         </tbody>
                     </table>
 
-                    <div class="flex justify-between items-center gap-2 text-white mt-4" x-show="!loading">
-                        <div class="text-white text-sm mt-2" x-show="!loading && results.length > 0">
-                            Menampilkan
-                            <span x-text="results.length"></span> data dari
-                            <span x-text="pagination.total ?? originalData.total ?? 0"></span> siswa.
+                    <div class="flex justify-between items-center text-white mt-4 mx-2" x-show="!loading">
+
+                        <div class="text-white text-sm mt-2" x-show="pagination.total > 0">
+                            Menampilkan ke
+                            <span x-text="pagination.from ?? 0"></span> -
+                            <span x-text="pagination.to ?? 0"></span> data dari
+                            <span x-text="pagination.total ?? 0"></span> data siswa.
                         </div>
+
                         <div>
                             <button x-on:click="changePage(pagination.prev_page_url)"
                                 class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 disabled:opacity-30"
                                 :disabled="!pagination.prev_page_url">Previous</button>
 
-                            <template x-for="page in pagination.last_page">
-                                <button x-on:click="changePage(`/master/siswa?page=${page}&q=${query}`)"
-                                    class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10"
-                                    :class="{ 'bg-white/10 text-white font-bold': page === pagination.current_page }"
-                                    x-text="page"></button>
-                            </template>
+                            <div class="inline-flex space-x-1">
+                                <template x-for="page in pagination.last_page">
+                                    <button x-on:click="changePage(`/master/siswa?page=${page}&q=${query}`)"
+                                        class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 glow-white-hover"
+                                        :class="{ 'bg-white/10 text-white font-bold': page === pagination.current_page }"
+                                        x-text="page"></button>
+                                </template>
+                            </div>
 
                             <button x-on:click="changePage(pagination.next_page_url)"
                                 class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 disabled:opacity-30"
@@ -349,6 +356,6 @@
         };
         window.defaultNis = '{{ $nis_siswa ?? '' }}';
         window.storageUrl = '{{ asset('storage') }}';
-        window.initialData = @json($users_data); // Data awal untuk search component
+        window.initialData = @json($users_data);
     </script>
 @endsection
