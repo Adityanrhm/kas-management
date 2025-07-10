@@ -61,30 +61,36 @@ class MasterSiswaController extends Controller
             'class' => ['required'],
         ]);
 
-        if ($request->hasFile('photo')) {
-            $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
+        try {
 
-            $path_photo = Storage::disk('public')->putFileAs('assets/images', $request->file('photo'), $filename);
-        };
+            if ($request->hasFile('photo')) {
+                $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
 
-        $user_student = User::create([
-            'username' => $request->name,
-            'email' => $request->email,
-            'avatar' => $path_photo,
-            'password' => Hash::make($request->password),
-            'created_at' => now()
-        ]);
+                $path_photo = Storage::disk('public')->putFileAs('assets/images', $request->file('photo'), $filename);
+            };
 
-        $user_student->assignRole('siswa');
+            $user_student = User::create([
+                'username' => $request->name,
+                'email' => $request->email,
+                'avatar' => $path_photo,
+                'password' => Hash::make($request->password),
+                'created_at' => now()
+            ]);
 
-        Student::create([
-            'user_id' => $user_student->id,
-            'nis' => $request->nis,
-            'name' => $request->name,
-            'class' => $request->class,
-        ]);
+            $user_student->assignRole('siswa');
 
-        return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil ditambahkan!');
+            Student::create([
+                'user_id' => $user_student->id,
+                'nis' => $request->nis,
+                'name' => $request->name,
+                'class' => $request->class,
+            ]);
+
+
+            return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menambahkan data siswa. Silakan coba lagi.')->withInput();
+        }
     }
 
     public function update_siswa(Request $request, $user_id): RedirectResponse
@@ -97,33 +103,38 @@ class MasterSiswaController extends Controller
             'class' => ['required'],
         ]);
 
-        $user_student = User::findOrfail($user_id);
+        try {
+            $user_student = User::findOrfail($user_id);
 
-        $path_photo = null;
-        if ($request->hasFile('photo')) {
-            Storage::disk('public')->delete($user_student->avatar);
 
-            $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
+            $path_photo = null;
+            if ($request->hasFile('photo')) {
+                Storage::disk('public')->delete($user_student->avatar);
 
-            $path_photo = Storage::disk('public')->putFileAs('assets/images', $request->file('photo'), $filename);
-        };
+                $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
 
-        $user_student->update([
-            'username' => $request->name,
-            'email' => $request->email,
-            'avatar' => $path_photo ? $path_photo : $user_student->avatar,
-        ]);
+                $path_photo = Storage::disk('public')->putFileAs('assets/images', $request->file('photo'), $filename);
+            };
 
-        $student = Student::where('user_id', $user_id)->first();
+            $user_student->update([
+                'username' => $request->name,
+                'email' => $request->email,
+                'avatar' => $path_photo ? $path_photo : $user_student->avatar,
+            ]);
 
-        $student->update([
-            'users_id' => $user_id,
-            'nis' => $request->nis,
-            'name' => $request->name,
-            'class' => $request->class,
-        ]);
+            $student = Student::where('user_id', $user_id)->first();
 
-        return redirect(route('master.siswa'));
+            $student->update([
+                'users_id' => $user_id,
+                'nis' => $request->nis,
+                'name' => $request->name,
+                'class' => $request->class,
+            ]);
+
+            return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui data siswa. Silakan coba lagi.')->withInput();
+        }
     }
 
 

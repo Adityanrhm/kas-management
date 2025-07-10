@@ -2,8 +2,8 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll(@json($selector)).forEach(form => {
-            form.addEventListener('submit', function(e) {
+        document.addEventListener('submit', function(e) {
+            if (e.target.matches(@json($selector))) {
                 e.preventDefault();
 
                 Swal.fire({
@@ -103,10 +103,10 @@
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        this.submit();
+                        e.target.submit();
                     }
                 });
-            });
+            }
         });
     });
 </script>

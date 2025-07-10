@@ -3,6 +3,10 @@
 
 @section('content')
     <div class="px-6 py-6">
+
+        {{-- Tambahkan alert component di sini --}}
+        <x-alert />
+
         <div class="rounded-2xl shadow-xl shadow-white/10 p-6 bg-white/5 backdrop-blur-lg border border-white/20">
             <div x-data="searchData()" x-init="init()">
                 <div class="flex justify-between items-center mb-6">
@@ -108,7 +112,7 @@
 
                                                 <!-- Delete Form -->
                                                 <form :action="`/master/siswa/${user.id}`" method="POST"
-                                                    class="form-delete">
+                                                    class="form-delete-siswa">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
@@ -117,7 +121,7 @@
                                                         <i class="fa-solid fa-trash text-base"></i>
                                                     </button>
                                                 </form>
-                                                <x-swal-delete selector=".form-delete" />
+                                                <x-swal-delete selector=".form-delete-siswa" />
                                             </div>
                                         </td>
                                     </tr>
