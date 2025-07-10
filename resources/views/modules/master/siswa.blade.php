@@ -1,10 +1,12 @@
 @extends('layouts.app')
+
+{{-- javacript calling --}}
 @vite(['resources/modules/js/master_siswa.js'])
 
 @section('content')
     <div class="px-6 py-6">
 
-        {{-- Tambahkan alert component di sini --}}
+        {{-- Component alert untuk insert dan update --}}
         <x-alert />
 
         <div class="rounded-2xl shadow-xl shadow-white/10 p-6 bg-white/5 backdrop-blur-lg border border-white/20">
@@ -38,7 +40,8 @@
                 </div>
 
                 <div class="overflow-x-auto rounded-xl">
-                    <!-- Loading indicator -->
+
+                    {{-- Loading Indicator --}}
                     <div x-show="loading" class="text-center py-4">
                         <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-white/60">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +56,7 @@
                         </div>
                     </div>
 
+                    {{-- Table utama siswa --}}
                     <table class="w-full text-sm" x-show="!loading">
                         <thead>
                             <tr
@@ -89,7 +93,8 @@
                                         </td>
                                         <td class="py-3 px-3">
                                             <div class="gap-3 flex">
-                                                <!-- Edit Button -->
+
+                                                {{-- Edit button --}}
                                                 <button
                                                     class="text-white/50 hover:text-blue-400 transition duration-300 edit-btn"
                                                     title="Edit" :data-id="user.id"
@@ -110,7 +115,7 @@
                                                     <i class="fa-solid fa-pen-to-square text-base"></i>
                                                 </button>
 
-                                                <!-- Delete Form -->
+                                                {{-- Delete button --}}
                                                 <form :action="`/master/siswa/${user.id}`" method="POST"
                                                     class="form-delete-siswa">
                                                     @csrf
@@ -122,11 +127,14 @@
                                                     </button>
                                                 </form>
                                                 <x-swal-delete selector=".form-delete-siswa" />
+
                                             </div>
                                         </td>
                                     </tr>
                                 </template>
                             </template>
+
+                            {{-- Data ketika kosong --}}
                             <template x-if="results.length === 0 && !loading">
                                 <tr>
                                     <td colspan="7" class="p-4 text-center text-white/50 italic">
@@ -140,9 +148,11 @@
                                     </td>
                                 </tr>
                             </template>
+
                         </tbody>
                     </table>
 
+                    {{-- Pagination --}}
                     <div class="flex justify-between items-center text-white mt-4 mx-2" x-show="!loading">
 
                         <div class="text-white text-sm mt-2" x-show="pagination.total > 0">
@@ -158,12 +168,32 @@
                                 :disabled="!pagination.prev_page_url">Previous</button>
 
                             <div class="inline-flex space-x-1">
-                                <template x-for="page in pagination.last_page">
+
+                                {{-- Halaman yang terlihat --}}
+                                <template x-for="page in visiblePages" :key="page">
                                     <button x-on:click="changePage(`/master/siswa?page=${page}&q=${query}`)"
                                         class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 glow-white-hover"
                                         :class="{ 'bg-white/10 text-white font-bold': page === pagination.current_page }"
                                         x-text="page"></button>
                                 </template>
+
+                                {{-- Total button page tersedia --}}
+                                <template x-if="visiblePages[visiblePages.length - 1] < pagination.last_page">
+                                    <div class="inline-flex items-center space-x-1">
+                                        <template x-if="visiblePages[visiblePages.length - 1] < pagination.last_page - 1">
+                                            <span class="px-2 text-sm">...</span>
+                                        </template>
+                                        <button
+                                            x-on:click="changePage(`/master/siswa?page=${pagination.last_page}&q=${query}`)"
+                                            class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 glow-white-hover"
+                                            :class="{
+                                                'bg-white/10 text-white font-bold': pagination.last_page === pagination
+                                                    .current_page
+                                            }"
+                                            x-text="pagination.last_page"></button>
+                                    </div>
+                                </template>
+
                             </div>
 
                             <button x-on:click="changePage(pagination.next_page_url)"
@@ -171,22 +201,24 @@
                                 :disabled="!pagination.next_page_url">Next</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal siswa -->
+    {{-- Modal Store dan Update Siswa --}}
     <div x-data="siswaModal()" x-init="init()" x-on:reset-form.window="resetForm()"
         x-on:edit-form.window="editForm($event.detail)">
         <x-modal name="siswa-modal">
+
             <form method="POST" :action="formAction" enctype="multipart/form-data">
                 @csrf
                 <template x-if="isEdit">
                     <input type="hidden" name="_method" value="PUT">
                 </template>
 
-                <!-- Header -->
+                {{-- Header --}}
                 <div class="bg-white/5 backdrop-blur-lg px-4 py-2 rounded-t-md">
                     <h2 class="text-white font-semibold text-sm tracking-wide uppercase">
                         <span x-text="isEdit ? 'Edit Data Siswa' : 'Tambah Data Siswa'"></span>
@@ -194,13 +226,14 @@
                 </div>
 
                 <div class="px-6 py-6">
+
                     {{-- Photo Upload --}}
                     <div class="mb-6">
                         <x-input-label for="photo" :value="__('Foto Siswa')" />
                         <div class="mt-2">
-                            <!-- Photo Preview Container -->
+
                             <div class="flex items-start space-x-4">
-                                <!-- Preview Image -->
+                                {{-- Preview Image --}}
                                 <div class="flex-shrink-0">
                                     <div id="photo-preview"
                                         class="w-24 h-24 border-2 border-dashed border-white/20 dark:border-white/20 rounded-lg flex items-center justify-center bg-white/5 dark:bg-white/5 overflow-hidden">
@@ -213,7 +246,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Upload Area -->
+                                {{-- Uploade area image --}}
                                 <div class="flex-1">
                                     <div class="relative">
                                         <input type="file" id="photo" name="photo" accept="image/*"
@@ -240,7 +273,7 @@
                                         </label>
                                     </div>
 
-                                    <!-- Selected File Info -->
+                                    {{-- Informasi file terpilih --}}
                                     <div id="file-info" class="mt-2" x-show="fileName">
                                         <div class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
                                             <i class="fas fa-file-image text-blue-500"></i>
@@ -251,6 +284,7 @@
                                             </button>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -258,6 +292,7 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
+
                         {{-- NIS --}}
                         <div class="mb-0">
                             <x-input-label for="nis" :value="__('NIS')" />
@@ -310,7 +345,7 @@
                             <x-input-error :messages="$errors->get('class')" />
                         </div>
                     </div>
-                    {{-- Password (hanya tampil saat create) --}}
+                    {{-- Password (hanya tampil saat create} --}}
                     <div class="mb-4" x-show="!isEdit">
                         <x-input-label for="password" :value="__('Password')" />
                         <div class="relative mt-1">
@@ -338,6 +373,7 @@
                         <x-input-error :messages="$errors->get('password_confirmation')" />
                     </div>
 
+
                     <div class="flex gap-3">
                         <x-secondary-button x-on:click="$dispatch('close')">
                             {{ __('Batal') }}
@@ -352,9 +388,8 @@
         </x-modal>
     </div>
 
-    {{-- Set window variables for JavaScript components --}}
+    {{-- Set window varible untuk function javascript --}}
     <script>
-        // Set global variables untuk komponen JavaScript
         window.routes = {
             'master.store.siswa': '{{ route('master.store.siswa') }}'
         };

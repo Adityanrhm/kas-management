@@ -77,7 +77,7 @@
                 </div>
                 <div class="ml-3">
                     <p class="text-sm font-medium text-yellow-300 mb-2">
-                        Terdapat kesalahan dalam input data:
+                        Ada kesalahan waktu input data:
                     </p>
                     <ul class="text-sm text-yellow-200 space-y-1">
                         @foreach ($errors->all() as $error)

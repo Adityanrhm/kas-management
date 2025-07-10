@@ -54,7 +54,7 @@ class MasterSiswaController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'photo' => ['required'],
             'nis' => ['required'],
@@ -89,22 +89,22 @@ class MasterSiswaController extends Controller
 
             return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil ditambahkan!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan data siswa. Silakan coba lagi.')->withInput();
+            return redirect()->back()->with('error', 'Gagal menambahkan data siswa. Silakan coba lagi.');
         }
     }
 
-    public function update_siswa(Request $request, $user_id): RedirectResponse
+    public function update_siswa(Request $request, $siswa_user_id): RedirectResponse
     {
         // dd(User::findOrfail($user_id));
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'unique:users,email,' . $siswa_user_id],
             'nis' => ['required'],
             'class' => ['required'],
         ]);
 
         try {
-            $user_student = User::findOrfail($user_id);
+            $user_student = User::findOrfail($siswa_user_id);
 
 
             $path_photo = null;
@@ -122,10 +122,10 @@ class MasterSiswaController extends Controller
                 'avatar' => $path_photo ? $path_photo : $user_student->avatar,
             ]);
 
-            $student = Student::where('user_id', $user_id)->first();
+            $student = Student::where('user_id', $siswa_user_id)->first();
 
             $student->update([
-                'users_id' => $user_id,
+                'users_id' => $siswa_user_id,
                 'nis' => $request->nis,
                 'name' => $request->name,
                 'class' => $request->class,
@@ -133,14 +133,14 @@ class MasterSiswaController extends Controller
 
             return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil diperbarui!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal memperbarui data siswa. Silakan coba lagi.')->withInput();
+            return redirect()->back()->with('error', 'Gagal memperbarui data siswa. Silakan coba lagi.');
         }
     }
 
 
-    public function destroy_siswa($user_id)
+    public function destroy_siswa($siswa_user_id)
     {
-        $user_student = User::findOrfail($user_id);
+        $user_student = User::findOrfail($siswa_user_id);
         if ($user_student->avatar && Storage::disk('public')->exists($user_student->avatar)) {
             Storage::disk('public')->delete($user_student->avatar);
         }

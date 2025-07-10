@@ -102,6 +102,27 @@ function searchData() {
 
         init() {},
 
+        get visiblePages() {
+            const maxVisible = 3; // Jumlah halaman yang ingin ditampilkan
+            const current = this.pagination.current_page;
+            const last = this.pagination.last_page;
+
+            if (last <= maxVisible) {
+                // Jika total halaman <= maxVisible, tampilkan semua
+                return Array.from({ length: last }, (_, i) => i + 1);
+            }
+
+            let start = Math.max(1, current - Math.floor(maxVisible / 2));
+            let end = Math.min(last, start + maxVisible - 1);
+
+            // Penyesuaian jika berada di awal atau akhir
+            if (end - start + 1 < maxVisible) {
+                start = Math.max(1, end - maxVisible + 1);
+            }
+
+            return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+        },
+
         performSearch() {
             // Clear previous timeout
             if (this.searchTimeout) {
