@@ -81,7 +81,7 @@
                                         <td class="text-left py-3 px-12 text-white/60" x-text="user.student?.nis ?? '-'">
                                         </td>
                                         <td class="text-left py-3 px-3 text-white/60" x-text="user.email"></td>
-                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.name ?? '-'">
+                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.username ?? '-'">
                                         </td>
                                         <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.class ?? '-'">
                                         </td>
@@ -99,14 +99,14 @@
                                                     class="text-white/50 hover:text-blue-400 transition duration-300 edit-btn"
                                                     title="Edit" :data-id="user.id"
                                                     :data-nis="user.student?.nis ?? ''" :data-email="user.email ?? ''"
-                                                    :data-name="user.student?.name ?? ''"
-                                                    :data-class="user.student?.class ?? ''" :data-avatar="user.avatar ?? ''"
+                                                    :data-name="user.username ?? ''" :data-class="user.student?.class ?? ''"
+                                                    :data-avatar="user.avatar ?? ''"
                                                     x-on:click.prevent="
                                                         $dispatch('edit-form', {
                                                             id: user.id,
                                                             nis: user.student?.nis ?? '',
                                                             email: user.email ?? '',
-                                                            name: user.student?.name ?? '',
+                                                            name: user.username ?? '',
                                                             class: user.student?.class ?? '',
                                                             avatar: user.avatar ?? ''
                                                         });
@@ -155,7 +155,7 @@
                     {{-- Pagination --}}
                     <div class="flex justify-between items-center text-white mt-4 mx-2" x-show="!loading">
 
-                        <div class="text-white text-sm mt-2" x-show="pagination.total > 0">
+                        <div class="text-white text-sm mt-2">
                             Menampilkan ke
                             <span x-text="pagination.from ?? 0"></span> -
                             <span x-text="pagination.to ?? 0"></span> data dari

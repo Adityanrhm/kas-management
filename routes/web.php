@@ -19,9 +19,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->prefix('master')->name('master.')->group(function () {
-    Route::get('/siswa/', [MasterSiswaController::class, 'index'])->name('siswa');
-    Route::post('/siswa', [MasterSiswaController::class, 'store_siswa'])->name('store.siswa');
-    Route::put('/siswa/{user_id}', [MasterSiswaController::class, 'update_siswa'])->name('update.siswa');
+    Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('siswa');
+    Route::post('/siswa/store', [MasterSiswaController::class, 'store_siswa'])->name('store.siswa');
+    Route::put('/siswa/update/{user_siswa_id}', [MasterSiswaController::class, 'update_siswa'])->name('update.siswa');
     Route::delete('/siswa/{user_id}', [MasterSiswaController::class, 'destroy_siswa'])->name('destroy.siswa');
 });
 

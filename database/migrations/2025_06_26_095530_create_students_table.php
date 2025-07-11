@@ -16,8 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('nis', length: 150)->unique();
-            $table->string('name');
-            $table->string('class', length: 20);
+            $table->string('class', length: 20)->nullable();
         });
     }
 

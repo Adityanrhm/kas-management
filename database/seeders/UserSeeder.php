@@ -64,13 +64,11 @@ class UserSeeder extends Seeder
             [
                 [
                     'user_id' => $user_admin,
-                    'name' => 'Admin',
                     'nis' => 11901,
                     'class' => 'XI RPL 1',
                 ],
                 [
                     'user_id' => $user_bendahara,
-                    'name' => 'Bendahara',
                     'nis' => 11902,
                     'class' => 'XI RPL 1',
                 ]

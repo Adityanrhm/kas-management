@@ -38,8 +38,9 @@ function siswaModal() {
         },
 
         editForm(data) {
+            console.log(data);
             this.isEdit = true;
-            this.formAction = `/master/siswa/${data.id}`;
+            this.formAction = `/master/siswa/update/${data.id}`;
             this.formData = {
                 nis: data.nis || "",
                 email: data.email || "",

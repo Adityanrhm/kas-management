@@ -21,7 +21,7 @@ class MasterSiswaController extends Controller
             $users = User::select('users.*')->join('students', 'students.user_id', '=', 'users.id')->where(function ($query) use ($keyword) {
                 $query->where('users.email', 'ILIKE', "%$keyword%")
                     ->orWhere('students.nis', 'LIKE', "%$keyword%")
-                    ->orWhere('students.name', 'LIKE', "%$keyword%");
+                    ->orWhere('users.username', 'LIKE', "%$keyword%");
             })->with('student')->orderBy('students.nis')->paginate(8);
 
             return response()->json($users);
@@ -106,7 +106,6 @@ class MasterSiswaController extends Controller
         try {
             $user_student = User::findOrfail($siswa_user_id);
 
-
             $path_photo = null;
             if ($request->hasFile('photo')) {
                 Storage::disk('public')->delete($user_student->avatar);
@@ -127,7 +126,6 @@ class MasterSiswaController extends Controller
             $student->update([
                 'users_id' => $siswa_user_id,
                 'nis' => $request->nis,
-                'name' => $request->name,
                 'class' => $request->class,
             ]);
 
