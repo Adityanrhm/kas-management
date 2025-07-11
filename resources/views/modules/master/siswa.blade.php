@@ -14,6 +14,8 @@
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
                     <div class="flex gap-3">
+
+                        {{-- Search --}}
                         <div class="relative">
                             <input type="text" placeholder="Search..." x-model="query"
                                 x-on:input.debounce.300ms="performSearch()"
@@ -27,13 +29,14 @@
                             </svg>
                         </div>
 
+
                         <button type="button"
                             x-on:click.prevent="
                                     $dispatch('reset-form');
                                     $dispatch('open-modal', 'siswa-modal');
                                     "
-                            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white">
-                            <i class="fa-solid fa-plus text-xs"></i>
+                            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-black/40 hover:scale-[1.02] active:scale-95 group">
+                            <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
                             Data Baru
                         </button>
                     </div>
