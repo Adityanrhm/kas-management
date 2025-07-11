@@ -82,7 +82,6 @@ class MasterSiswaController extends Controller
             Student::create([
                 'user_id' => $user_student->id,
                 'nis' => $request->nis,
-                'name' => $request->name,
                 'class' => $request->class,
             ]);
 

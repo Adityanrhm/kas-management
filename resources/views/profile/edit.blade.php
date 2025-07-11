@@ -3,6 +3,7 @@
 @section('content')
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <x-alert />
 
             <div
                 class="w-full max-w-sm mx-auto lg:max-w-7xl lg:p-6 p-4 bg-white/5 border border-white/25 shadow rounded-lg flex items-center space-x-6">
