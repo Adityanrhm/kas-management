@@ -5,11 +5,11 @@
             'icon' => 'fa-solid fa-chart-simple',
             'route' => 'dashboard',
             'submenus' => [],
-            'roles' => [], // Kosong berarti semua role bisa akses
         ],
         [
             'name' => 'Master',
             'icon' => 'fa-solid fa-circle-user',
+            // 'roles' => ['bendahara'],
             'submenus' => [
                 [
                     'name' => 'Data Siswa',

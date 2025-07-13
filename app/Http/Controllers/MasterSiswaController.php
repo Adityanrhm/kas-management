@@ -106,8 +106,12 @@ class MasterSiswaController extends Controller
             $user_student = User::findOrfail($siswa_user_id);
 
             $path_photo = null;
+
             if ($request->hasFile('photo')) {
-                Storage::disk('public')->delete($user_student->avatar);
+
+                if ($user_student->avatar && Storage::disk('public')->exists($user_student->avatar)) {
+                    Storage::disk('public')->delete($user_student->avatar);
+                }
 
                 $filename = time() . '_' . $request->file('photo')->getClientOriginalName();
 
