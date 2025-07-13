@@ -82,11 +82,11 @@
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
-                    class="absolute right-0 mt-4 w-80 bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-100 dark:border-white/20 overflow-hidden backdrop-blur-xl">
+                    class="absolute right-0 mt-4 w-80 bg-white/10 rounded-2xl shadow-2xl border border-gray-100 dark:border-white/20 overflow-hidden backdrop-blur-lg">
 
                     <!-- Header Section with gradient background -->
                     <div
-                        class="bg-black p-6 border-b border-gray-100 dark:border-white/20">
+                        class=" p-6 border-b border-gray-100 dark:border-white/20">
                         <div class="flex items-center space-x-4">
                             <x-user-avatar :src="Auth::user()->avatar" class="ring-white h-12 w-12" image-class="rounded-lg" />
                             <div class="flex-1 min-w-0">
@@ -105,9 +105,9 @@
                         <ul class="space-y-1">
                             <li>
                                 <a href="{{ route('profile.edit') }}"
-                                    class="group flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium text-white dark:text-white/80 hover:bg-white dark:hover:bg-white/5 transition-all duration-300 transform wdsh hover:scale-[1.01] ">
+                                    class="group flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium text-white dark:text-white/80 transition-all duration-300 transform wdsh hover:scale-[1.01] ">
                                     <div
-                                        class="flex-shrink-0 w-10 h-10 bg-black dark:bg-black rounded-lg flex items-center justify-center group-hover:bg-white dark:group-hover:bg-white/5  transition-colors duration-300">
+                                        class="flex-shrink-0 w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center transition duration-300">
                                         <svg class="w-5 h-5 fill-white/50 dark:fill-white/50 group-hover:fill-white dark:group-hover:fill-white transition-colors duration-300"
                                             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd"
