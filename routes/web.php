@@ -3,6 +3,7 @@
 use App\Http\Controllers\MasterSiswaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -18,7 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->prefix('master')->name('master.')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('master')->name('master.')->group(function () {
     Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('siswa');
     Route::post('/siswa/store', [MasterSiswaController::class, 'store_siswa'])->name('store.siswa');
     Route::put('/siswa/update/{user_siswa_id}', [MasterSiswaController::class, 'update_siswa'])->name('update.siswa');
