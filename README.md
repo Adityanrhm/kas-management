@@ -49,12 +49,6 @@ This project is licensed under the [MIT License](LICENSE)
 
 Open issue or pull request.
 
-## Notes
-Make sure you already have apache, php-pgsql, nodejs, npm, composer, postgresql installed, else
-```
-sudo pacman -Syu && sudo pacman -S nodejs npm composer postgresql apache php-pgsql
-```
-
 ## Instalasi & Penggunaan
 
 1. Clone the repository
