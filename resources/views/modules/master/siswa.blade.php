@@ -29,17 +29,17 @@
                             </svg>
                         </div>
 
-                    @role('admin')
-                        <button type="button"
-                            x-on:click.prevent="
+                        @role('admin')
+                            <button type="button"
+                                x-on:click.prevent="
                                     $dispatch('reset-form');
                                     $dispatch('open-modal', 'siswa-modal');
                                     "
-                            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-black/40 hover:scale-[1.02] active:scale-95 group">
-                            <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
-                            Data Baru
-                        </button>
-                    @endrole
+                                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-black/40 hover:scale-[1.02] active:scale-95 group">
+                                <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
+                                Data Baru
+                            </button>
+                        @endrole
 
                     </div>
                 </div>
@@ -71,13 +71,14 @@
                                 <th class="text-left py-3 px-3">Email</th>
                                 <th class="text-left py-3 px-3">Nama</th>
                                 <th class="text-left py-3 px-3">Kelas</th>
+                                <th class="text-left py-3 px-3">Role</th>
 
-                                @role('bendahara') 
-                                <th class="text-left py-3 px-3">Status Kas</th>
+                                @role('bendahara')
+                                    <th class="text-left py-3 px-3">Status Kas</th>
                                 @endrole
 
-                                @role('admin') 
-                                <th class="text-left py-3 px-3">Action</th>
+                                @role('admin')
+                                    <th class="text-left py-3 px-3">Action</th>
                                 @endrole
                             </tr>
                         </thead>
@@ -96,29 +97,48 @@
                                         </td>
                                         <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.class ?? '-'">
                                         </td>
-
-                                        @role('bendahara')
                                         <td class="text-left py-3 px-3 text-white/60">
                                             <span
-                                                class="inline-flex items-left wdsR bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                                                belum bayar
-                                            </span>
-                                        @endrole
+                                                class="inline-flex items-left  text-xs font-medium px-2.5 py-0.5 rounded-full"
+                                                x-text="user.roles[0]?.name ?? '-'"
+                                                :class="{
+                                                    // 🟦 admin = biru
+                                                    'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 wdsB': user
+                                                        .roles[0]?.name === 'admin',
+                                                
+                                                    // 🟢 siswa = hijau
+                                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 wdsG': user
+                                                        .roles[0]?.name === 'siswa',
+                                                
+                                                    // 🟡 bendahara = kuning
+                                                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 wdsY': user
+                                                        .roles[0]?.name === 'bendahara',
+                                                
+                                                }"></span>
+                                        </td>
 
+
+                                        @role('bendahara')
+                                            <td class="text-left py-3 px-3 text-white/60">
+                                                <span
+                                                    class="inline-flex items-left wdsR bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                                    belum bayar
+                                                </span>
+                                            @endrole
                                         </td>
 
                                         @role('admin')
-                                        <td class="py-3 px-3">
-                                            <div class="gap-3 flex">
+                                            <td class="py-3 px-3">
+                                                <div class="gap-3 flex">
 
-                                                {{-- Edit button --}}
-                                                <button
-                                                    class="text-white/50 hover:text-blue-400 transition duration-300 edit-btn"
-                                                    title="Edit" :data-id="user.id"
-                                                    :data-nis="user.student?.nis ?? ''" :data-email="user.email ?? ''"
-                                                    :data-name="user.username ?? ''" :data-class="user.student?.class ?? ''"
-                                                    :data-avatar="user.avatar ?? ''"
-                                                    x-on:click.prevent="
+                                                    {{-- Edit button --}}
+                                                    <button
+                                                        class="text-white/50 hover:text-blue-400 transition duration-300 edit-btn wdsB"
+                                                        title="Edit" :data-id="user.id"
+                                                        :data-nis="user.student?.nis ?? ''" :data-email="user.email ?? ''"
+                                                        :data-name="user.username ?? ''" :data-class="user.student?.class ?? ''"
+                                                        :data-avatar="user.avatar ?? ''"
+                                                        x-on:click.prevent="
                                                         $dispatch('edit-form', {
                                                             id: user.id,
                                                             nis: user.student?.nis ?? '',
@@ -129,24 +149,24 @@
                                                         });
                                                         $dispatch('open-modal', 'siswa-modal');
                                                     ">
-                                                    <i class="fa-solid fa-pen-to-square text-base"></i>
-                                                </button>
-
-                                                {{-- Delete button --}}
-                                                <form :action="`/master/siswa/${user.id}`" method="POST"
-                                                    class="form-delete-siswa">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="text-white/50 hover:text-red-500 transition duration-300"
-                                                        title="Hapus">
-                                                        <i class="fa-solid fa-trash text-base"></i>
+                                                        <i class="fa-solid fa-pen-to-square text-base"></i>
                                                     </button>
-                                                </form>
-                                                <x-swal-delete selector=".form-delete-siswa" />
-                                                
-                                            </div>
-                                        </td>
+
+                                                    {{-- Delete button --}}
+                                                    <form :action="`/master/siswa/${user.id}`" method="POST"
+                                                        class="form-delete-siswa">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="text-white/50 hover:text-red-500 transition duration-300 wdsR"
+                                                            title="Hapus">
+                                                            <i class="fa-solid fa-trash text-base"></i>
+                                                        </button>
+                                                    </form>
+                                                    <x-swal-delete selector=".form-delete-siswa" />
+
+                                                </div>
+                                            </td>
                                         @endrole
 
                                     </tr>
@@ -310,21 +330,21 @@
                         <x-input-error :messages="$errors->get('photo')" />
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-
-                        {{-- NIS --}}
-                        <div class="mb-0">
-                            <x-input-label for="nis" :value="__('NIS')" />
-                            <div class="relative mt-1">
-                                <span
-                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
-                                    <i class="fas fa-hashtag"></i>
-                                </span>
-                                <x-text-input id="nis" type="text" name="nis" x-model="formData.nis"
-                                    required autofocus :readonly="true" autocomplete="nis" />
-                            </div>
-                            <x-input-error :messages="$errors->get('nis')" />
+                    {{-- NIS --}}
+                    <div class="mb-2">
+                        <x-input-label for="nis" :value="__('NIS')" />
+                        <div class="relative mt-1">
+                            <span
+                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
+                                <i class="fas fa-hashtag"></i>
+                            </span>
+                            <x-text-input id="nis" type="text" name="nis" x-model="formData.nis" required
+                                autofocus :readonly="true" autocomplete="nis" />
                         </div>
+                        <x-input-error :messages="$errors->get('nis')" />
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
 
                         {{-- Email --}}
                         <div class="mb-0">
@@ -341,7 +361,7 @@
                         </div>
 
                         {{-- Nama --}}
-                        <div class="mb-4">
+                        <div class="mb-0">
                             <x-input-label for="name" :value="__('Nama')" />
                             <div class="relative mt-1">
                                 <span
@@ -363,9 +383,20 @@
                             </div>
                             <x-input-error :messages="$errors->get('class')" />
                         </div>
+
+                        {{-- Dropdown Roles --}}
+                        <div class="mb-6">
+                            <x-input-label for="roles" :value="__('Pilih Role')" />
+                            <div class="mt-1">
+                                <x-select-dropdown name="roles" :options="['' => 'Pilih Role', 'admin' => 'Admin', 'bendahara' => 'Bendahara']" :selected="old('class')"
+                                    x-model="formData.class" required />
+                            </div>
+                            <x-input-error :messages="$errors->get('roles')" />
+                        </div>
+
                     </div>
                     {{-- Password (hanya tampil saat create} --}}
-                    <div class="mb-4" x-show="!isEdit">
+                    <div class="mb-6" x-show="!isEdit">
                         <x-input-label for="password" :value="__('Password')" />
                         <div class="relative mt-1">
                             <span

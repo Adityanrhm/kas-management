@@ -22,7 +22,7 @@ class MasterSiswaController extends Controller
                 $query->where('users.email', 'ILIKE', "%$keyword%")
                     ->orWhere('students.nis', 'LIKE', "%$keyword%")
                     ->orWhere('users.username', 'LIKE', "%$keyword%");
-            })->with('student')->orderBy('students.nis')->paginate(8);
+            })->with(['student', 'roles'])->orderBy('students.nis')->paginate(8);
 
             return response()->json($users);
         }
@@ -43,7 +43,7 @@ class MasterSiswaController extends Controller
         $nis_siswa = $next_nis ?? ($all_nis ? max($all_nis) + 1 : 11901);
 
         // users_siswa data
-        $users_data = User::select('users.*')->join('students', 'students.user_id', '=', 'users.id')->orderBy('students.nis', 'ASC')->with('student')->paginate(8);
+        $users_data = User::select('users.*')->join('students', 'students.user_id', '=', 'users.id')->orderBy('students.nis', 'ASC')->with(['student', 'roles'])->paginate(8);
 
         return view('modules.master.siswa', ['users_data' => $users_data, 'nis_siswa' => $nis_siswa]);
     }

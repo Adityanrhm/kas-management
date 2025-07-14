@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MasterSiswaController;
 use App\Http\Controllers\ProfileController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 

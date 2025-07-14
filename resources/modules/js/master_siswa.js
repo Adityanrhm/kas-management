@@ -38,7 +38,6 @@ function siswaModal() {
         },
 
         editForm(data) {
-            console.log(data);
             this.isEdit = true;
             this.formAction = `/master/siswa/update/${data.id}`;
             this.formData = {
@@ -101,7 +100,9 @@ function searchData() {
         loading: false,
         searchTimeout: null,
 
-        init() {},
+        init() {
+            console.log(this.results);
+        },
 
         get visiblePages() {
             const maxVisible = 3; // Jumlah halaman yang ingin ditampilkan
