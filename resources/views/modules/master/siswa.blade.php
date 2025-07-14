@@ -29,7 +29,7 @@
                             </svg>
                         </div>
 
-
+                    @role('admin')
                         <button type="button"
                             x-on:click.prevent="
                                     $dispatch('reset-form');
@@ -39,6 +39,8 @@
                             <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
                             Data Baru
                         </button>
+                    @endrole
+
                     </div>
                 </div>
 
@@ -69,8 +71,14 @@
                                 <th class="text-left py-3 px-3">Email</th>
                                 <th class="text-left py-3 px-3">Nama</th>
                                 <th class="text-left py-3 px-3">Kelas</th>
+
+                                @role('bendahara') 
                                 <th class="text-left py-3 px-3">Status Kas</th>
+                                @endrole
+
+                                @role('admin') 
                                 <th class="text-left py-3 px-3">Action</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody class="text-white">
@@ -88,12 +96,18 @@
                                         </td>
                                         <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.class ?? '-'">
                                         </td>
+
+                                        @role('bendahara')
                                         <td class="text-left py-3 px-3 text-white/60">
                                             <span
                                                 class="inline-flex items-left wdsR bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
                                                 belum bayar
                                             </span>
+                                        @endrole
+
                                         </td>
+
+                                        @role('admin')
                                         <td class="py-3 px-3">
                                             <div class="gap-3 flex">
 
@@ -130,9 +144,11 @@
                                                     </button>
                                                 </form>
                                                 <x-swal-delete selector=".form-delete-siswa" />
-
+                                                
                                             </div>
                                         </td>
+                                        @endrole
+
                                     </tr>
                                 </template>
                             </template>

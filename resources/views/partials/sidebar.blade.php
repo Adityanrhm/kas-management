@@ -14,7 +14,7 @@
                 [
                     'name' => 'Data Siswa',
                     'route' => 'master.siswa',
-                    'roles' => ['admin'], // Hanya admin yang bisa akses
+                    'roles' => ['admin', 'bendahara'], // Hanya admin yang bisa akses
                 ],
             ],
             'roles' => [], // Parent menu bisa diakses semua role
