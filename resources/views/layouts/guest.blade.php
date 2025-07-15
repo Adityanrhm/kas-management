@@ -17,19 +17,27 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div
-        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-black">
-        @include('partials.preloader')
-        <div>
-            <a href="/">
-<x-application-logo class="w-24 h-24 fill-current text-gray-500 wds" />
-            </a>
-        </div>
-        <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 overflow-hidden sm:rounded-lg ">
-            {{ $slot }}
-        </div>
+   <div
+    class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-black"
+    data-aos="fade-up"             
+    data-aos-duration="800"          
+    data-aos-once="false">       
+
+    @include('partials.preloader')
+
+    <div data-aos="zoom-in" data-aos-delay="200" data-aos-duration="900">
+        <a href="/">
+            <x-application-logo class="w-24 h-24 fill-current text-gray-500 wds" />
+        </a>
     </div>
+
+    <div
+        class="w-full sm:max-w-md mt-6 px-6 py-4 overflow-hidden sm:rounded-lg"
+        data-aos="fade-up" data-aos-delay="400" data-aos-duration="900">
+        {{ $slot }}
+    </div>
+</div>
+
 </body>
 
 </html>

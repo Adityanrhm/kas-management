@@ -65,10 +65,12 @@ npm install && npm update && composer update && composer install
 cp .env.example .env
 php artisan key:generate
 ```
-4. Migrate database
+4. Migrate & Seeding database
 ```
 php artisan migrate
 php artisan storage:link
+
+php artisan db:seed --class=UserSeeder
 ```
 5. Run build & server
 ```
