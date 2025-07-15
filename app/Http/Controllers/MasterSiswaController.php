@@ -77,7 +77,7 @@ class MasterSiswaController extends Controller
                 'created_at' => now()
             ]);
 
-            $user_student->assignRole('siswa');
+            $user_student->assignRole($request->role);
 
             Student::create([
                 'user_id' => $user_student->id,
@@ -104,6 +104,7 @@ class MasterSiswaController extends Controller
 
         try {
             $user_student = User::findOrfail($siswa_user_id);
+            $student = Student::where('user_id', $siswa_user_id)->first();
 
             $path_photo = null;
 
@@ -124,7 +125,7 @@ class MasterSiswaController extends Controller
                 'avatar' => $path_photo ? $path_photo : $user_student->avatar,
             ]);
 
-            $student = Student::where('user_id', $siswa_user_id)->first();
+            $user_student->syncRoles($request->role);
 
             $student->update([
                 'users_id' => $siswa_user_id,
@@ -139,15 +140,20 @@ class MasterSiswaController extends Controller
     }
 
 
-    public function destroy_siswa($siswa_user_id)
+    public function destroy_siswa($siswa_user_id): RedirectResponse
     {
-        $user_student = User::findOrfail($siswa_user_id);
-        if ($user_student->avatar && Storage::disk('public')->exists($user_student->avatar)) {
-            Storage::disk('public')->delete($user_student->avatar);
+        try {
+
+            $user_student = User::findOrfail($siswa_user_id);
+            if ($user_student->avatar && Storage::disk('public')->exists($user_student->avatar)) {
+                Storage::disk('public')->delete($user_student->avatar);
+            }
+
+            $user_student->delete();
+
+            return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus data siswa. Silakan coba lagi.');
         }
-
-        $user_student->delete();
-
-        return redirect(route('master.siswa'));
     }
 }

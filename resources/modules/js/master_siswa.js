@@ -8,6 +8,7 @@ function siswaModal() {
             email: "",
             name: "",
             class: "",
+            role: "",
         },
         previewImage: "",
         fileName: "",
@@ -26,6 +27,7 @@ function siswaModal() {
                 email: "",
                 name: "",
                 class: "",
+                role: "",
             };
             this.previewImage = "";
             this.fileName = "";
@@ -45,11 +47,13 @@ function siswaModal() {
                 email: data.email || "",
                 name: data.name || "",
                 class: data.class || "",
+                role: data.role || "",
             };
 
             // Set preview image jika ada avatar
             if (data.avatar) {
                 this.previewImage = `${window.storageUrl}/${data.avatar}`;
+                console.log(data);
             }
         },
 

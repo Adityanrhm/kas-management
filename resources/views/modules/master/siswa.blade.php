@@ -138,6 +138,7 @@
                                                         :data-nis="user.student?.nis ?? ''" :data-email="user.email ?? ''"
                                                         :data-name="user.username ?? ''" :data-class="user.student?.class ?? ''"
                                                         :data-avatar="user.avatar ?? ''"
+                                                        :data-avatar="user.roles[0]?.name ?? ''"
                                                         x-on:click.prevent="
                                                         $dispatch('edit-form', {
                                                             id: user.id,
@@ -145,7 +146,8 @@
                                                             email: user.email ?? '',
                                                             name: user.username ?? '',
                                                             class: user.student?.class ?? '',
-                                                            avatar: user.avatar ?? ''
+                                                            avatar: user.avatar ?? '',
+                                                            role: user.roles[0]?.name ?? '',
                                                         });
                                                         $dispatch('open-modal', 'siswa-modal');
                                                     ">
@@ -331,7 +333,7 @@
                     </div>
 
                     {{-- NIS --}}
-                    <div class="mb-2">
+                    <div class="mb-4">
                         <x-input-label for="nis" :value="__('NIS')" />
                         <div class="relative mt-1">
                             <span
@@ -346,22 +348,8 @@
 
                     <div class="grid grid-cols-2 gap-4">
 
-                        {{-- Email --}}
-                        <div class="mb-0">
-                            <x-input-label for="email" :value="__('Email')" />
-                            <div class="relative mt-1">
-                                <span
-                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
-                                    <i class="fas fa-envelope"></i>
-                                </span>
-                                <x-text-input id="email" name="email" type="email" x-model="formData.email"
-                                    required autocomplete="email" />
-                            </div>
-                            <x-input-error :messages="$errors->get('email')" />
-                        </div>
-
                         {{-- Nama --}}
-                        <div class="mb-0">
+                        <div>
                             <x-input-label for="name" :value="__('Nama')" />
                             <div class="relative mt-1">
                                 <span
@@ -374,8 +362,22 @@
                             <x-input-error :messages="$errors->get('name')" />
                         </div>
 
+                        {{-- Email --}}
+                        <div>
+                            <x-input-label for="email" :value="__('Email')" />
+                            <div class="relative mt-1">
+                                <span
+                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/50">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <x-text-input id="email" name="email" type="email" x-model="formData.email"
+                                    required autocomplete="email" />
+                            </div>
+                            <x-input-error :messages="$errors->get('email')" />
+                        </div>
+
                         {{-- Dropdown kelas --}}
-                        <div class="mb-4">
+                        <div class="mb-6">
                             <x-input-label for="class" :value="__('Pilih Kelas')" />
                             <div class="mt-1">
                                 <x-select-dropdown name="class" :options="['' => 'Pilih Kelas', 'XI RPL 1' => 'XI RPL 1']" :selected="old('class')"
@@ -386,17 +388,21 @@
 
                         {{-- Dropdown Roles --}}
                         <div class="mb-6">
-                            <x-input-label for="roles" :value="__('Pilih Role')" />
+                            <x-input-label for="role" :value="__('Pilih Role')" />
                             <div class="mt-1">
-                                <x-select-dropdown name="roles" :options="['' => 'Pilih Role', 'admin' => 'Admin', 'bendahara' => 'Bendahara']" :selected="old('class')"
-                                    x-model="formData.class" required />
+                                <x-select-dropdown name="role" :options="[
+                                    'siswa' => 'Siswa',
+                                    'bendahara' => 'Bendahara',
+                                    'admin' => 'Admin',
+                                ]" :selected="old('role')"
+                                    x-model="formData.role" required />
                             </div>
                             <x-input-error :messages="$errors->get('roles')" />
                         </div>
 
                     </div>
                     {{-- Password (hanya tampil saat create} --}}
-                    <div class="mb-6" x-show="!isEdit">
+                    <div class="mb-2" x-show="!isEdit">
                         <x-input-label for="password" :value="__('Password')" />
                         <div class="relative mt-1">
                             <span
@@ -410,7 +416,7 @@
                     </div>
 
                     {{-- Konfirmasi password (hanya tampil saat create) --}}
-                    <div class="mb-4" x-show="!isEdit">
+                    <div class="mb-6" x-show="!isEdit">
                         <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
                         <div class="relative mt-1">
                             <span
