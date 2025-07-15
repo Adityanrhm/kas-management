@@ -55,7 +55,7 @@
         <div :class="menuToggle ? 'flex' : 'hidden'"
             class="shadow-theme-md w-full items-center justify-between gap-4 px-4 py-3 lg:flex lg:justify-end lg:px-0 lg:shadow-none">
             <!-- User Area -->
-            <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
+            <div class="relative ml-auto" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
                 <a class="flex items-center text-white dark:text-white/70 hover:text-white dark:hover:text-white transition-colors duration-300 group wdsh"
                     href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
                     <!-- Avatar with enhanced styling -->
