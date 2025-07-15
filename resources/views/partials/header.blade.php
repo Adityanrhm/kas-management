@@ -4,8 +4,7 @@
         <div
             class="flex w-full items-center justify-between gap-2 px-3 py-2 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-3 dark:border-gray-800">
             <!-- Hamburger Toggle BTN -->
-            <button
-                :class="sidebarToggle ? 'lg:bg-transparent dark:lg:bg-transparent bg-white/5 dark:bg-white/5' : ''"
+            <button :class="sidebarToggle ? 'lg:bg-transparent dark:lg:bg-transparent bg-white/5 dark:bg-white/5' : ''"
                 class="z-50 flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-500 lg:h-10 lg:w-10 \ 
                     wdsh transition-all duration-300 border dark:border-[rgba(255,255,255,0.25)] dark:text-gray-400"
                 @click.stop="sidebarToggle = !sidebarToggle">
@@ -115,7 +114,8 @@
                                     </div>
                                     <div class="flex-1">
                                         <div class="font-medium">Edit Profile</div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400">Update your information</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">Update your information
+                                        </div>
                                     </div>
                                     <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors duration-200"
                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">

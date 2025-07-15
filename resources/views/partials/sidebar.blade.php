@@ -9,27 +9,23 @@
         [
             'name' => 'Master',
             'icon' => 'fa-solid fa-circle-user',
-            // 'roles' => ['bendahara'],
             'submenus' => [
                 [
                     'name' => 'Data Siswa',
                     'route' => 'master.siswa',
-                    'roles' => ['admin', 'bendahara'], // Hanya admin yang bisa akses
+                    'roles' => ['admin', 'bendahara'],
                 ],
             ],
-            'roles' => [], // Parent menu bisa diakses semua role
+            'roles' => [],
         ],
     ];
 
-    // Function untuk check access berdasarkan roles saja
     function canAccessMenu($menu, $user)
     {
-        // Jika tidak ada roles yang didefinisikan, berarti semua bisa akses
         if (empty($menu['roles'])) {
             return true;
         }
 
-        // Check roles
         return $user->hasAnyRole($menu['roles']);
     }
 @endphp
@@ -44,8 +40,7 @@
         class="sidebar-header flex items-center gap-3 py-6 transition-all duration-300">
 
         <a href="{{ route('dashboard') }}" class="flex items-center">
-            <x-application-logo
-                class="w-8 h-8 lg:w-10 lg:h-10 fill-current text-gray-500 transition-all duration-300" />
+            <x-application-logo class="w-8 h-8 lg:w-10 lg:h-10 fill-current text-gray-500 transition-all duration-300" />
             <div x-show="!sidebarToggle && window.innerWidth >= 1024" x-transition:leave="transition ease-in duration-100"
                 x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 -translate-x-2"
                 class="hidden lg:flex flex-col ml-3 leading-tight text-left font-semibold text-gray-700 dark:text-gray-100 text-lg font-sans">
@@ -73,10 +68,8 @@
                 <ul class="flex flex-col text-[15px] space-y-2">
                     @foreach ($menus as $menu)
                         @php
-                            // Check jika user bisa akses menu utama
                             $canAccessMainMenu = canAccessMenu($menu, auth()->user());
 
-                            // Check submenu yang bisa diakses
                             $accessibleSubmenus = [];
                             if (!empty($menu['submenus'])) {
                                 foreach ($menu['submenus'] as $submenu) {
@@ -86,12 +79,10 @@
                                 }
                             }
 
-                            // Jika menu utama tidak bisa diakses DAN tidak ada submenu yang bisa diakses, skip
                             if (!$canAccessMainMenu && empty($accessibleSubmenus)) {
                                 continue;
                             }
 
-                            // Menentukan apakah menu utama aktif
                             $isActive = false;
                             if (isset($menu['route']) && request()->routeIs($menu['route'])) {
                                 $isActive = true;
@@ -106,7 +97,6 @@
                         @endphp
 
                         @if (empty($menu['submenus']))
-                            <!-- Menu tanpa submenu -->
                             @if ($canAccessMainMenu)
                                 <li>
                                     <a href="{{ route($menu['route']) }}"
@@ -123,7 +113,6 @@
                                 </li>
                             @endif
                         @else
-                            <!-- Menu dengan submenu -->
                             @if (!empty($accessibleSubmenus))
                                 <li x-data="{
                                     open: {{ $isActive ? 'true' : 'false' }},
@@ -149,14 +138,13 @@
                                             <span x-show="!sidebarToggle"
                                                 class="whitespace-nowrap">{{ $menu['name'] }}</span>
                                         </div>
-                                        <!-- Rotasi hanya saat button diklik, bukan saat navigasi -->
+
                                         <i x-show="!sidebarToggle"
                                             class="fas fa-chevron-left w-4 h-4 transition-transform duration-300 ease-in-out"
                                             :class="open ? 'transform rotate-[-90deg]' : 'transform rotate-0'"
                                             style="transform-origin: center;"></i>
                                     </button>
 
-                                    <!-- Submenu dengan animasi smooth untuk buka dan tutup -->
                                     <div x-show="open && !sidebarToggle"
                                         x-transition:enter="transition ease-out duration-300"
                                         x-transition:enter-start="opacity-0 max-h-0"

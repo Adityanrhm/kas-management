@@ -14,14 +14,17 @@ return new class extends Migration
         Schema::create('kas_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->foreignId('approved_by')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('bill_id')->constrained('bills')->cascadeOnDelete();
 
-            $table->string('month', length: 100);
-            $table->string('year', length: 100);
-            $table->integer('amount');
+            $table->string('month', length: 100)->nullable();
+            $table->string('year', length: 100)->nullable();
+            $table->integer('nominal')->nullable();
             $table->timestamp('paid_at')->nullable();
+            $table->timestamp('verified_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->enum('payment_method', ['cash', 'qris']);
-            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
+            $table->enum('payment_method', ['cash'])->nullable();
+            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending')->nullable();
         });
     }
 

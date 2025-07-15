@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\MasterSiswaController;
 use App\Http\Controllers\ProfileController;
-use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -21,7 +19,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('master')->name('master.')->group(function () {
-    Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('siswa');
+    Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('siswa')->middleware(['role:admin|bendahara']);
     Route::post('/siswa/store', [MasterSiswaController::class, 'store_siswa'])->name('store.siswa')->middleware('role:admin');
     Route::put('/siswa/update/{user_siswa_id}', [MasterSiswaController::class, 'update_siswa'])->name('update.siswa')->middleware('role:admin');
     Route::delete('/siswa/{user_id}', [MasterSiswaController::class, 'destroy_siswa'])->name('destroy.siswa')->middleware('role:admin');
