@@ -71,14 +71,14 @@
                                 <th class="text-left py-3 px-3">Email</th>
                                 <th class="text-left py-3 px-3">Nama</th>
                                 <th class="text-left py-3 px-3">Kelas</th>
-                                <th class="text-left py-3 px-3">Role</th>
+
+                                @role('admin')
+                                    <th class="text-left py-3 px-3">Role</th>
+                                    <th class="text-left py-3 px-3">Action</th>
+                                @endrole
 
                                 @role('bendahara')
                                     <th class="text-left py-3 px-3">Status Kas</th>
-                                @endrole
-
-                                @role('admin')
-                                    <th class="text-left py-3 px-3">Action</th>
                                 @endrole
                             </tr>
                         </thead>
@@ -97,26 +97,25 @@
                                         </td>
                                         <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.class ?? '-'">
                                         </td>
-                                        <td class="text-left py-3 px-3 text-white/60">
-                                            <span
-                                                class="inline-flex items-left  text-xs font-medium px-2.5 py-0.5 rounded-full"
-                                                x-text="user.roles[0]?.name ?? '-'"
-                                                :class="{
-                                                    // 🟦 admin = biru
-                                                    'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 wdsB': user
-                                                        .roles[0]?.name === 'admin',
-                                                
-                                                    // 🟢 siswa = hijau
-                                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 wdsG': user
-                                                        .roles[0]?.name === 'siswa',
-                                                
-                                                    // 🟡 bendahara = kuning
-                                                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 wdsY': user
-                                                        .roles[0]?.name === 'bendahara',
-                                                
-                                                }"></span>
-                                        </td>
 
+                                        @role('admin')
+                                            <td class="text-left py-3 px-3 text-white/60">
+                                                <span
+                                                    class="inline-flex items-left  text-xs font-medium px-2.5 py-0.5 rounded-full"
+                                                    x-text="user.roles[0]?.name ?? '-'"
+                                                    :class="{
+                                                        'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 wdsB': user
+                                                            .roles[0]?.name === 'admin',
+                                                    
+                                                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 wdsG': user
+                                                            .roles[0]?.name === 'siswa',
+                                                    
+                                                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 wdsY': user
+                                                            .roles[0]?.name === 'bendahara',
+                                                    
+                                                    }"></span>
+                                            </td>
+                                        @endrole
 
                                         @role('bendahara')
                                             <td class="text-left py-3 px-3 text-white/60">
