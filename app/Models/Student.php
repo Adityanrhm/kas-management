@@ -19,4 +19,22 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    public static function generateNextNis($start_nis = 11901)
+    {
+        $all_nis = self::orderBy('nis', 'ASC')->pluck('nis');
+
+        $next_nis = null;
+        $start_nis = 11901;
+
+        foreach ($all_nis as $nis) {
+            if ($start_nis != $nis) {
+                $next_nis = $start_nis;
+                break;
+            }
+            $start_nis++;
+        }
+        return  $next_nis ?? ($all_nis ? $all_nis->max() + 1 : 11901);
+    }
 }

@@ -18,34 +18,21 @@ class MasterSiswaController extends Controller
         // Search algorithm
         if ($request->ajax()) {
             $keyword = $request->query('q');
-            $users = User::select('users.*')->join('students', 'students.user_id', '=', 'users.id')->where(function ($query) use ($keyword) {
-                $query->where('users.email', 'ILIKE', "%$keyword%")
-                    ->orWhere('students.nis', 'LIKE', "%$keyword%")
-                    ->orWhere('users.username', 'LIKE', "%$keyword%");
-            })->with(['student', 'roles'])->orderBy('students.nis')->paginate(8);
 
-            return response()->json($users);
+            $users_siswa_data_search = User::select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id',)->join('students', 'students.user_id', '=', 'users.id')
+                ->search($keyword, ['students.nis', 'users.email', 'users.username'])
+                ->with(['student', 'roles'])->orderBy('students.nis')->paginate(8);
+
+            return response()->json($users_siswa_data_search);
         }
 
-        // Nis siswa algorithm
-        $all_nis = Student::orderBy('nis', 'ASC')->pluck('nis')->toArray();
+        // Generate next value NIS
+        $nis_siswa = Student::generateNextNis();
 
-        $next_nis = null;
-        $start_nis = 11901;
+        // Users siswa data
+        $users_data = User::getUsersSiswaData()->orderBy('students.nis', 'ASC')->with(['student', 'roles'])->paginate(8);
 
-        foreach ($all_nis as $nis) {
-            if ($start_nis != $nis) {
-                $next_nis = $start_nis;
-                break;
-            }
-            $start_nis++;
-        }
-        $nis_siswa = $next_nis ?? ($all_nis ? max($all_nis) + 1 : 11901);
-
-        // users_siswa data
-        $users_data = User::select('users.*')->join('students', 'students.user_id', '=', 'users.id')->orderBy('students.nis', 'ASC')->with(['student', 'roles'])->paginate(8);
-
-        return view('modules.master.siswa', ['users_data' => $users_data, 'nis_siswa' => $nis_siswa]);
+        return view('modules.master.siswa', compact('users_data', 'nis_siswa'));
     }
 
 
@@ -56,7 +43,7 @@ class MasterSiswaController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'photo' => ['required'],
+            'photo' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
             'nis' => ['required'],
             'class' => ['required'],
         ]);
@@ -92,9 +79,9 @@ class MasterSiswaController extends Controller
         }
     }
 
+
     public function update_siswa(Request $request, $siswa_user_id): RedirectResponse
     {
-        // dd(User::findOrfail($user_id));
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'unique:users,email,' . $siswa_user_id],

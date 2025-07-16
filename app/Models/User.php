@@ -50,8 +50,36 @@ class User extends Authenticatable
         ];
     }
 
+
+    // Relation Area
     public function student()
     {
         return $this->hasOne(Student::class);
+    }
+
+    public function role()
+    {
+        return $this->morphToMany(Role::class, 'model', 'model_has_roles');
+    }
+
+
+
+    // Logic Area
+    public function scopeGetUsersSiswaData($query)
+    {
+        return $query->select('users.*')->join('students', 'students.user_id', '=', 'users.id');
+    }
+
+    public function scopeSearch($query, $keyword, array $fields)
+    {
+        return $query->where(function ($q) use ($keyword, $fields) {
+            foreach ($fields as $field) {
+                $q->orWhere($field, 'ILIKE', "%$keyword%");
+            }
+
+            $q->orWhereHas('roles', function ($roleQuery) use ($keyword) {
+                $roleQuery->where('name', 'ILIKE', "%$keyword%");
+            });
+        });
     }
 }
