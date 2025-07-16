@@ -7,13 +7,26 @@
             'submenus' => [],
         ],
         [
-            'name' => 'Master',
-            'icon' => 'fa-solid fa-circle-user',
+            'name' => 'Management Siswa',
+            'icon' => 'fa-solid fa-users',
+            'route' => 'management-siswa.siswa',
+            // 'submenus' => [
+            //     [
+            //         'name' => 'Data Siswa',
+            //         'route' => 'master.siswa',
+            //         'roles' => ['admin', 'bendahara'],
+            //     ],
+            // ],
+            'roles' => ['admin', 'bendahara'],
+        ],
+        [
+            'name' => 'Kas Siswa',
+            'icon' => 'fa-solid fa-money-check-dollar',
             'submenus' => [
                 [
-                    'name' => 'Data Siswa',
-                    'route' => 'master.siswa',
-                    'roles' => ['admin', 'bendahara'],
+                    'name' => 'Kas Saya',
+                    'route' => 'kas.kas-siswa',
+                    'roles' => ['siswa'],
                 ],
             ],
             'roles' => [],

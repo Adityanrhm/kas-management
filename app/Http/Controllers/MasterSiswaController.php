@@ -19,7 +19,8 @@ class MasterSiswaController extends Controller
         if ($request->ajax()) {
             $keyword = $request->query('q');
 
-            $users_siswa_data_search = User::select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id',)->join('students', 'students.user_id', '=', 'users.id')
+            $users_siswa_data_search = User::select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id',)
+                ->join('students', 'students.user_id', '=', 'users.id')
                 ->search($keyword, ['students.nis', 'users.email', 'users.username'])
                 ->with(['student', 'roles'])->orderBy('students.nis')->paginate(8);
 
@@ -32,7 +33,7 @@ class MasterSiswaController extends Controller
         // Users siswa data
         $users_data = User::getUsersSiswaData()->orderBy('students.nis', 'ASC')->with(['student', 'roles'])->paginate(8);
 
-        return view('modules.master.siswa', compact('users_data', 'nis_siswa'));
+        return view('modules.management-siswa.siswa_view', compact('users_data', 'nis_siswa'));
     }
 
 
@@ -73,7 +74,7 @@ class MasterSiswaController extends Controller
             ]);
 
 
-            return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil ditambahkan!');
+            return redirect(route('management-siswa.siswa'))->with('success', 'Data siswa berhasil ditambahkan!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan data siswa. Silakan coba lagi.');
         }
@@ -120,7 +121,7 @@ class MasterSiswaController extends Controller
                 'class' => $request->class,
             ]);
 
-            return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil diperbarui!');
+            return redirect(route('management-siswa.siswa'))->with('success', 'Data siswa berhasil diperbarui!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal memperbarui data siswa. Silakan coba lagi.');
         }
@@ -138,7 +139,7 @@ class MasterSiswaController extends Controller
 
             $user_student->delete();
 
-            return redirect(route('master.siswa'))->with('success', 'Data siswa berhasil dihapus!');
+            return redirect(route('management-siswa.siswa'))->with('success', 'Data siswa berhasil dihapus!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus data siswa. Silakan coba lagi.');
         }

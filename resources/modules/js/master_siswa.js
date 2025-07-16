@@ -2,7 +2,7 @@
 function siswaModal() {
     return {
         isEdit: false,
-        formAction: window.routes["master.store.siswa"],
+        formAction: window.routes["management-siswa.store.siswa"],
         formData: {
             nis: window.defaultNis || "",
             email: "",
@@ -21,7 +21,7 @@ function siswaModal() {
 
         resetForm() {
             this.isEdit = false;
-            this.formAction = window.routes["master.store.siswa"];
+            this.formAction = window.routes["management-siswa.store.siswa"];
             this.formData = {
                 nis: window.defaultNis || "",
                 email: "",
@@ -41,7 +41,7 @@ function siswaModal() {
 
         editForm(data) {
             this.isEdit = true;
-            this.formAction = `/master/siswa/update/${data.id}`;
+            this.formAction = `/management-siswa/siswa/update/${data.id}`;
             this.formData = {
                 nis: data.nis || "",
                 email: data.email || "",
@@ -147,7 +147,9 @@ function searchData() {
         async fetchData() {
             try {
                 const response = await fetch(
-                    `/master/siswa?q=${encodeURIComponent(this.query)}`,
+                    `/management-siswa/siswa?q=${encodeURIComponent(
+                        this.query
+                    )}`,
                     {
                         method: "GET",
                         headers: {
