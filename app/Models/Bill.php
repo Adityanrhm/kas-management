@@ -19,7 +19,7 @@ class Bill extends Model
 
 
     // Relation Area
-    public function KasPayments()
+    public function kasPayment()
     {
         return $this->hasMany(KasPayment::class);
     }

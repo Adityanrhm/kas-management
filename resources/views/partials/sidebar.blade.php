@@ -13,9 +13,9 @@
             'roles' => ['admin'],
         ],
         [
-            'name' => 'Kas Settings',
+            'name' => 'Cash Amount',
             'icon' => 'fa-solid fa-money-bills',
-            'route' => 'kas-settings',
+            'route' => 'cash-amount',
             'roles' => ['admin'],
         ],
         [

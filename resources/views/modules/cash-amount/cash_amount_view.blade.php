@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @extends('layouts.app')
-
     {{-- javacript calling --}}
     @vite(['resources/modules/js/kas-settings.js'])
 
@@ -15,7 +13,7 @@
         <div class="rounded-2xl shadow-xl shadow-white/10 p-6 bg-white/5 backdrop-blur-lg border border-white/20">
             <div x-data="searchData()" x-init="init()">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold text-white">Data Siswa</h2>
+                    <h2 class="text-xl font-semibold text-white">Nominal Kas</h2>
                     <div class="flex gap-3">
 
                         {{-- Search --}}
@@ -70,67 +68,58 @@
                             <tr
                                 class="backdrop-blur-lg bg-white/5 text-white/80 uppercase text-xs tracking-widest border-b border-white/20">
                                 <th class="text-left py-3 px-3">Photo</th>
-                                <th class="text-left py-3 px-12">NIS</th>
-                                <th class="text-left py-3 px-3">Email</th>
-                                <th class="text-left py-3 px-3">Nama</th>
-                                <th class="text-left py-3 px-3">Kelas</th>
-
-                                @role('admin')
-                                    <th class="text-left py-3 px-3">Role</th>
-                                    <th class="text-left py-3 px-3">Action</th>
-                                @endrole
-
-                                @role('bendahara')
-                                    <th class="text-left py-3 px-3">Status Kas</th>
-                                @endrole
+                                <th class="text-left py-3 px-6">NIS</th>
+                                <th class="text-left py-3 px-1">Nama Siswa</th>
+                                <th class="text-left py-3 px-4">Minggu</th>
+                                <th class="text-left py-3 px-4">Bulan</th>
+                                <th class="text-left py-3 px-4">Tahun</th>
+                                <th class="text-left py-3 px-4">Nominal</th>
+                                <th class="text-left py-3">Status Pembayaran</th>
+                                <th class="text-left py-3 px-3">Jatuh Tempo</th>
+                                <th class="text-left py-3 px-3">Action</th>
                             </tr>
                         </thead>
                         <tbody class="text-white">
                             <template x-if="results.length > 0">
-                                <template x-for="user in results" :key="user.id">
+                                <template x-for="cashData in results" :key="cashData.id">
                                     <tr class="border-b border-white/20 hover:bg-white/5 transition duration-300">
                                         <td class="text-left py-3 px-3">
-                                            <img :src="`{{ asset('storage') }}/` + user.avatar"
+                                            <img :src="`{{ asset('storage') }}/` + cashData.student.user.avatar"
                                                 class="h-10 w-10 rounded-full" />
                                         </td>
-                                        <td class="text-left py-3 px-12 text-white/60" x-text="user.student?.nis ?? '-'">
+                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.student?.nis ?? '-'">
                                         </td>
-                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.email"></td>
-                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.username ?? '-'">
+                                        <td class="text-left py-3 px-1 text-white/60"
+                                            x-text="cashData.student.user.username"></td>
+                                        <td class="text-left py-3 px-6 text-white/60"
+                                            x-text="cashData.week ? 'Ke - ' + cashData.week : 'Ke - ' + '-'"></td>
+                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.month ?? '-'">
                                         </td>
-                                        <td class="text-left py-3 px-3 text-white/60" x-text="user.student?.class ?? '-'">
+                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.year ?? '-'">
                                         </td>
-
-                                        @role('admin')
-                                            <td class="text-left py-3 px-3 text-white/60">
-                                                <span
-                                                    class="inline-flex items-left  text-xs font-medium px-2.5 py-0.5 rounded-full"
-                                                    x-text="user.roles[0]?.name ?? '-'"
-                                                    :class="{
-                                                        'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 wdsB': user
-                                                            .roles[0]?.name === 'admin',
-                                                    
-                                                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 wdsG': user
-                                                            .roles[0]?.name === 'siswa',
-                                                    
-                                                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-400 wdsY': user
-                                                            .roles[0]?.name === 'bendahara',
-                                                    
-                                                    }"></span>
-                                            </td>
-                                        @endrole
-
-                                        @role('bendahara')
-                                            <td class="text-left py-3 px-3 text-white/60">
-                                                <span
-                                                    class="inline-flex items-left wdsR bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                                                    belum bayar
-                                                </span>
-                                            @endrole
+                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.nominal ?? '-'">
+                                        </td>
+                                        <td class="text-left py-3 px-8 text-white/60">
+                                            <span
+                                                class="capitalize inline-flex items-left  text-xs font-medium px-2.5 py-0.5 rounded-full"
+                                                x-text="cashData.kas_payment[0].status ?? '-'"
+                                                :class="{
+                                                    'bg-blue-100 text-red-800 dark:bg-red-900 dark:text-red-300 wdsR': cashData
+                                                        .kas_payment[0].status === 'rejected',
+                                                
+                                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 wdsG': cashData
+                                                        .kas_payment[0].status === 'verified',
+                                                
+                                                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-400 wdsY': cashData
+                                                        .kas_payment[0].status === 'pending',
+                                                
+                                                }"></span>
+                                        </td>
+                                        <td class="text-left py-3 px-5 text-white/60" x-text="cashData.due_date ?? '-'">
                                         </td>
 
                                         @role('admin')
-                                            <td class="py-3 px-3">
+                                            <td class="py-3 px-4">
                                                 <div class="gap-3 flex">
 
                                                     {{-- Edit button --}}
@@ -157,7 +146,7 @@
                                                     </button>
 
                                                     {{-- Delete button --}}
-                                                    <form :action="`/management-siswa/siswa/${user.id}`" method="POST"
+                                                    <form :action="`/management-siswa/${user.id}`" method="POST"
                                                         class="form-delete-siswa">
                                                         @csrf
                                                         @method('DELETE')
@@ -250,25 +239,22 @@
         </div>
     </div>
 
-    {{-- Modal Store dan Update Siswa --}}
-    <div x-data="siswaModal()" x-init="init()" x-on:reset-form.window="resetForm()"
+    {{-- <div x-data="siswaModal()" x-init="init()" x-on:reset-form.window="resetForm()"
         x-on:edit-form.window="editForm($event.detail)">
         <x-modal name="siswa-modal">
 
             @include('modules.management-siswa.siswa_form')
 
         </x-modal>
-    </div>
+    </div> --}}
 
     {{-- Set window varible untuk function javascript --}}
     <script>
         window.routes = {
-            'management-siswa.store.siswa': '{{ route('management-siswa.store.siswa') }}'
+            'store.management-siswa': '{{ route('store.management-siswa') }}'
         };
-        window.defaultNis = '{{ $nis_siswa ?? '' }}';
+        // window.defaultNis = '{{ $nis_siswa ?? '' }}';
         window.storageUrl = '{{ asset('storage') }}';
-        window.initialData = @json($student_bill);
+        window.initialData = @json($cash_amount_data);
     </script>
-@endsection
-
 @endsection

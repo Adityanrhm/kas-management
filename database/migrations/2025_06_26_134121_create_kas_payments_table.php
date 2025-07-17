@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('kas_payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            $table->foreignId('approved_by')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('approved_by')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('bill_id')->constrained('bills')->cascadeOnDelete();
 
             $table->timestamp('paid_at')->nullable();

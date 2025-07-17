@@ -25,11 +25,6 @@ class KasPayment extends Model
         return $this->belongsTo(Bill::class);
     }
 
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
-    }
-
     public function approvedBy()
     {
         return $this->belongsTo(User::class);

@@ -168,7 +168,7 @@ function searchData() {
 
                 const data = await response.json();
 
-                // console.log("Search results:", data);
+                console.log("Search results:", data);
                 this.results = data.data;
                 this.pagination = {
                     current_page: data.current_page,

@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\KasSettingsController;
+use App\Http\Controllers\CashAmountController;
 use App\Http\Controllers\KasSiswaController;
-use App\Http\Controllers\MasterKasSiswaController;
 use App\Http\Controllers\ManagementSiswaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/kas-settings', [KasSettingsController::class, 'index'])->name('kas-settings')->middleware(['role:admin']);
+    Route::get('/cash-amount', [CashAmountController::class, 'index'])->name('cash-amount')->middleware(['role:admin']);
 });
 
 require __DIR__ . '/auth.php';
