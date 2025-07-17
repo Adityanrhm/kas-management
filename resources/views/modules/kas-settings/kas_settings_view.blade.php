@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-{{-- javacript calling --}}
-@vite(['resources/modules/js/management-siswa.js'])
+@section('content')
+    @extends('layouts.app')
+
+    {{-- javacript calling --}}
+    @vite(['resources/modules/js/kas-settings.js'])
 
 @section('content')
     <div class="px-6 py-6">
@@ -154,7 +157,7 @@
                                                     </button>
 
                                                     {{-- Delete button --}}
-                                                    <form :action="`/management-siswa/${user.id}`" method="POST"
+                                                    <form :action="`/management-siswa/siswa/${user.id}`" method="POST"
                                                         class="form-delete-siswa">
                                                         @csrf
                                                         @method('DELETE')
@@ -260,10 +263,12 @@
     {{-- Set window varible untuk function javascript --}}
     <script>
         window.routes = {
-            'store.management-siswa': '{{ route('store.management-siswa') }}'
+            'management-siswa.store.siswa': '{{ route('management-siswa.store.siswa') }}'
         };
         window.defaultNis = '{{ $nis_siswa ?? '' }}';
         window.storageUrl = '{{ asset('storage') }}';
-        window.initialData = @json($users_data);
+        window.initialData = @json($student_bill);
     </script>
+@endsection
+
 @endsection

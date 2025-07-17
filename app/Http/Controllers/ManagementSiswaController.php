@@ -11,7 +11,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class MasterSiswaController extends Controller
+class ManagementSiswaController extends Controller
 {
     public function index(Request $request)
     {
@@ -74,7 +74,7 @@ class MasterSiswaController extends Controller
             ]);
 
 
-            return redirect(route('management-siswa.siswa'))->with('success', 'Data siswa berhasil ditambahkan!');
+            return redirect(route('management-siswa'))->with('success', 'Data siswa berhasil ditambahkan!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan data siswa. Silakan coba lagi.');
         }
@@ -121,7 +121,7 @@ class MasterSiswaController extends Controller
                 'class' => $request->class,
             ]);
 
-            return redirect(route('management-siswa.siswa'))->with('success', 'Data siswa berhasil diperbarui!');
+            return redirect(route('management-siswa'))->with('success', 'Data siswa berhasil diperbarui!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal memperbarui data siswa. Silakan coba lagi.');
         }
@@ -139,7 +139,7 @@ class MasterSiswaController extends Controller
 
             $user_student->delete();
 
-            return redirect(route('management-siswa.siswa'))->with('success', 'Data siswa berhasil dihapus!');
+            return redirect(route('management-siswa'))->with('success', 'Data siswa berhasil dihapus!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus data siswa. Silakan coba lagi.');
         }

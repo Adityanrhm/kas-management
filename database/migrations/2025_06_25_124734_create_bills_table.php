@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
 
+            $table->tinyInteger('week')->nullable();
             $table->string('month', length: 100)->nullable();
             $table->string('year', length: 100)->nullable();
             $table->integer('nominal')->nullable();
-            $table->date('Due date')->nullable();
+            $table->date('due_date')->nullable();
         });
     }
 

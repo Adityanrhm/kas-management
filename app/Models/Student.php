@@ -15,12 +15,19 @@ class Student extends Model
         'class'
     ];
 
+    // Relation Area
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    public function bill()
+    {
+        return $this->hasMany(Bill::class);
+    }
 
+
+    // Logic Area
     public static function generateNextNis($start_nis = 11901)
     {
         $all_nis = self::orderBy('nis', 'ASC')->pluck('nis');

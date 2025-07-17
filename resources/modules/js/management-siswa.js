@@ -2,7 +2,7 @@
 function siswaModal() {
     return {
         isEdit: false,
-        formAction: window.routes["management-siswa.store.siswa"],
+        formAction: window.routes["store.management-siswa"],
         formData: {
             nis: window.defaultNis || "",
             email: "",
@@ -21,7 +21,7 @@ function siswaModal() {
 
         resetForm() {
             this.isEdit = false;
-            this.formAction = window.routes["management-siswa.store.siswa"];
+            this.formAction = window.routes["store.management-siswa"];
             this.formData = {
                 nis: window.defaultNis || "",
                 email: "",
@@ -41,7 +41,7 @@ function siswaModal() {
 
         editForm(data) {
             this.isEdit = true;
-            this.formAction = `/management-siswa/siswa/update/${data.id}`;
+            this.formAction = `/management-siswa/update/${data.id}`;
             this.formData = {
                 nis: data.nis || "",
                 email: data.email || "",

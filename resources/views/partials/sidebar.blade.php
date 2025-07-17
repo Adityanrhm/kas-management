@@ -9,15 +9,14 @@
         [
             'name' => 'Management Siswa',
             'icon' => 'fa-solid fa-users',
-            'route' => 'management-siswa.siswa',
-            // 'submenus' => [
-            //     [
-            //         'name' => 'Data Siswa',
-            //         'route' => 'master.siswa',
-            //         'roles' => ['admin', 'bendahara'],
-            //     ],
-            // ],
-            'roles' => ['admin', 'bendahara'],
+            'route' => 'management-siswa',
+            'roles' => ['admin'],
+        ],
+        [
+            'name' => 'Kas Settings',
+            'icon' => 'fa-solid fa-money-bills',
+            'route' => 'kas-settings',
+            'roles' => ['admin'],
         ],
         [
             'name' => 'Kas Siswa',

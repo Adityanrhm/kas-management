@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\KasSettingsController;
+use App\Http\Controllers\KasSiswaController;
 use App\Http\Controllers\MasterKasSiswaController;
-use App\Http\Controllers\MasterSiswaController;
+use App\Http\Controllers\ManagementSiswaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,15 +21,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth'])->prefix('management-siswa')->name('management-siswa.')->group(function () {
-    Route::get('/siswa', [MasterSiswaController::class, 'index'])->name('siswa')->middleware(['role:admin|bendahara']);
-    Route::post('/siswa/store', [MasterSiswaController::class, 'store_siswa'])->name('store.siswa')->middleware('role:admin');
-    Route::put('/siswa/update/{user_siswa_id}', [MasterSiswaController::class, 'update_siswa'])->name('update.siswa')->middleware('role:admin');
-    Route::delete('/siswa/{user_id}', [MasterSiswaController::class, 'destroy_siswa'])->name('destroy.siswa')->middleware('role:admin');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/management-siswa', [ManagementSiswaController::class, 'index'])->name('management-siswa')->middleware(['role:admin']);
+    Route::post('/management-siswa/store', [ManagementSiswaController::class, 'store_siswa'])->name('store.management-siswa')->middleware('role:admin');
+    Route::put('/management-siswa/update/{user_siswa_id}', [ManagementSiswaController::class, 'update_siswa'])->name('update.management-siswa')->middleware('role:admin');
+    Route::delete('/management-siswa/{user_id}', [ManagementSiswaController::class, 'destroy_siswa'])->name('destroy.management-siswa')->middleware('role:admin');
 });
 
-Route::middleware(['auth'])->prefix('kas')->name('kas.')->group(function () {
-    Route::get('/kas-siswa', [MasterKasSiswaController::class, 'index'])->name('kas-siswa')->middleware(['role:siswa']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/kas-siswa', [KasSiswaController::class, 'index'])->name('kas-siswa')->middleware(['role:siswa']);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/kas-settings', [KasSettingsController::class, 'index'])->name('kas-settings')->middleware(['role:admin']);
 });
 
 require __DIR__ . '/auth.php';
