@@ -37,7 +37,7 @@
                                     "
                                 class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-black/40 hover:scale-[1.02] active:scale-95 group">
                                 <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
-                                Data Baru
+                                Siswa Baru
                             </button>
                         @endrole
 
@@ -154,7 +154,7 @@
                                                     </button>
 
                                                     {{-- Delete button --}}
-                                                    <form :action="`/management-siswa/${user.id}`" method="POST"
+                                                    <form :action="`/management-siswa/delete/${user.id}`" method="POST"
                                                         class="form-delete-siswa">
                                                         @csrf
                                                         @method('DELETE')

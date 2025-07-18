@@ -13,9 +13,9 @@
             'roles' => ['admin'],
         ],
         [
-            'name' => 'Cash Amount',
+            'name' => 'Cash Nominal',
             'icon' => 'fa-solid fa-money-bills',
-            'route' => 'cash-amount',
+            'route' => 'cash-nominal',
             'roles' => ['admin'],
         ],
         [

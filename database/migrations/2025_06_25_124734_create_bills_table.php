@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('month', length: 100)->nullable();
             $table->string('year', length: 100)->nullable();
             $table->integer('nominal')->nullable();
+            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending')->nullable();
             $table->date('due_date')->nullable();
         });
     }

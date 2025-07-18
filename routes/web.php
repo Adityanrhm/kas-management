@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CashAmountController;
+use App\Http\Controllers\CashNominalController;
 use App\Http\Controllers\KasSiswaController;
 use App\Http\Controllers\ManagementSiswaController;
 use App\Http\Controllers\ProfileController;
@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/management-siswa', [ManagementSiswaController::class, 'index'])->name('management-siswa')->middleware(['role:admin']);
     Route::post('/management-siswa/store', [ManagementSiswaController::class, 'store_siswa'])->name('store.management-siswa')->middleware('role:admin');
     Route::put('/management-siswa/update/{user_siswa_id}', [ManagementSiswaController::class, 'update_siswa'])->name('update.management-siswa')->middleware('role:admin');
-    Route::delete('/management-siswa/{user_id}', [ManagementSiswaController::class, 'destroy_siswa'])->name('destroy.management-siswa')->middleware('role:admin');
+    Route::delete('/management-siswa/delete/{user_id}', [ManagementSiswaController::class, 'destroy_siswa'])->name('destroy.management-siswa')->middleware('role:admin');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -32,7 +32,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/cash-amount', [CashAmountController::class, 'index'])->name('cash-amount')->middleware(['role:admin']);
+    Route::get('/cash-nominal', [CashNominalController::class, 'index'])->name('cash-nominal')->middleware(['role:admin']);
+    Route::get('/cash-nominal/create', [CashNominalController::class, 'store_cash_nominal'])->name('store.cash-nominal')->middleware(['role:admin']);
+    Route::get('/cash-nominal/update', [CashNominalController::class, 'update_cash_nominal'])->name('update.cash-nominal')->middleware(['role:admin']);
+    Route::get('/cash-nominal/delete/{cash_nominal_id}', [CashNominalController::class, 'destroy.cash_nominal'])->name('delete-cash-nominal')->middleware(['role:admin']);
 });
 
 require __DIR__ . '/auth.php';

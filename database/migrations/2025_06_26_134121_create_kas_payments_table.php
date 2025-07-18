@@ -19,7 +19,6 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->enum('payment_method', ['cash'])->nullable();
-            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending')->nullable();
         });
     }
 

@@ -2,7 +2,7 @@
 
 @section('content')
     {{-- javacript calling --}}
-    @vite(['resources/modules/js/kas-settings.js'])
+    @vite(['resources/modules/js/cash-nominal.js'])
 
 @section('content')
     <div class="px-6 py-6">
@@ -30,17 +30,15 @@
                             </svg>
                         </div>
 
-                        @role('admin')
-                            <button type="button"
-                                x-on:click.prevent="
+                        <button type="button"
+                            x-on:click.prevent="
                                     $dispatch('reset-form');
-                                    $dispatch('open-modal', 'siswa-modal');
+                                    $dispatch('open-modal', 'cash-nominal-modal');
                                     "
-                                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-black/40 hover:scale-[1.02] active:scale-95 group">
-                                <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
-                                Data Baru
-                            </button>
-                        @endrole
+                            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-black/40 hover:scale-[1.02] active:scale-95 group">
+                            <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
+                            Nominal Baru
+                        </button>
 
                     </div>
                 </div>
@@ -67,7 +65,7 @@
                         <thead>
                             <tr
                                 class="backdrop-blur-lg bg-white/5 text-white/80 uppercase text-xs tracking-widest border-b border-white/20">
-                                <th class="text-left py-3 px-3">Photo</th>
+                                {{-- <th class="text-left py-3 px-3">Photo</th> --}}
                                 <th class="text-left py-3 px-6">NIS</th>
                                 <th class="text-left py-3 px-1">Nama Siswa</th>
                                 <th class="text-left py-3 px-4">Minggu</th>
@@ -81,41 +79,42 @@
                         </thead>
                         <tbody class="text-white">
                             <template x-if="results.length > 0">
-                                <template x-for="cashData in results" :key="cashData.id">
+                                <template x-for="cashNomiData in results" :key="cashNomiData.id">
                                     <tr class="border-b border-white/20 hover:bg-white/5 transition duration-300">
-                                        <td class="text-left py-3 px-3">
-                                            <img :src="`{{ asset('storage') }}/` + cashData.student.user.avatar"
+                                        {{-- <td class="text-left py-3 px-3">
+                                            <img :src="`{{ asset('storage') }}/` + cashNomiData.student.user.avatar"
                                                 class="h-10 w-10 rounded-full" />
-                                        </td>
-                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.student?.nis ?? '-'">
+                                        </td> --}}
+                                        <td class="text-left py-3 px-5 text-white/60"
+                                            x-text="cashNomiData.student?.nis ?? '-'">
                                         </td>
                                         <td class="text-left py-3 px-1 text-white/60"
-                                            x-text="cashData.student.user.username"></td>
+                                            x-text="cashNomiData.student.user.username"></td>
                                         <td class="text-left py-3 px-6 text-white/60"
-                                            x-text="cashData.week ? 'Ke - ' + cashData.week : 'Ke - ' + '-'"></td>
-                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.month ?? '-'">
+                                            x-text="cashNomiData.week ? 'Ke - ' + cashNomiData.week : 'Ke - ' + '-'"></td>
+                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashNomiData.month ?? '-'">
                                         </td>
-                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.year ?? '-'">
+                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashNomiData.year ?? '-'">
                                         </td>
-                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashData.nominal ?? '-'">
+                                        <td class="text-left py-3 px-6 text-white/60" x-text="cashNomiData.nominal ?? '-'">
                                         </td>
                                         <td class="text-left py-3 px-8 text-white/60">
                                             <span
                                                 class="capitalize inline-flex items-left  text-xs font-medium px-2.5 py-0.5 rounded-full"
-                                                x-text="cashData.kas_payment[0].status ?? '-'"
+                                                x-text="cashNomiData.status ?? '-'"
                                                 :class="{
-                                                    'bg-blue-100 text-red-800 dark:bg-red-900 dark:text-red-300 wdsR': cashData
-                                                        .kas_payment[0].status === 'rejected',
+                                                    'bg-blue-100 text-red-800 dark:bg-red-900 dark:text-red-300 wdsR': cashNomiData
+                                                        .status === 'rejected',
                                                 
-                                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 wdsG': cashData
-                                                        .kas_payment[0].status === 'verified',
+                                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 wdsG': cashNomiData
+                                                        .status === 'verified',
                                                 
-                                                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-400 wdsY': cashData
-                                                        .kas_payment[0].status === 'pending',
+                                                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-400 wdsY': cashNomiData
+                                                        .status === 'pending',
                                                 
                                                 }"></span>
                                         </td>
-                                        <td class="text-left py-3 px-5 text-white/60" x-text="cashData.due_date ?? '-'">
+                                        <td class="text-left py-3 px-5 text-white/60" x-text="cashNomiData.due_date ?? '-'">
                                         </td>
 
                                         @role('admin')
@@ -125,29 +124,33 @@
                                                     {{-- Edit button --}}
                                                     <button
                                                         class="text-white/50 hover:text-blue-400 transition duration-300 edit-btn wdsB"
-                                                        title="Edit" :data-id="user.id"
-                                                        :data-nis="user.student?.nis ?? ''" :data-email="user.email ?? ''"
-                                                        :data-name="user.username ?? ''" :data-class="user.student?.class ?? ''"
-                                                        :data-avatar="user.avatar ?? ''"
-                                                        :data-avatar="user.roles[0]?.name ?? ''"
+                                                        title="Edit" :data-id="cashNomiData.id"
+                                                        :data-nis="cashNomiData.student?.nis ?? ''"
+                                                        :data-name="cashNomiData.student.user.username ?? ''"
+                                                        :data-week="cashNomiData.week ?? ''"
+                                                        :data-month="cashNomiData.month ?? ''"
+                                                        :data-year="cashNomiData.year ?? ''"
+                                                        :data-nominal="cashNomiData.nominal ?? ''"
+                                                        :data-due-date="cashNomiData.due_date ?? ''"
                                                         x-on:click.prevent="
                                                         $dispatch('edit-form', {
-                                                            id: user.id,
-                                                            nis: user.student?.nis ?? '',
-                                                            email: user.email ?? '',
-                                                            name: user.username ?? '',
-                                                            class: user.student?.class ?? '',
-                                                            avatar: user.avatar ?? '',
-                                                            role: user.roles[0]?.name ?? '',
+                                                            id: cashNomiData.id,
+                                                            nis: cashNomiData.student?.nis ?? '',
+                                                            name: cashNomiData.student.user.username ?? '',
+                                                            week: cashNomiData.week ?? '',
+                                                            month: cashNomiData.month ?? '',
+                                                            year: cashNomiData.year ?? '',
+                                                            nominal: cashNomiData.nominal ?? '',
+                                                            due-date: cashNomiData.due_date ?? '',
                                                         });
-                                                        $dispatch('open-modal', 'siswa-modal');
+                                                        $dispatch('open-modal', 'cash-nominal-modal');
                                                     ">
                                                         <i class="fa-solid fa-pen-to-square text-base"></i>
                                                     </button>
 
                                                     {{-- Delete button --}}
-                                                    <form :action="`/management-siswa/${user.id}`" method="POST"
-                                                        class="form-delete-siswa">
+                                                    <form :action="`/cash-amount/delete/${cashNomiData.id}`" method="POST"
+                                                        class="form-delete-cash-nominal">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
@@ -156,7 +159,7 @@
                                                             <i class="fa-solid fa-trash text-base"></i>
                                                         </button>
                                                     </form>
-                                                    <x-swal-delete selector=".form-delete-siswa" />
+                                                    <x-swal-delete selector=".form-delete-cash-nominal" />
 
                                                 </div>
                                             </td>
@@ -169,7 +172,7 @@
                             {{-- Data ketika kosong --}}
                             <template x-if="results.length === 0 && !loading">
                                 <tr>
-                                    <td colspan="7" class="p-4 text-center text-white/50 italic">
+                                    <td colspan="9" class="p-4 text-center text-white/50 italic">
                                         <span
                                             class="inline-flex items-center justify-center px-4 py-2 rounded-md 
                                                text-sm font-semibold text-red-200 bg-red-500/10 border border-red-400/20 
@@ -239,22 +242,22 @@
         </div>
     </div>
 
-    {{-- <div x-data="siswaModal()" x-init="init()" x-on:reset-form.window="resetForm()"
+    <div x-data="cashNominalModal()" x-init="init()" x-on:reset-form.window="resetForm()"
         x-on:edit-form.window="editForm($event.detail)">
-        <x-modal name="siswa-modal">
+        <x-modal name="cash-nominal-modal">
 
-            @include('modules.management-siswa.siswa_form')
+            @include('modules.cash-nominal.cash_nominal_form')
 
         </x-modal>
-    </div> --}}
+    </div>
 
     {{-- Set window varible untuk function javascript --}}
     <script>
         window.routes = {
-            'store.management-siswa': '{{ route('store.management-siswa') }}'
+            'store.cash-nominal': '{{ route('store.cash-nominal') }}'
         };
         // window.defaultNis = '{{ $nis_siswa ?? '' }}';
         window.storageUrl = '{{ asset('storage') }}';
-        window.initialData = @json($cash_amount_data);
+        window.initialData = @json($cash_nominal_data);
     </script>
 @endsection

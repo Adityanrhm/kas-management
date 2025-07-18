@@ -19,10 +19,11 @@ class ManagementSiswaController extends Controller
         if ($request->ajax()) {
             $keyword = $request->query('q');
 
-            $users_siswa_data_search = User::select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id',)
+            $users_siswa_data_search = User::with(['student.user', 'roles'])
                 ->join('students', 'students.user_id', '=', 'users.id')
-                ->search($keyword, ['students.nis', 'users.email', 'users.username'])
-                ->with(['student', 'roles'])->orderBy('students.nis')->paginate(8);
+                ->search($keyword, ['student.nis', 'username', 'username', 'roles.name'])->orderBy('students.nis')
+                ->select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id')
+                ->paginate(8);
 
             return response()->json($users_siswa_data_search);
         }

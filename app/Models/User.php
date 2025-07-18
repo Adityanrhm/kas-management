@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Role;
 use App\Models\Student;
+use App\Traits\UniversalSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +15,7 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
     use HasRoles;
+    use UniversalSearch;
 
     /**
      * The attributes that are mass assignable.
@@ -66,19 +68,6 @@ class User extends Authenticatable
     // Logic Area
     public function scopeGetUsersSiswaData($query)
     {
-        return $query->select('users.*')->join('students', 'students.user_id', '=', 'users.id');
-    }
-
-    public function scopeSearch($query, $keyword, array $fields)
-    {
-        return $query->where(function ($q) use ($keyword, $fields) {
-            foreach ($fields as $field) {
-                $q->orWhere($field, 'ILIKE', "%$keyword%");
-            }
-
-            $q->orWhereHas('roles', function ($roleQuery) use ($keyword) {
-                $roleQuery->where('name', 'ILIKE', "%$keyword%");
-            });
-        });
+        return $query->select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id')->join('students', 'students.user_id', '=', 'users.id');
     }
 }

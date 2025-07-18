@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\UniversalSearch;
 
 class Bill extends Model
 {
+
+    use UniversalSearch;
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -27,5 +31,12 @@ class Bill extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+
+    // Logic Area
+    public function scopeGetBillKasPaymentData($query)
+    {
+        return $query->select('bills.id', 'bills.week', 'bills.month', 'bills.year', 'bills.nominal', 'bills.status', 'bills.due_date', 'bills.student_id')->join('students', 'bills.student_id', '=', 'students.id');
     }
 }

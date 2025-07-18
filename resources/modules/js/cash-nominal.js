@@ -1,8 +1,8 @@
 // Function untuk modal siswa (jika belum ada)
-function siswaModal() {
+function cashNominalModal() {
     return {
         isEdit: false,
-        formAction: window.routes["store.management-siswa"],
+        formAction: window.routes["store.cash-nominal"],
         formData: {
             nis: window.defaultNis || "",
             email: "",
@@ -21,7 +21,7 @@ function siswaModal() {
 
         resetForm() {
             this.isEdit = false;
-            this.formAction = window.routes["store.management-siswa"];
+            this.formAction = window.routes["store.cash-nominal"];
             this.formData = {
                 nis: window.defaultNis || "",
                 email: "",
@@ -41,7 +41,7 @@ function siswaModal() {
 
         editForm(data) {
             this.isEdit = true;
-            this.formAction = `/management-siswa/update/${data.id}`;
+            this.formAction = `/cash-nominal/update/${data.id}`;
             this.formData = {
                 nis: data.nis || "",
                 email: data.email || "",
@@ -147,7 +147,7 @@ function searchData() {
         async fetchData() {
             try {
                 const response = await fetch(
-                    `/management-siswa?q=${encodeURIComponent(this.query)}`,
+                    `/cash-nominal?q=${encodeURIComponent(this.query)}`,
                     {
                         method: "GET",
                         headers: {
@@ -227,4 +227,4 @@ function searchData() {
 
 // Export functions untuk penggunaan global
 window.searchData = searchData;
-window.siswaModal = siswaModal;
+window.cashNominalModal = cashNominalModal;
