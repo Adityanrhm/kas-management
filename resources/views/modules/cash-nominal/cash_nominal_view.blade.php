@@ -206,7 +206,7 @@
 
                                 {{-- Halaman yang terlihat --}}
                                 <template x-for="page in visiblePages" :key="page">
-                                    <button x-on:click="changePage(`/management-siswa/siswa?page=${page}&q=${query}`)"
+                                    <button x-on:click="changePage(`/cash-nominal?page=${page}&q=${query}`)"
                                         class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 glow-white-hover"
                                         :class="{ 'bg-white/10 text-white font-bold': page === pagination.current_page }"
                                         x-text="page"></button>
@@ -219,7 +219,7 @@
                                             <span class="px-2 text-sm">...</span>
                                         </template>
                                         <button
-                                            x-on:click="changePage(`/management-siswa/siswa?page=${pagination.last_page}&q=${query}`)"
+                                            x-on:click="changePage(`/cash-nominal?page=${pagination.last_page}&q=${query}`)"
                                             class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 glow-white-hover"
                                             :class="{
                                                 'bg-white/10 text-white font-bold': pagination.last_page === pagination

@@ -70,4 +70,17 @@ class User extends Authenticatable
     {
         return $query->select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id')->join('students', 'students.user_id', '=', 'users.id');
     }
+
+    // public function scopeSearch($query, $keyword, array $fields)
+    // {
+    //     return $query->where(function ($q) use ($keyword, $fields) {
+    //         foreach ($fields as $field) {
+    //             $q->orWhere($field, 'ILIKE', "%$keyword%");
+    //         }
+
+    //         $q->orWhereHas('roles', function ($roleQuery) use ($keyword) {
+    //             $roleQuery->where('name', 'ILIKE', "%$keyword%");
+    //         });
+    //     });
+    // }
 }

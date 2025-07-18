@@ -105,7 +105,7 @@ function searchData() {
         searchTimeout: null,
 
         init() {
-            console.log(this.results);
+            // console.log(this.results);
         },
 
         get visiblePages() {

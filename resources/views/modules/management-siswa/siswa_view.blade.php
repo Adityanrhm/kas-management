@@ -37,7 +37,7 @@
                                     "
                                 class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold backdrop-blur-lg bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-lg shadow-black/20 hover:shadow-black/40 hover:scale-[1.02] active:scale-95 group">
                                 <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform duration-300"></i>
-                                Siswa Baru
+                                Data Baru
                             </button>
                         @endrole
 
@@ -211,7 +211,7 @@
 
                                 {{-- Halaman yang terlihat --}}
                                 <template x-for="page in visiblePages" :key="page">
-                                    <button x-on:click="changePage(`/management-siswa/siswa?page=${page}&q=${query}`)"
+                                    <button x-on:click="changePage(`/management-siswa?page=${page}&q=${query}`)"
                                         class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 glow-white-hover"
                                         :class="{ 'bg-white/10 text-white font-bold': page === pagination.current_page }"
                                         x-text="page"></button>
@@ -224,7 +224,7 @@
                                             <span class="px-2 text-sm">...</span>
                                         </template>
                                         <button
-                                            x-on:click="changePage(`/management-siswa/siswa?page=${pagination.last_page}&q=${query}`)"
+                                            x-on:click="changePage(`/management-siswa?page=${pagination.last_page}&q=${query}`)"
                                             class="px-3 py-1 text-sm border border-white/20 rounded hover:bg-white/10 glow-white-hover"
                                             :class="{
                                                 'bg-white/10 text-white font-bold': pagination.last_page === pagination
