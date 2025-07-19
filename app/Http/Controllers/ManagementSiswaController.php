@@ -23,7 +23,7 @@ class ManagementSiswaController extends Controller
                 ->join('students', 'students.user_id', '=', 'users.id')
                 ->search($keyword, ['student.nis', 'username', 'username', 'roles.name'])->orderBy('students.nis')
                 ->select('users.id', 'users.username', 'users.email', 'users.avatar', 'students.nis', 'students.user_id')
-                ->paginate(8);
+                ->paginate(3);
 
             return response()->json($users_siswa_data_search);
         }
@@ -32,7 +32,7 @@ class ManagementSiswaController extends Controller
         $nis_siswa = Student::generateNextNis();
 
         // Users siswa data
-        $users_data = User::getUsersSiswaData()->orderBy('students.nis', 'ASC')->with(['student', 'roles'])->paginate(8);
+        $users_data = User::getUsersSiswaData()->orderBy('students.nis', 'ASC')->with(['student', 'roles'])->paginate(3);
 
         return view('modules.management-siswa.siswa_view', compact('users_data', 'nis_siswa'));
     }
